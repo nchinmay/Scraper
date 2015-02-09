@@ -6,6 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 public class Scraper {
+	private static final String Y = "http://finance.yahoo.com/";
+
 	private Document doc;
 
 	public Scraper(String baseUri) {
@@ -21,7 +23,7 @@ public class Scraper {
 	}
 
 	public static void main(String[] args) {
-		Scraper scr = new Scraper("http://www.google.com/");
+		Scraper scr = new Scraper(Y);
 		System.out.println(scr.getTitle());
 	}
 }
