@@ -5,6 +5,10 @@ public class YData {
 
 	private String yearLow;
 	private String yearHigh;
+	private String fiftydayMovingAverage;
+	private String changeFromFiftydayMovingAverage;
+	private String twoHundreddayMovingAverage;
+	private String changeFromTwoHundreddayMovingAverage;
 	private String averageDailyVolume;
 
 	private String pERatio;
@@ -44,6 +48,40 @@ public class YData {
 		this.yearHigh = yearHigh;
 	}
 
+	public String getFiftydayMovingAverage() {
+		return fiftydayMovingAverage;
+	}
+
+	public void setFiftydayMovingAverage(String fiftydayMovingAverage) {
+		this.fiftydayMovingAverage = fiftydayMovingAverage;
+	}
+
+	public String getChangeFromFiftydayMovingAverage() {
+		return changeFromFiftydayMovingAverage;
+	}
+
+	public void setChangeFromFiftydayMovingAverage(
+			String changeFromFiftydayMovingAverage) {
+		this.changeFromFiftydayMovingAverage = changeFromFiftydayMovingAverage;
+	}
+
+	public String getTwoHundreddayMovingAverage() {
+		return twoHundreddayMovingAverage;
+	}
+
+	public void setTwoHundreddayMovingAverage(String twoHundreddayMovingAverage) {
+		this.twoHundreddayMovingAverage = twoHundreddayMovingAverage;
+	}
+
+	public String getChangeFromTwoHundreddayMovingAverage() {
+		return changeFromTwoHundreddayMovingAverage;
+	}
+
+	public void setChangeFromTwoHundreddayMovingAverage(
+			String changeFromTwoHundreddayMovingAverage) {
+		this.changeFromTwoHundreddayMovingAverage = changeFromTwoHundreddayMovingAverage;
+	}
+
 	public String getAverageDailyVolume() {
 		return averageDailyVolume;
 	}
@@ -58,6 +96,14 @@ public class YData {
 
 	public void setpERatio(String pERatio) {
 		this.pERatio = pERatio;
+	}
+
+	public String getpEGRatio() {
+		return pEGRatio;
+	}
+
+	public void setpEGRatio(String pEGRatio) {
+		this.pEGRatio = pEGRatio;
 	}
 
 	public String geteBITDA() {
@@ -133,23 +179,23 @@ public class YData {
 		this.oneyrTargetPrice = oneyrTargetPrice;
 	}
 
-	public String getpEGRatio() {
-		return pEGRatio;
-	}
-
-	public void setpEGRatio(String pEGRatio) {
-		this.pEGRatio = pEGRatio;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("YSEData [symbol=");
+		builder.append("YData [symbol=");
 		builder.append(symbol);
 		builder.append(", yearLow=");
 		builder.append(yearLow);
 		builder.append(", yearHigh=");
 		builder.append(yearHigh);
+		builder.append(", fiftydayMovingAverage=");
+		builder.append(fiftydayMovingAverage);
+		builder.append(", changeFromFiftydayMovingAverage=");
+		builder.append(changeFromFiftydayMovingAverage);
+		builder.append(", twoHundreddayMovingAverage=");
+		builder.append(twoHundreddayMovingAverage);
+		builder.append(", changeFromTwoHundreddayMovingAverage=");
+		builder.append(changeFromTwoHundreddayMovingAverage);
 		builder.append(", averageDailyVolume=");
 		builder.append(averageDailyVolume);
 		builder.append(", pERatio=");

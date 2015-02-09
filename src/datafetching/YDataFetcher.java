@@ -75,6 +75,13 @@ public class YDataFetcher {
 		d.setSymbol(getValue(quote, "Symbol"));
 		d.setYearLow(getValue(quote, "YearLow"));
 		d.setYearHigh(getValue(quote, "YearHigh"));
+		d.setFiftydayMovingAverage(getValue(quote, "FiftydayMovingAverage"));
+		d.setChangeFromFiftydayMovingAverage(getValue(quote,
+				"ChangeFromFiftydayMovingAverage"));
+		d.setTwoHundreddayMovingAverage(getValue(quote,
+				"TwoHundreddayMovingAverage"));
+		d.setChangeFromTwoHundreddayMovingAverage(getValue(quote,
+				"ChangeFromTwoHundreddayMovingAverage"));
 		d.setAverageDailyVolume(getValue(quote, "AverageDailyVolume"));
 		d.setpERatio(getValue(quote, "PERatio"));
 		d.setpEGRatio(getValue(quote, "PEGRatio"));
