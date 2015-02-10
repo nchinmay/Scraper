@@ -73,6 +73,8 @@ public class YDataFetcher {
 	public static YData parseYDXMLQuote(Element quote) {
 		YData d = new YData();
 		d.setSymbol(getValue(quote, "Symbol"));
+		d.setName(getValue(quote, "Name"));
+
 		d.setYearLow(getValue(quote, "YearLow"));
 		d.setYearHigh(getValue(quote, "YearHigh"));
 		d.setFiftydayMovingAverage(getValue(quote, "FiftydayMovingAverage"));
@@ -83,14 +85,18 @@ public class YDataFetcher {
 		d.setChangeFromTwoHundreddayMovingAverage(getValue(quote,
 				"ChangeFromTwoHundreddayMovingAverage"));
 		d.setAverageDailyVolume(getValue(quote, "AverageDailyVolume"));
-		d.setpERatio(getValue(quote, "PERatio"));
-		d.setpEGRatio(getValue(quote, "PEGRatio"));
-		d.seteBITDA(getValue(quote, "EBITDA"));
+		d.setPERatio(getValue(quote, "PERatio"));
+		d.setPEGRatio(getValue(quote, "PEGRatio"));
+		d.setEBITDA(getValue(quote, "EBITDA"));
 		d.setMarketCapitalization(getValue(quote, "MarketCapitalization"));
+
 		d.setEarningsShare(getValue(quote, "EarningsShare"));
-		d.setePSEstimateCurrentYear(getValue(quote, "EPSEstimateCurrentYear"));
-		d.setePSEstimateNextYear(getValue(quote, "EPSEstimateNextYear"));
-		d.setePSEstimateNextQuarter(getValue(quote, "EPSEstimateNextQuarter"));
+		d.setEPSEstimateCurrentYear(getValue(quote, "EPSEstimateCurrentYear"));
+		d.setEPSEstimateNextYear(getValue(quote, "EPSEstimateNextYear"));
+		d.setEPSEstimateNextQuarter(getValue(quote, "EPSEstimateNextQuarter"));
+		d.setDividendShare(getValue(quote, "DividendShare"));
+		d.setDividendYield(getValue(quote, "DividendYield"));
+		d.setExDividendDate(getValue(quote, "ExDividendDate"));
 		d.setPriceEPSEstimateCurrentYear(getValue(quote,
 				"PriceEPSEstimateCurrentYear"));
 		d.setPriceEPSEstimateNextYear(getValue(quote,

@@ -1,226 +1,271 @@
 package datafetching;
 
 public class YData {
-	private String symbol;
+	private String Symbol;
+	private String Name;
 
-	private String yearLow;
-	private String yearHigh;
-	private String fiftydayMovingAverage;
-	private String changeFromFiftydayMovingAverage;
-	private String twoHundreddayMovingAverage;
-	private String changeFromTwoHundreddayMovingAverage;
-	private String averageDailyVolume;
+	private String YearLow;
+	private String YearHigh;
+	private String FiftydayMovingAverage;
+	private String ChangeFromFiftydayMovingAverage;
+	private String TwoHundreddayMovingAverage;
+	private String ChangeFromTwoHundreddayMovingAverage;
+	private String AverageDailyVolume;
 
-	private String pERatio;
-	private String pEGRatio;
-	private String eBITDA;
-	private String marketCapitalization;
+	private String PERatio;
+	private String PEGRatio;
+	private String EBITDA;
+	private String MarketCapitalization;
 
-	private String earningsShare;
-	private String ePSEstimateCurrentYear;
-	private String ePSEstimateNextYear;
-	private String ePSEstimateNextQuarter;
-	private String priceEPSEstimateCurrentYear;
-	private String priceEPSEstimateNextYear;
-	private String oneyrTargetPrice;
+	private String EarningsShare;
+	private String EPSEstimateCurrentYear;
+	private String EPSEstimateNextYear;
+	private String EPSEstimateNextQuarter;
+	private String DividendShare;
+	private String DividendYield;
+	private String ExDividendDate;
+	private String PriceEPSEstimateCurrentYear;
+	private String PriceEPSEstimateNextYear;
+	private String OneyrTargetPrice;
 
 	public String getSymbol() {
-		return symbol;
+		return Symbol;
 	}
 
 	public void setSymbol(String symbol) {
-		this.symbol = symbol;
+		Symbol = symbol;
+	}
+
+	public String getName() {
+		return Name;
+	}
+
+	public void setName(String name) {
+		Name = name;
 	}
 
 	public String getYearLow() {
-		return yearLow;
+		return YearLow;
 	}
 
 	public void setYearLow(String yearLow) {
-		this.yearLow = yearLow;
+		YearLow = yearLow;
 	}
 
 	public String getYearHigh() {
-		return yearHigh;
+		return YearHigh;
 	}
 
 	public void setYearHigh(String yearHigh) {
-		this.yearHigh = yearHigh;
+		YearHigh = yearHigh;
 	}
 
 	public String getFiftydayMovingAverage() {
-		return fiftydayMovingAverage;
+		return FiftydayMovingAverage;
 	}
 
 	public void setFiftydayMovingAverage(String fiftydayMovingAverage) {
-		this.fiftydayMovingAverage = fiftydayMovingAverage;
+		FiftydayMovingAverage = fiftydayMovingAverage;
 	}
 
 	public String getChangeFromFiftydayMovingAverage() {
-		return changeFromFiftydayMovingAverage;
+		return ChangeFromFiftydayMovingAverage;
 	}
 
 	public void setChangeFromFiftydayMovingAverage(
 			String changeFromFiftydayMovingAverage) {
-		this.changeFromFiftydayMovingAverage = changeFromFiftydayMovingAverage;
+		ChangeFromFiftydayMovingAverage = changeFromFiftydayMovingAverage;
 	}
 
 	public String getTwoHundreddayMovingAverage() {
-		return twoHundreddayMovingAverage;
+		return TwoHundreddayMovingAverage;
 	}
 
 	public void setTwoHundreddayMovingAverage(String twoHundreddayMovingAverage) {
-		this.twoHundreddayMovingAverage = twoHundreddayMovingAverage;
+		TwoHundreddayMovingAverage = twoHundreddayMovingAverage;
 	}
 
 	public String getChangeFromTwoHundreddayMovingAverage() {
-		return changeFromTwoHundreddayMovingAverage;
+		return ChangeFromTwoHundreddayMovingAverage;
 	}
 
 	public void setChangeFromTwoHundreddayMovingAverage(
 			String changeFromTwoHundreddayMovingAverage) {
-		this.changeFromTwoHundreddayMovingAverage = changeFromTwoHundreddayMovingAverage;
+		ChangeFromTwoHundreddayMovingAverage = changeFromTwoHundreddayMovingAverage;
 	}
 
 	public String getAverageDailyVolume() {
-		return averageDailyVolume;
+		return AverageDailyVolume;
 	}
 
 	public void setAverageDailyVolume(String averageDailyVolume) {
-		this.averageDailyVolume = averageDailyVolume;
+		AverageDailyVolume = averageDailyVolume;
 	}
 
-	public String getpERatio() {
-		return pERatio;
+	public String getPERatio() {
+		return PERatio;
 	}
 
-	public void setpERatio(String pERatio) {
-		this.pERatio = pERatio;
+	public void setPERatio(String pERatio) {
+		PERatio = pERatio;
 	}
 
-	public String getpEGRatio() {
-		return pEGRatio;
+	public String getPEGRatio() {
+		return PEGRatio;
 	}
 
-	public void setpEGRatio(String pEGRatio) {
-		this.pEGRatio = pEGRatio;
+	public void setPEGRatio(String pEGRatio) {
+		PEGRatio = pEGRatio;
 	}
 
-	public String geteBITDA() {
-		return eBITDA;
+	public String getEBITDA() {
+		return EBITDA;
 	}
 
-	public void seteBITDA(String eBITDA) {
-		this.eBITDA = eBITDA;
+	public void setEBITDA(String eBITDA) {
+		EBITDA = eBITDA;
 	}
 
 	public String getMarketCapitalization() {
-		return marketCapitalization;
+		return MarketCapitalization;
 	}
 
 	public void setMarketCapitalization(String marketCapitalization) {
-		this.marketCapitalization = marketCapitalization;
+		MarketCapitalization = marketCapitalization;
 	}
 
 	public String getEarningsShare() {
-		return earningsShare;
+		return EarningsShare;
 	}
 
 	public void setEarningsShare(String earningsShare) {
-		this.earningsShare = earningsShare;
+		EarningsShare = earningsShare;
 	}
 
-	public String getePSEstimateCurrentYear() {
-		return ePSEstimateCurrentYear;
+	public String getEPSEstimateCurrentYear() {
+		return EPSEstimateCurrentYear;
 	}
 
-	public void setePSEstimateCurrentYear(String ePSEstimateCurrentYear) {
-		this.ePSEstimateCurrentYear = ePSEstimateCurrentYear;
+	public void setEPSEstimateCurrentYear(String ePSEstimateCurrentYear) {
+		EPSEstimateCurrentYear = ePSEstimateCurrentYear;
 	}
 
-	public String getePSEstimateNextYear() {
-		return ePSEstimateNextYear;
+	public String getEPSEstimateNextYear() {
+		return EPSEstimateNextYear;
 	}
 
-	public void setePSEstimateNextYear(String ePSEstimateNextYear) {
-		this.ePSEstimateNextYear = ePSEstimateNextYear;
+	public void setEPSEstimateNextYear(String ePSEstimateNextYear) {
+		EPSEstimateNextYear = ePSEstimateNextYear;
 	}
 
-	public String getePSEstimateNextQuarter() {
-		return ePSEstimateNextQuarter;
+	public String getEPSEstimateNextQuarter() {
+		return EPSEstimateNextQuarter;
 	}
 
-	public void setePSEstimateNextQuarter(String ePSEstimateNextQuarter) {
-		this.ePSEstimateNextQuarter = ePSEstimateNextQuarter;
+	public void setEPSEstimateNextQuarter(String ePSEstimateNextQuarter) {
+		EPSEstimateNextQuarter = ePSEstimateNextQuarter;
+	}
+
+	public String getDividendShare() {
+		return DividendShare;
+	}
+
+	public void setDividendShare(String dividendShare) {
+		DividendShare = dividendShare;
+	}
+
+	public String getDividendYield() {
+		return DividendYield;
+	}
+
+	public void setDividendYield(String dividendYield) {
+		DividendYield = dividendYield;
+	}
+
+	public String getExDividendDate() {
+		return ExDividendDate;
+	}
+
+	public void setExDividendDate(String exDividendDate) {
+		ExDividendDate = exDividendDate;
 	}
 
 	public String getPriceEPSEstimateCurrentYear() {
-		return priceEPSEstimateCurrentYear;
+		return PriceEPSEstimateCurrentYear;
 	}
 
 	public void setPriceEPSEstimateCurrentYear(
 			String priceEPSEstimateCurrentYear) {
-		this.priceEPSEstimateCurrentYear = priceEPSEstimateCurrentYear;
+		PriceEPSEstimateCurrentYear = priceEPSEstimateCurrentYear;
 	}
 
 	public String getPriceEPSEstimateNextYear() {
-		return priceEPSEstimateNextYear;
+		return PriceEPSEstimateNextYear;
 	}
 
 	public void setPriceEPSEstimateNextYear(String priceEPSEstimateNextYear) {
-		this.priceEPSEstimateNextYear = priceEPSEstimateNextYear;
+		PriceEPSEstimateNextYear = priceEPSEstimateNextYear;
 	}
 
 	public String getOneyrTargetPrice() {
-		return oneyrTargetPrice;
+		return OneyrTargetPrice;
 	}
 
 	public void setOneyrTargetPrice(String oneyrTargetPrice) {
-		this.oneyrTargetPrice = oneyrTargetPrice;
+		OneyrTargetPrice = oneyrTargetPrice;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("YData [symbol=");
-		builder.append(symbol);
-		builder.append(", yearLow=");
-		builder.append(yearLow);
-		builder.append(", yearHigh=");
-		builder.append(yearHigh);
-		builder.append(", fiftydayMovingAverage=");
-		builder.append(fiftydayMovingAverage);
-		builder.append(", changeFromFiftydayMovingAverage=");
-		builder.append(changeFromFiftydayMovingAverage);
-		builder.append(", twoHundreddayMovingAverage=");
-		builder.append(twoHundreddayMovingAverage);
-		builder.append(", changeFromTwoHundreddayMovingAverage=");
-		builder.append(changeFromTwoHundreddayMovingAverage);
-		builder.append(", averageDailyVolume=");
-		builder.append(averageDailyVolume);
-		builder.append(", pERatio=");
-		builder.append(pERatio);
-		builder.append(", pEGRatio=");
-		builder.append(pEGRatio);
-		builder.append(", eBITDA=");
-		builder.append(eBITDA);
-		builder.append(", marketCapitalization=");
-		builder.append(marketCapitalization);
-		builder.append(", earningsShare=");
-		builder.append(earningsShare);
-		builder.append(", ePSEstimateCurrentYear=");
-		builder.append(ePSEstimateCurrentYear);
-		builder.append(", ePSEstimateNextYear=");
-		builder.append(ePSEstimateNextYear);
-		builder.append(", ePSEstimateNextQuarter=");
-		builder.append(ePSEstimateNextQuarter);
-		builder.append(", priceEPSEstimateCurrentYear=");
-		builder.append(priceEPSEstimateCurrentYear);
-		builder.append(", priceEPSEstimateNextYear=");
-		builder.append(priceEPSEstimateNextYear);
-		builder.append(", oneyrTargetPrice=");
-		builder.append(oneyrTargetPrice);
+		builder.append("YData [Symbol=");
+		builder.append(Symbol);
+		builder.append(", Name=");
+		builder.append(Name);
+		builder.append(", YearLow=");
+		builder.append(YearLow);
+		builder.append(", YearHigh=");
+		builder.append(YearHigh);
+		builder.append(", FiftydayMovingAverage=");
+		builder.append(FiftydayMovingAverage);
+		builder.append(", ChangeFromFiftydayMovingAverage=");
+		builder.append(ChangeFromFiftydayMovingAverage);
+		builder.append(", TwoHundreddayMovingAverage=");
+		builder.append(TwoHundreddayMovingAverage);
+		builder.append(", ChangeFromTwoHundreddayMovingAverage=");
+		builder.append(ChangeFromTwoHundreddayMovingAverage);
+		builder.append(", AverageDailyVolume=");
+		builder.append(AverageDailyVolume);
+		builder.append(", PERatio=");
+		builder.append(PERatio);
+		builder.append(", PEGRatio=");
+		builder.append(PEGRatio);
+		builder.append(", EBITDA=");
+		builder.append(EBITDA);
+		builder.append(", MarketCapitalization=");
+		builder.append(MarketCapitalization);
+		builder.append(", EarningsShare=");
+		builder.append(EarningsShare);
+		builder.append(", EPSEstimateCurrentYear=");
+		builder.append(EPSEstimateCurrentYear);
+		builder.append(", EPSEstimateNextYear=");
+		builder.append(EPSEstimateNextYear);
+		builder.append(", EPSEstimateNextQuarter=");
+		builder.append(EPSEstimateNextQuarter);
+		builder.append(", DividendShare=");
+		builder.append(DividendShare);
+		builder.append(", DividendYield=");
+		builder.append(DividendYield);
+		builder.append(", ExDividendDate=");
+		builder.append(ExDividendDate);
+		builder.append(", PriceEPSEstimateCurrentYear=");
+		builder.append(PriceEPSEstimateCurrentYear);
+		builder.append(", PriceEPSEstimateNextYear=");
+		builder.append(PriceEPSEstimateNextYear);
+		builder.append(", OneyrTargetPrice=");
+		builder.append(OneyrTargetPrice);
 		builder.append("]");
 		return builder.toString();
 	}
+
 }
