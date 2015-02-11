@@ -28,12 +28,10 @@ public class YData implements ICSVAble {
 	private String PriceEPSEstimateNextYear;
 	private String OneyrTargetPrice;
 
-	@Override
 	public String getCSVHeader() {
 		return "Symbol, Name, YearLow, YearHigh, FiftydayMovingAverage, ChangeFromFiftydayMovingAverage, TwoHundreddayMovingAverage, ChangeFromTwoHundreddayMovingAverage, AverageDailyVolume, PERatio, PEGRatio, EBITDA, MarketCapitalization, EarningsShare, EPSEstimateCurrentYear, EPSEstimateNextYear, EPSEstimateNextQuarter, DividendShare, DividendYield, ExDividendDate, PriceEPSEstimateCurrentYear, PriceEPSEstimateNextYear, OneyrTargetPrice";
 	}
 
-	@Override
 	public String getRow() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(Symbol);
@@ -84,7 +82,6 @@ public class YData implements ICSVAble {
 		return builder.toString();
 	}
 
-	@Override
 	public String getRowKey() {
 		return this.Symbol;
 	}

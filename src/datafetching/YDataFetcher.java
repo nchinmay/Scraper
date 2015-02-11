@@ -14,6 +14,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import datautil.CsvFileHelper;
+import datautil.RunHelper;
+
 public class YDataFetcher {
 	public static void main(String[] args) throws Exception {
 		Set<String> symbols = getTestSymbols();
@@ -64,6 +67,9 @@ public class YDataFetcher {
 			if (quoteNodes != null && quoteNodes.getLength() > 0) {
 				for (int i = 0; i < quoteNodes.getLength(); ++i) {
 					YData data = parseYDXMLQuote((Element) quoteNodes.item(i));
+					CsvFileHelper.writeAsCsvFile(
+							RunHelper.getTodayDataDirectory(), data.getRowKey()
+									+ ".csv", ',', data);
 					System.out.println(data);
 				}
 			}

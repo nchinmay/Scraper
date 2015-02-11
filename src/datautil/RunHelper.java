@@ -5,8 +5,8 @@ public class RunHelper {
 		return System.getProperty("user.dir");
 	}
 
-	public static String getDataDirectory() {
+	public static String getTodayDataDirectory() {
 		return getCurrentRunDirectory() + "\\Data\\"
-				+ DateTimeHelper.getTodayDate();
+				+ DateTimeHelper.getTodayDate() +"\\";
 	}
 }
