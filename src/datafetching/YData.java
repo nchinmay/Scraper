@@ -1,6 +1,6 @@
 package datafetching;
 
-public class YData {
+public class YData implements ICSVAble {
 	private String Symbol;
 	private String Name;
 
@@ -27,6 +27,67 @@ public class YData {
 	private String PriceEPSEstimateCurrentYear;
 	private String PriceEPSEstimateNextYear;
 	private String OneyrTargetPrice;
+
+	@Override
+	public String getCSVHeader() {
+		return "Symbol, Name, YearLow, YearHigh, FiftydayMovingAverage, ChangeFromFiftydayMovingAverage, TwoHundreddayMovingAverage, ChangeFromTwoHundreddayMovingAverage, AverageDailyVolume, PERatio, PEGRatio, EBITDA, MarketCapitalization, EarningsShare, EPSEstimateCurrentYear, EPSEstimateNextYear, EPSEstimateNextQuarter, DividendShare, DividendYield, ExDividendDate, PriceEPSEstimateCurrentYear, PriceEPSEstimateNextYear, OneyrTargetPrice";
+	}
+
+	@Override
+	public String getRow() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(Symbol);
+		builder.append(", ");
+		builder.append(Name);
+		builder.append(", ");
+		builder.append(YearLow);
+		builder.append(", ");
+		builder.append(YearHigh);
+		builder.append(", ");
+		builder.append(FiftydayMovingAverage);
+		builder.append(", ");
+		builder.append(ChangeFromFiftydayMovingAverage);
+		builder.append(", ");
+		builder.append(TwoHundreddayMovingAverage);
+		builder.append(", ");
+		builder.append(ChangeFromTwoHundreddayMovingAverage);
+		builder.append(", ");
+		builder.append(AverageDailyVolume);
+		builder.append(", ");
+		builder.append(PERatio);
+		builder.append(", ");
+		builder.append(PEGRatio);
+		builder.append(", ");
+		builder.append(EBITDA);
+		builder.append(", ");
+		builder.append(MarketCapitalization);
+		builder.append(", ");
+		builder.append(EarningsShare);
+		builder.append(", ");
+		builder.append(EPSEstimateCurrentYear);
+		builder.append(", ");
+		builder.append(EPSEstimateNextYear);
+		builder.append(", ");
+		builder.append(EPSEstimateNextQuarter);
+		builder.append(", ");
+		builder.append(DividendShare);
+		builder.append(", ");
+		builder.append(DividendYield);
+		builder.append(", ");
+		builder.append(ExDividendDate);
+		builder.append(", ");
+		builder.append(PriceEPSEstimateCurrentYear);
+		builder.append(", ");
+		builder.append(PriceEPSEstimateNextYear);
+		builder.append(", ");
+		builder.append(OneyrTargetPrice);
+		return builder.toString();
+	}
+
+	@Override
+	public String getRowKey() {
+		return this.Symbol;
+	}
 
 	public String getSymbol() {
 		return Symbol;
@@ -267,5 +328,4 @@ public class YData {
 		builder.append("]");
 		return builder.toString();
 	}
-
 }
