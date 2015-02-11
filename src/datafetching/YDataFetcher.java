@@ -1,5 +1,7 @@
 package datafetching;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -17,9 +19,19 @@ import org.w3c.dom.NodeList;
 import datautil.CsvFileHelper;
 import datautil.RunHelper;
 
+/**
+ * This thing just gets Publicly Available fundamental data from Yahoo and dumps
+ * to CSV/some other data container. It does nothing more nothing less and is
+ * not intended for commercial use.
+ * 
+ * @- TODO - There's unsafe calls all over the place. Clean them
+ * @- TODO - No Validations anywhere at all. Add them
+ */
 public class YDataFetcher {
+	public static final String SYMBOL_FILE = "symbols.txt";
+
 	public static void main(String[] args) throws Exception {
-		Set<String> symbols = getTestSymbols();
+		Set<String> symbols = readSymbolsFromFile();
 		InputStream is = YDataFetcher.getYQXMLData(symbols);
 		YDataFetcher.parseYQXMLQuery(is);
 	}
@@ -125,4 +137,19 @@ public class YDataFetcher {
 		symbols.add("GOOG");
 		return symbols;
 	}
+
+	public static Set<String> readSymbolsFromFile() throws Exception {
+		BufferedReader br = new BufferedReader(new FileReader(
+				RunHelper.getCurrentRunDirectory() + SYMBOL_FILE));
+		Set<String> symbols = new HashSet<String>();
+
+		String s = br.readLine();
+		while (s != null) {
+			symbols.add(s);
+			s = br.readLine();
+		}
+		br.close();
+		return symbols;
+	}
+
 }
