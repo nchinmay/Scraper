@@ -1,38 +1,41 @@
 package datafetching;
 
-public class YData implements ICSVAble {
+public class YData implements ICSVAble
+{
 	private String Symbol;
 	private String Name;
 
-	private String YearLow;
-	private String YearHigh;
-	private String FiftydayMovingAverage;
-	private String ChangeFromFiftydayMovingAverage;
-	private String TwoHundreddayMovingAverage;
-	private String ChangeFromTwoHundreddayMovingAverage;
-	private String AverageDailyVolume;
+	private double YearLow;
+	private double YearHigh;
+	private double FiftydayMovingAverage;
+	private double ChangeFromFiftydayMovingAverage;
+	private double TwoHundreddayMovingAverage;
+	private double ChangeFromTwoHundreddayMovingAverage;
+	private long AverageDailyVolume;
 
-	private String PERatio;
-	private String PEGRatio;
-	private String EBITDA;
-	private String MarketCapitalization;
+	private double PERatio;
+	private double PEGRatio;
+	private double EBITDA;
+	private double MarketCapitalization;
 
-	private String EarningsShare;
-	private String EPSEstimateCurrentYear;
-	private String EPSEstimateNextYear;
-	private String EPSEstimateNextQuarter;
-	private String DividendShare;
-	private String DividendYield;
+	private double EarningsShare;
+	private double EPSEstimateCurrentYear;
+	private double EPSEstimateNextYear;
+	private double EPSEstimateNextQuarter;
+	private double DividendShare;
+	private double DividendYield;
 	private String ExDividendDate;
-	private String PriceEPSEstimateCurrentYear;
-	private String PriceEPSEstimateNextYear;
-	private String OneyrTargetPrice;
+	private double PriceEPSEstimateCurrentYear;
+	private double PriceEPSEstimateNextYear;
+	private double OneyrTargetPrice;
 
-	public String getCSVHeader() {
+	public String getCSVHeader()
+	{
 		return "Symbol, Name, YearLow, YearHigh, FiftydayMovingAverage, ChangeFromFiftydayMovingAverage, TwoHundreddayMovingAverage, ChangeFromTwoHundreddayMovingAverage, AverageDailyVolume, PERatio, PEGRatio, EBITDA, MarketCapitalization, EarningsShare, EPSEstimateCurrentYear, EPSEstimateNextYear, EPSEstimateNextQuarter, DividendShare, DividendYield, ExDividendDate, PriceEPSEstimateCurrentYear, PriceEPSEstimateNextYear, OneyrTargetPrice";
 	}
 
-	public String getRow() {
+	public String getRow()
+	{
 		StringBuilder builder = new StringBuilder();
 		builder.append(Symbol);
 		builder.append(", ");
@@ -82,199 +85,244 @@ public class YData implements ICSVAble {
 		return builder.toString();
 	}
 
-	public String getRowKey() {
+	public String getRowKey()
+	{
 		return this.Symbol;
 	}
 
-	public String getSymbol() {
+	public String getSymbol()
+	{
 		return Symbol;
 	}
 
-	public void setSymbol(String symbol) {
+	public void setSymbol(String symbol)
+	{
 		Symbol = symbol;
 	}
 
-	public String getName() {
+	public String getName()
+	{
 		return Name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		Name = name;
 	}
 
-	public String getYearLow() {
+	public double getYearLow()
+	{
 		return YearLow;
 	}
 
-	public void setYearLow(String yearLow) {
+	public void setYearLow(double yearLow)
+	{
 		YearLow = yearLow;
 	}
 
-	public String getYearHigh() {
+	public double getYearHigh()
+	{
 		return YearHigh;
 	}
 
-	public void setYearHigh(String yearHigh) {
+	public void setYearHigh(double yearHigh)
+	{
 		YearHigh = yearHigh;
 	}
 
-	public String getFiftydayMovingAverage() {
+	public double getFiftydayMovingAverage()
+	{
 		return FiftydayMovingAverage;
 	}
 
-	public void setFiftydayMovingAverage(String fiftydayMovingAverage) {
+	public void setFiftydayMovingAverage(double fiftydayMovingAverage)
+	{
 		FiftydayMovingAverage = fiftydayMovingAverage;
 	}
 
-	public String getChangeFromFiftydayMovingAverage() {
+	public double getChangeFromFiftydayMovingAverage()
+	{
 		return ChangeFromFiftydayMovingAverage;
 	}
 
-	public void setChangeFromFiftydayMovingAverage(
-			String changeFromFiftydayMovingAverage) {
+	public void setChangeFromFiftydayMovingAverage(double changeFromFiftydayMovingAverage)
+	{
 		ChangeFromFiftydayMovingAverage = changeFromFiftydayMovingAverage;
 	}
 
-	public String getTwoHundreddayMovingAverage() {
+	public double getTwoHundreddayMovingAverage()
+	{
 		return TwoHundreddayMovingAverage;
 	}
 
-	public void setTwoHundreddayMovingAverage(String twoHundreddayMovingAverage) {
+	public void setTwoHundreddayMovingAverage(double twoHundreddayMovingAverage)
+	{
 		TwoHundreddayMovingAverage = twoHundreddayMovingAverage;
 	}
 
-	public String getChangeFromTwoHundreddayMovingAverage() {
+	public double getChangeFromTwoHundreddayMovingAverage()
+	{
 		return ChangeFromTwoHundreddayMovingAverage;
 	}
 
-	public void setChangeFromTwoHundreddayMovingAverage(
-			String changeFromTwoHundreddayMovingAverage) {
+	public void setChangeFromTwoHundreddayMovingAverage(double changeFromTwoHundreddayMovingAverage)
+	{
 		ChangeFromTwoHundreddayMovingAverage = changeFromTwoHundreddayMovingAverage;
 	}
 
-	public String getAverageDailyVolume() {
+	public long getAverageDailyVolume()
+	{
 		return AverageDailyVolume;
 	}
 
-	public void setAverageDailyVolume(String averageDailyVolume) {
+	public void setAverageDailyVolume(long averageDailyVolume)
+	{
 		AverageDailyVolume = averageDailyVolume;
 	}
 
-	public String getPERatio() {
+	public double getPERatio()
+	{
 		return PERatio;
 	}
 
-	public void setPERatio(String pERatio) {
+	public void setPERatio(double pERatio)
+	{
 		PERatio = pERatio;
 	}
 
-	public String getPEGRatio() {
+	public double getPEGRatio()
+	{
 		return PEGRatio;
 	}
 
-	public void setPEGRatio(String pEGRatio) {
+	public void setPEGRatio(double pEGRatio)
+	{
 		PEGRatio = pEGRatio;
 	}
 
-	public String getEBITDA() {
+	public double getEBITDA()
+	{
 		return EBITDA;
 	}
 
-	public void setEBITDA(String eBITDA) {
+	public void setEBITDA(double eBITDA)
+	{
 		EBITDA = eBITDA;
 	}
 
-	public String getMarketCapitalization() {
+	public double getMarketCapitalization()
+	{
 		return MarketCapitalization;
 	}
 
-	public void setMarketCapitalization(String marketCapitalization) {
+	public void setMarketCapitalization(double marketCapitalization)
+	{
 		MarketCapitalization = marketCapitalization;
 	}
 
-	public String getEarningsShare() {
+	public double getEarningsShare()
+	{
 		return EarningsShare;
 	}
 
-	public void setEarningsShare(String earningsShare) {
+	public void setEarningsShare(double earningsShare)
+	{
 		EarningsShare = earningsShare;
 	}
 
-	public String getEPSEstimateCurrentYear() {
+	public double getEPSEstimateCurrentYear()
+	{
 		return EPSEstimateCurrentYear;
 	}
 
-	public void setEPSEstimateCurrentYear(String ePSEstimateCurrentYear) {
+	public void setEPSEstimateCurrentYear(double ePSEstimateCurrentYear)
+	{
 		EPSEstimateCurrentYear = ePSEstimateCurrentYear;
 	}
 
-	public String getEPSEstimateNextYear() {
+	public double getEPSEstimateNextYear()
+	{
 		return EPSEstimateNextYear;
 	}
 
-	public void setEPSEstimateNextYear(String ePSEstimateNextYear) {
+	public void setEPSEstimateNextYear(double ePSEstimateNextYear)
+	{
 		EPSEstimateNextYear = ePSEstimateNextYear;
 	}
 
-	public String getEPSEstimateNextQuarter() {
+	public double getEPSEstimateNextQuarter()
+	{
 		return EPSEstimateNextQuarter;
 	}
 
-	public void setEPSEstimateNextQuarter(String ePSEstimateNextQuarter) {
+	public void setEPSEstimateNextQuarter(double ePSEstimateNextQuarter)
+	{
 		EPSEstimateNextQuarter = ePSEstimateNextQuarter;
 	}
 
-	public String getDividendShare() {
+	public double getDividendShare()
+	{
 		return DividendShare;
 	}
 
-	public void setDividendShare(String dividendShare) {
+	public void setDividendShare(double dividendShare)
+	{
 		DividendShare = dividendShare;
 	}
 
-	public String getDividendYield() {
+	public double getDividendYield()
+	{
 		return DividendYield;
 	}
 
-	public void setDividendYield(String dividendYield) {
+	public void setDividendYield(double dividendYield)
+	{
 		DividendYield = dividendYield;
 	}
 
-	public String getExDividendDate() {
+	public String getExDividendDate()
+	{
 		return ExDividendDate;
 	}
 
-	public void setExDividendDate(String exDividendDate) {
+	public void setExDividendDate(String exDividendDate)
+	{
 		ExDividendDate = exDividendDate;
 	}
 
-	public String getPriceEPSEstimateCurrentYear() {
+	public double getPriceEPSEstimateCurrentYear()
+	{
 		return PriceEPSEstimateCurrentYear;
 	}
 
-	public void setPriceEPSEstimateCurrentYear(
-			String priceEPSEstimateCurrentYear) {
+	public void setPriceEPSEstimateCurrentYear(double priceEPSEstimateCurrentYear)
+	{
 		PriceEPSEstimateCurrentYear = priceEPSEstimateCurrentYear;
 	}
 
-	public String getPriceEPSEstimateNextYear() {
+	public double getPriceEPSEstimateNextYear()
+	{
 		return PriceEPSEstimateNextYear;
 	}
 
-	public void setPriceEPSEstimateNextYear(String priceEPSEstimateNextYear) {
+	public void setPriceEPSEstimateNextYear(double priceEPSEstimateNextYear)
+	{
 		PriceEPSEstimateNextYear = priceEPSEstimateNextYear;
 	}
 
-	public String getOneyrTargetPrice() {
+	public double getOneyrTargetPrice()
+	{
 		return OneyrTargetPrice;
 	}
 
-	public void setOneyrTargetPrice(String oneyrTargetPrice) {
+	public void setOneyrTargetPrice(double oneyrTargetPrice)
+	{
 		OneyrTargetPrice = oneyrTargetPrice;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("YData [Symbol=");
 		builder.append(Symbol);
@@ -325,4 +373,5 @@ public class YData implements ICSVAble {
 		builder.append("]");
 		return builder.toString();
 	}
+
 }
