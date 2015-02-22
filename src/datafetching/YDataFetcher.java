@@ -136,7 +136,7 @@ public class YDataFetcher
 
 					// CSV data - to be removed once capnp layer is ready
 					YData data = parseYDXMLQuote(quote);
-					CsvFileHelper.writeAsCsvFile(RunHelper.getTodayDataDirectory(), data.getRowKey() + ".csv", ',',
+					CsvFileHelper.writeAsCsvFile(RunHelper.getTodayRunDataDirectory(), data.getRowKey() + ".csv", ',',
 							data);
 
 					// Cap'n Proto data
@@ -217,7 +217,7 @@ public class YDataFetcher
 
 		try
 		{
-			SerializePacked.writeToUnbuffered((new FileOutputStream(RunHelper.getTodayDataDirectory() + db.getSymbol()
+			SerializePacked.writeToUnbuffered((new FileOutputStream(RunHelper.getTodayRunDataDirectory() + db.getSymbol()
 					+ ".data")).getChannel(), message);
 		}
 		catch (IOException e)
