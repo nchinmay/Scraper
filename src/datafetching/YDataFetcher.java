@@ -125,8 +125,8 @@ public class YDataFetcher
 			Document dom = bd.parse(inputStream);
 
 			// "query"
-			Element root = dom.getDocumentElement();
-			System.out.println(root.getAttribute("yahoo:created"));
+			// Element root = dom.getDocumentElement();
+			// System.out.println(root.getAttribute("yahoo:created"));
 
 			// "quote"
 			NodeList quoteNodes = dom.getElementsByTagName("quote");
