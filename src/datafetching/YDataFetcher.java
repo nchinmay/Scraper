@@ -158,9 +158,14 @@ public class YDataFetcher
 		YData d = new YData();
 		d.setSymbol(getValueFromXML(quote, "Symbol"));
 		d.setName(getValueFromXML(quote, "Name"));
+		d.setStockExchange(getValueFromXML(quote, "StockExchange"));
 
 		d.setYearLow(convertToDouble(getValueFromXML(quote, "YearLow")));
 		d.setYearHigh(convertToDouble(getValueFromXML(quote, "YearHigh")));
+		d.setChangeFromYearLow(convertToDouble(getValueFromXML(quote, "ChangeFromYearLow")));
+		d.setChangeFromYearHigh(convertToDouble(getValueFromXML(quote, "ChangeFromYearHigh")));
+		d.setPercentChangeFromYearLow(convertToDouble(getValueFromXML(quote, "PercentChangeFromYearLow")));
+		d.setPercentChangeFromYearHigh(convertToDouble(getValueFromXML(quote, "PercebtChangeFromYearHigh"))); // Spelling mistake by Yahoo
 		d.setFiftydayMovingAverage(convertToDouble(getValueFromXML(quote, "FiftydayMovingAverage")));
 		d.setChangeFromFiftydayMovingAverage(convertToDouble(getValueFromXML(quote, "ChangeFromFiftydayMovingAverage")));
 		d.setTwoHundreddayMovingAverage(convertToDouble(getValueFromXML(quote, "TwoHundreddayMovingAverage")));
@@ -168,6 +173,8 @@ public class YDataFetcher
 		d.setAverageDailyVolume(convertToLong(getValueFromXML(quote, "AverageDailyVolume")));
 		d.setPERatio(convertToDouble(getValueFromXML(quote, "PERatio")));
 		d.setPEGRatio(convertToDouble(getValueFromXML(quote, "PEGRatio")));
+		d.setPriceSales(convertToDouble(getValueFromXML(quote, "PriceSales")));
+		d.setPriceBook(convertToDouble(getValueFromXML(quote, "PriceBook")));
 		d.setEBITDA(convertToDouble(getValueFromXML(quote, "EBITDA")));
 		d.setMarketCapitalization(convertToDouble(getValueFromXML(quote, "MarketCapitalization")));
 
@@ -178,6 +185,7 @@ public class YDataFetcher
 		d.setDividendShare(convertToDouble(getValueFromXML(quote, "DividendShare")));
 		d.setDividendYield(convertToDouble(getValueFromXML(quote, "DividendYield")));
 		d.setExDividendDate(getValueFromXML(quote, "ExDividendDate"));
+		d.setDividendPayDate(getValueFromXML(quote, "DividendPayDate"));
 		d.setPriceEPSEstimateCurrentYear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimateCurrentYear")));
 		d.setPriceEPSEstimateNextYear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimatenexttYear")));
 		d.setOneyrTargetPrice(convertToDouble(getValueFromXML(quote, "OneyrTargetPrice")));
@@ -191,9 +199,14 @@ public class YDataFetcher
 		datalayer.objects.YDataCP.YData.Builder db = message.initRoot(datalayer.objects.YDataCP.YData.factory);
 		db.setSymbol(getValueFromXML(quote, "Symbol"));
 		db.setName(getValueFromXML(quote, "Name"));
+		db.setStockExchange(getValueFromXML(quote, "StockExchange"));
 
 		db.setYearLow(convertToDouble(getValueFromXML(quote, "YearLow")));
 		db.setYearHigh(convertToDouble(getValueFromXML(quote, "YearHigh")));
+		db.setChangeFromYearLow(convertToDouble(getValueFromXML(quote, "ChangeFromYearLow")));
+		db.setChangeFromYearHigh(convertToDouble(getValueFromXML(quote, "ChangeFromYearHigh")));
+		db.setPercentChangeFromYearLow(convertToDouble(getValueFromXML(quote, "PercentChangeFromYearLow")));
+		db.setPercentChangeFromYearHigh(convertToDouble(getValueFromXML(quote, "PercebtChangeFromYearHigh"))); // Spelling mistake by Yahoo
 		db.setFiftydayMovingAverage(convertToDouble(getValueFromXML(quote, "FiftydayMovingAverage")));
 		db.setChangeFromFiftydayMovingAverage(convertToDouble(getValueFromXML(quote, "ChangeFromFiftydayMovingAverage")));
 		db.setTwoHundreddayMovingAverage(convertToDouble(getValueFromXML(quote, "TwoHundreddayMovingAverage")));
@@ -201,6 +214,8 @@ public class YDataFetcher
 		db.setAverageDailyVolume(convertToLong(getValueFromXML(quote, "AverageDailyVolume")));
 		db.setPERatio(convertToDouble(getValueFromXML(quote, "PERatio")));
 		db.setPEGRatio(convertToDouble(getValueFromXML(quote, "PEGRatio")));
+		db.setPriceSales(convertToDouble(getValueFromXML(quote, "PriceSales")));
+		db.setPriceBook(convertToDouble(getValueFromXML(quote, "PriceBook")));
 		db.setEBITDA(convertToDouble(getValueFromXML(quote, "EBITDA")));
 		db.setMarketCapitalization(convertToDouble(getValueFromXML(quote, "MarketCapitalization")));
 
@@ -211,6 +226,7 @@ public class YDataFetcher
 		db.setDividendShare(convertToDouble(getValueFromXML(quote, "DividendShare")));
 		db.setDividendYield(convertToDouble(getValueFromXML(quote, "DividendYield")));
 		db.setExDividendDate(getValueFromXML(quote, "ExDividendDate"));
+		db.setDividendPayDate(getValueFromXML(quote, "DividendPayDate"));
 		db.setPriceEPSEstimateCurrentYear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimateCurrentYear")));
 		db.setPriceEPSEstimateNextYear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimatenexttYear")));
 		db.setOneyrTargetPrice(convertToDouble(getValueFromXML(quote, "OneyrTargetPrice")));
@@ -258,6 +274,13 @@ public class YDataFetcher
 				value = value.replace("K", "");
 				multiplier = 1000;
 			}
+
+			// Remove Percent (%) Character
+			if (value.contains("%"))
+			{
+				value = value.replace("%", "");
+			}
+
 			d = Double.valueOf(value) * multiplier;
 		}
 		catch (NumberFormatException e)

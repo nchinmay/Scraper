@@ -1,21 +1,28 @@
 package datalayer.objects;
 
-
 public class YData implements ICSVAble
 {
 	private String Symbol;
 	private String Name;
+	private String StockExchange;
 
 	private double YearLow;
 	private double YearHigh;
+	private double ChangeFromYearLow;
+	private double ChangeFromYearHigh;
+	private double PercentChangeFromYearLow;
+	private double PercentChangeFromYearHigh;
 	private double FiftydayMovingAverage;
 	private double ChangeFromFiftydayMovingAverage;
 	private double TwoHundreddayMovingAverage;
 	private double ChangeFromTwoHundreddayMovingAverage;
+
 	private long AverageDailyVolume;
 
 	private double PERatio;
 	private double PEGRatio;
+	private double PriceSales;
+	private double PriceBook;
 	private double EBITDA;
 	private double MarketCapitalization;
 
@@ -26,70 +33,10 @@ public class YData implements ICSVAble
 	private double DividendShare;
 	private double DividendYield;
 	private String ExDividendDate;
+	private String DividendPayDate;
 	private double PriceEPSEstimateCurrentYear;
 	private double PriceEPSEstimateNextYear;
 	private double OneyrTargetPrice;
-
-	public String getCSVHeader()
-	{
-		return "Symbol, Name, YearLow, YearHigh, FiftydayMovingAverage, ChangeFromFiftydayMovingAverage, TwoHundreddayMovingAverage, ChangeFromTwoHundreddayMovingAverage, AverageDailyVolume, PERatio, PEGRatio, EBITDA, MarketCapitalization, EarningsShare, EPSEstimateCurrentYear, EPSEstimateNextYear, EPSEstimateNextQuarter, DividendShare, DividendYield, ExDividendDate, PriceEPSEstimateCurrentYear, PriceEPSEstimateNextYear, OneyrTargetPrice";
-	}
-
-	public String getRow()
-	{
-		StringBuilder builder = new StringBuilder();
-		builder.append(Symbol);
-		builder.append(", ");
-		builder.append(Name);
-		builder.append(", ");
-		builder.append(YearLow);
-		builder.append(", ");
-		builder.append(YearHigh);
-		builder.append(", ");
-		builder.append(FiftydayMovingAverage);
-		builder.append(", ");
-		builder.append(ChangeFromFiftydayMovingAverage);
-		builder.append(", ");
-		builder.append(TwoHundreddayMovingAverage);
-		builder.append(", ");
-		builder.append(ChangeFromTwoHundreddayMovingAverage);
-		builder.append(", ");
-		builder.append(AverageDailyVolume);
-		builder.append(", ");
-		builder.append(PERatio);
-		builder.append(", ");
-		builder.append(PEGRatio);
-		builder.append(", ");
-		builder.append(EBITDA);
-		builder.append(", ");
-		builder.append(MarketCapitalization);
-		builder.append(", ");
-		builder.append(EarningsShare);
-		builder.append(", ");
-		builder.append(EPSEstimateCurrentYear);
-		builder.append(", ");
-		builder.append(EPSEstimateNextYear);
-		builder.append(", ");
-		builder.append(EPSEstimateNextQuarter);
-		builder.append(", ");
-		builder.append(DividendShare);
-		builder.append(", ");
-		builder.append(DividendYield);
-		builder.append(", ");
-		builder.append(ExDividendDate);
-		builder.append(", ");
-		builder.append(PriceEPSEstimateCurrentYear);
-		builder.append(", ");
-		builder.append(PriceEPSEstimateNextYear);
-		builder.append(", ");
-		builder.append(OneyrTargetPrice);
-		return builder.toString();
-	}
-
-	public String getRowKey()
-	{
-		return this.Symbol;
-	}
 
 	public String getSymbol()
 	{
@@ -111,6 +58,16 @@ public class YData implements ICSVAble
 		Name = name;
 	}
 
+	public String getStockExchange()
+	{
+		return StockExchange;
+	}
+
+	public void setStockExchange(String stockExchange)
+	{
+		StockExchange = stockExchange;
+	}
+
 	public double getYearLow()
 	{
 		return YearLow;
@@ -129,6 +86,46 @@ public class YData implements ICSVAble
 	public void setYearHigh(double yearHigh)
 	{
 		YearHigh = yearHigh;
+	}
+
+	public double getChangeFromYearLow()
+	{
+		return ChangeFromYearLow;
+	}
+
+	public void setChangeFromYearLow(double changeFromYearLow)
+	{
+		ChangeFromYearLow = changeFromYearLow;
+	}
+
+	public double getPercentChangeFromYearLow()
+	{
+		return PercentChangeFromYearLow;
+	}
+
+	public void setPercentChangeFromYearLow(double percentChangeFromYearLow)
+	{
+		PercentChangeFromYearLow = percentChangeFromYearLow;
+	}
+
+	public double getChangeFromYearHigh()
+	{
+		return ChangeFromYearHigh;
+	}
+
+	public void setChangeFromYearHigh(double changeFromYearHigh)
+	{
+		ChangeFromYearHigh = changeFromYearHigh;
+	}
+
+	public double getPercentChangeFromYearHigh()
+	{
+		return PercentChangeFromYearHigh;
+	}
+
+	public void setPercentChangeFromYearHigh(double percentChangeFromYearHigh)
+	{
+		PercentChangeFromYearHigh = percentChangeFromYearHigh;
 	}
 
 	public double getFiftydayMovingAverage()
@@ -199,6 +196,26 @@ public class YData implements ICSVAble
 	public void setPEGRatio(double pEGRatio)
 	{
 		PEGRatio = pEGRatio;
+	}
+
+	public double getPriceSales()
+	{
+		return PriceSales;
+	}
+
+	public void setPriceSales(double priceSales)
+	{
+		PriceSales = priceSales;
+	}
+
+	public double getPriceBook()
+	{
+		return PriceBook;
+	}
+
+	public void setPriceBook(double priceBook)
+	{
+		PriceBook = priceBook;
 	}
 
 	public double getEBITDA()
@@ -291,6 +308,16 @@ public class YData implements ICSVAble
 		ExDividendDate = exDividendDate;
 	}
 
+	public String getDividendPayDate()
+	{
+		return DividendPayDate;
+	}
+
+	public void setDividendPayDate(String dividendPayDate)
+	{
+		DividendPayDate = dividendPayDate;
+	}
+
 	public double getPriceEPSEstimateCurrentYear()
 	{
 		return PriceEPSEstimateCurrentYear;
@@ -321,6 +348,83 @@ public class YData implements ICSVAble
 		OneyrTargetPrice = oneyrTargetPrice;
 	}
 
+	public String getRowKey()
+	{
+		return Symbol;
+	}
+
+	public String getCSVHeader()
+	{
+		return "Symbol,Name,StockExchange,YearLow,YearHigh,ChangeFromYearLow,ChangeFromYearHigh,PercentChangeFromYearLow,PercentChangeFromYearHigh,FiftydayMovingAverage,ChangeFromFiftydayMovingAverage,TwoHundreddayMovingAverage,ChangeFromTwoHundreddayMovingAverage,AverageDailyVolume,PERatio,PEGRatio,PriceSales,PriceBook,EBITDA,MarketCapitalization,EarningsShare,EPSEstimateCurrentYear,EPSEstimateNextYear,EPSEstimateNextQuarter,DividendShare,DividendYield,ExDividendDate,DividendPayDate,PriceEPSEstimateCurrentYear,PriceEPSEstimateNextYear,OneyrTargetPrice";
+	}
+
+	public String getRow()
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append(Symbol);
+		builder.append(",");
+		builder.append(Name);
+		builder.append(",");
+		builder.append(StockExchange);
+		builder.append(",");
+		builder.append(YearLow);
+		builder.append(",");
+		builder.append(YearHigh);
+		builder.append(",");
+		builder.append(ChangeFromYearLow);
+		builder.append(",");
+		builder.append(ChangeFromYearHigh);
+		builder.append(",");
+		builder.append(PercentChangeFromYearLow);
+		builder.append(",");
+		builder.append(PercentChangeFromYearHigh);
+		builder.append(",");
+		builder.append(FiftydayMovingAverage);
+		builder.append(",");
+		builder.append(ChangeFromFiftydayMovingAverage);
+		builder.append(",");
+		builder.append(TwoHundreddayMovingAverage);
+		builder.append(",");
+		builder.append(ChangeFromTwoHundreddayMovingAverage);
+		builder.append(",");
+		builder.append(AverageDailyVolume);
+		builder.append(",");
+		builder.append(PERatio);
+		builder.append(",");
+		builder.append(PEGRatio);
+		builder.append(",");
+		builder.append(PriceSales);
+		builder.append(",");
+		builder.append(PriceBook);
+		builder.append(",");
+		builder.append(EBITDA);
+		builder.append(",");
+		builder.append(MarketCapitalization);
+		builder.append(",");
+		builder.append(EarningsShare);
+		builder.append(",");
+		builder.append(EPSEstimateCurrentYear);
+		builder.append(",");
+		builder.append(EPSEstimateNextYear);
+		builder.append(",");
+		builder.append(EPSEstimateNextQuarter);
+		builder.append(",");
+		builder.append(DividendShare);
+		builder.append(",");
+		builder.append(DividendYield);
+		builder.append(",");
+		builder.append(ExDividendDate);
+		builder.append(",");
+		builder.append(DividendPayDate);
+		builder.append(",");
+		builder.append(PriceEPSEstimateCurrentYear);
+		builder.append(",");
+		builder.append(PriceEPSEstimateNextYear);
+		builder.append(",");
+		builder.append(OneyrTargetPrice);
+		return builder.toString();
+	}
+
 	@Override
 	public String toString()
 	{
@@ -329,10 +433,20 @@ public class YData implements ICSVAble
 		builder.append(Symbol);
 		builder.append(", Name=");
 		builder.append(Name);
+		builder.append(", StockExchange=");
+		builder.append(StockExchange);
 		builder.append(", YearLow=");
 		builder.append(YearLow);
 		builder.append(", YearHigh=");
 		builder.append(YearHigh);
+		builder.append(", ChangeFromYearLow=");
+		builder.append(ChangeFromYearLow);
+		builder.append(", ChangeFromYearHigh=");
+		builder.append(ChangeFromYearHigh);
+		builder.append(", PercentChangeFromYearLow=");
+		builder.append(PercentChangeFromYearLow);
+		builder.append(", PercentChangeFromYearHigh=");
+		builder.append(PercentChangeFromYearHigh);
 		builder.append(", FiftydayMovingAverage=");
 		builder.append(FiftydayMovingAverage);
 		builder.append(", ChangeFromFiftydayMovingAverage=");
@@ -347,6 +461,10 @@ public class YData implements ICSVAble
 		builder.append(PERatio);
 		builder.append(", PEGRatio=");
 		builder.append(PEGRatio);
+		builder.append(", PriceSales=");
+		builder.append(PriceSales);
+		builder.append(", PriceBook=");
+		builder.append(PriceBook);
 		builder.append(", EBITDA=");
 		builder.append(EBITDA);
 		builder.append(", MarketCapitalization=");
@@ -365,6 +483,8 @@ public class YData implements ICSVAble
 		builder.append(DividendYield);
 		builder.append(", ExDividendDate=");
 		builder.append(ExDividendDate);
+		builder.append(", DividendPayDate=");
+		builder.append(DividendPayDate);
 		builder.append(", PriceEPSEstimateCurrentYear=");
 		builder.append(PriceEPSEstimateCurrentYear);
 		builder.append(", PriceEPSEstimateNextYear=");
