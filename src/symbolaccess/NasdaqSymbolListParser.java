@@ -1,4 +1,4 @@
-package symbollookup;
+package symbolaccess;
 
 import org.apache.commons.lang3.StringUtils;
 

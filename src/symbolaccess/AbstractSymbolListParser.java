@@ -1,4 +1,4 @@
-package symbollookup;
+package symbolaccess;
 
 public abstract class AbstractSymbolListParser
 {
