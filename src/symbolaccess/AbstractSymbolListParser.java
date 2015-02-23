@@ -1,10 +1,16 @@
 package symbolaccess;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.io.Util;
@@ -22,11 +28,35 @@ public abstract class AbstractSymbolListParser {
 
 	public static final String LINE_DELIM = "\\|";
 
-	public static final int MAX_SYMBOL_LEN = 5;
+	public static final int MAX_COMMON_STOCK_SYMBOL_LEN = 5;
 	public static final String TEST_ISSUE = "Y";
 	public static final String NOT_TEST_ISSUE = "N";
 
 	public abstract String getFileName();
+
+	public abstract String parseLine(String line);
+
+	public Set<String> parseFile() {
+		Set<String> symbols = null;
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(
+					RunHelper.getTodaySymbolDataDirectory() + getFileName()));
+			symbols = new HashSet<String>();
+			String line = br.readLine();
+			while (line != null) {
+				String symbol = parseLine(line);
+				if (symbol != null)
+					symbols.add(symbol);
+				line = br.readLine();
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return symbols;
+	}
 
 	public boolean getSymbolDataFile() throws IOException {
 		FTPClient ftp = new FTPClient();
@@ -84,6 +114,15 @@ public abstract class AbstractSymbolListParser {
 		showServerReply(ftp);
 
 		return true;
+	}
+
+	/**
+	 * HELPERS
+	 */
+	public static boolean isValidCommonStock(String symbol) {
+		return symbol.length() > 0
+				&& symbol.length() <= MAX_COMMON_STOCK_SYMBOL_LEN
+				&& StringUtils.isAlpha(symbol);
 	}
 
 	private static void showServerReply(FTPClient ftpClient) {
