@@ -17,7 +17,8 @@ import org.apache.commons.net.io.Util;
 
 import datautil.RunHelper;
 
-public abstract class AbstractSymbolListParser {
+public abstract class AbstractSymbolListParser
+{
 	/**
 	 * Reference : http://www.nasdaqtrader.com/trader.aspx?id=symboldirdefs
 	 */
@@ -46,23 +47,28 @@ public abstract class AbstractSymbolListParser {
 	/**
 	 * PARSES SYMBOL DATA FILE
 	 */
-	public Set<String> parseFile() {
+	public Set<String> parseFile()
+	{
 		Set<String> symbols = null;
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(
-					RunHelper.getTodaySymbolDataDirectory() + getFileName()));
+		try
+		{
+			BufferedReader br = new BufferedReader(new FileReader(RunHelper.getTodaySymbolDataDirectory() + getFileName()));
 			symbols = new HashSet<String>();
 			String line = br.readLine();
-			while (line != null) {
+			while (line != null)
+			{
 				String symbol = parseLine(line);
-				if (symbol != null)
-					symbols.add(symbol);
+				if (symbol != null) symbols.add(symbol);
 				line = br.readLine();
 			}
 			br.close();
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 		return symbols;
@@ -71,13 +77,15 @@ public abstract class AbstractSymbolListParser {
 	/**
 	 * RETRIEVES SYMBOL DATA FILE OVER FTP
 	 */
-	public boolean getSymbolListFile() throws IOException {
+	public boolean getSymbolListFile() throws IOException
+	{
 		FTPClient ftp = new FTPClient();
 		// Connect
 		ftp.connect(FTP_SERVER);
 		showServerReply(ftp);
 		int reply = ftp.getReplyCode();
-		if (!FTPReply.isPositiveCompletion(reply)) {
+		if (!FTPReply.isPositiveCompletion(reply))
+		{
 			ftp.disconnect();
 			System.out.println(FTP_SERVER + " refused connection.");
 			return false;
@@ -91,7 +99,8 @@ public abstract class AbstractSymbolListParser {
 		ftp.login(FTP_USER, FTP_PASSWORD);
 		showServerReply(ftp);
 		reply = ftp.getReplyCode();
-		if (!FTPReply.isPositiveCompletion(reply)) {
+		if (!FTPReply.isPositiveCompletion(reply))
+		{
 			ftp.logout();
 			ftp.disconnect();
 			System.out.println("Failed to login to " + FTP_SERVER);
@@ -102,23 +111,23 @@ public abstract class AbstractSymbolListParser {
 		ftp.changeWorkingDirectory(FTP_DIRECTORY);
 		showServerReply(ftp);
 		reply = ftp.getReplyCode();
-		if (!FTPReply.isPositiveCompletion(reply)) {
+		if (!FTPReply.isPositiveCompletion(reply))
+		{
 			ftp.logout();
 			ftp.disconnect();
-			System.out.println("Failed to change working directory to "
-					+ FTP_DIRECTORY);
+			System.out.println("Failed to change working directory to " + FTP_DIRECTORY);
 			return false;
 		}
 
 		// Return FileStream
 		InputStream input = ftp.retrieveFileStream(getFileName());
-		OutputStream output = new FileOutputStream(
-				RunHelper.getTodaySymbolDataDirectory() + getFileName());
+		OutputStream output = new FileOutputStream(RunHelper.getTodaySymbolDataDirectory() + getFileName());
 		showServerReply(ftp);
 		Util.copyStream(input, output);
 		input.close();
 		output.close();
-		if (!ftp.completePendingCommand()) {
+		if (!ftp.completePendingCommand())
+		{
 			ftp.logout();
 			ftp.disconnect();
 			System.out.println("File transfer failed");
@@ -132,16 +141,18 @@ public abstract class AbstractSymbolListParser {
 	/**
 	 * HELPERS
 	 */
-	public static boolean isValidCommonStock(String symbol) {
-		return symbol.length() > 0
-				&& symbol.length() <= MAX_COMMON_STOCK_SYMBOL_LEN
-				&& StringUtils.isAlpha(symbol);
+	public static boolean isValidCommonStock(String symbol)
+	{
+		return symbol.length() > 0 && symbol.length() <= MAX_COMMON_STOCK_SYMBOL_LEN && StringUtils.isAlpha(symbol);
 	}
 
-	private static void showServerReply(FTPClient ftpClient) {
+	private static void showServerReply(FTPClient ftpClient)
+	{
 		String[] replies = ftpClient.getReplyStrings();
-		if (replies != null && replies.length > 0) {
-			for (String aReply : replies) {
+		if (replies != null && replies.length > 0)
+		{
+			for (String aReply : replies)
+			{
 				System.out.println("SERVER: " + aReply);
 			}
 		}

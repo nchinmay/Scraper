@@ -1,6 +1,7 @@
 package datafetching;
 
-public interface ICSVAble {
+public interface ICSVAble
+{
 	public String getCSVHeader();
 
 	public String getRow();
