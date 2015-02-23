@@ -91,6 +91,10 @@ public abstract class AbstractSymbolListParser
 			return false;
 		}
 
+		// Enter Local Passive Mode
+		ftp.enterLocalPassiveMode();
+		showServerReply(ftp);
+
 		// Enter Remote Passive Mode
 		ftp.enterRemotePassiveMode();
 		showServerReply(ftp);
