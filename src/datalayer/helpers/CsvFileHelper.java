@@ -1,4 +1,4 @@
-package datautil;
+package datalayer.helpers;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import datafetching.ICSVAble;
+import datalayer.objects.ICSVAble;
 
 public class CsvFileHelper
 {

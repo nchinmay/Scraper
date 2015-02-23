@@ -15,7 +15,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.io.Util;
 
-import datautil.RunHelper;
+import runutil.RunHelper;
 
 public abstract class AbstractSymbolListParser
 {

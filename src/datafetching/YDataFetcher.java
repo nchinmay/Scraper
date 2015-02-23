@@ -20,10 +20,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import runutil.RunHelper;
 import symbolaccess.NasdaqSymbolListParser;
 import symbolaccess.NonNasdaqSymbolListParser;
-import datautil.CsvFileHelper;
-import datautil.RunHelper;
+import datalayer.helpers.CsvFileHelper;
+import datalayer.objects.YData;
 
 /**
  * This thing just gets Publicly Available fundamental data from Yahoo and dumps to CSV/some other data container. It does nothing more nothing less and is not intended for commercial use.
@@ -187,7 +188,7 @@ public class YDataFetcher
 	{
 		// Cap'n Proto data
 		MessageBuilder message = new MessageBuilder();
-		datafetching.YDataCP.YData.Builder db = message.initRoot(datafetching.YDataCP.YData.factory);
+		datalayer.objects.YDataCP.YData.Builder db = message.initRoot(datalayer.objects.YDataCP.YData.factory);
 		db.setSymbol(getValueFromXML(quote, "Symbol"));
 		db.setName(getValueFromXML(quote, "Name"));
 

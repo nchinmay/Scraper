@@ -1,4 +1,4 @@
-package datafetching;
+package datalayer.objects;
 
 public interface ICSVAble
 {
