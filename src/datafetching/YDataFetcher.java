@@ -317,7 +317,7 @@ public class YDataFetcher
 
 	public static Set<String> readSymbolsFromFile() throws Exception
 	{
-		BufferedReader br = new BufferedReader(new FileReader(RunHelper.getCurrentRunDirectory() + SP500_FEB_2015_SYMBOL_FILE));
+		BufferedReader br = new BufferedReader(new FileReader(RunHelper.getCurrentWorkingDirectory() + SP500_FEB_2015_SYMBOL_FILE));
 		Set<String> symbols = new HashSet<String>();
 
 		String s = br.readLine();
