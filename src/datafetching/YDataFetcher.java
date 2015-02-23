@@ -21,7 +21,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import symbolaccess.NasdaqSymbolListParser;
-import symbolaccess.NonNasdaqSymbolListedParser;
+import symbolaccess.NonNasdaqSymbolListParser;
 import datautil.CsvFileHelper;
 import datautil.RunHelper;
 
@@ -43,12 +43,12 @@ public class YDataFetcher {
 	public static void main(String[] args) throws Exception {
 		// NSDQ listed symbols
 		NasdaqSymbolListParser nsp = new NasdaqSymbolListParser();
-		nsp.getSymbolDataFile();
+		nsp.getSymbolListFile();
 		getYahooData(nsp.parseFile());
 
 		// Other listed symbols
-		NonNasdaqSymbolListedParser nnsp = new NonNasdaqSymbolListedParser();
-		nnsp.getSymbolDataFile();
+		NonNasdaqSymbolListParser nnsp = new NonNasdaqSymbolListParser();
+		nnsp.getSymbolListFile();
 		getYahooData(nnsp.parseFile());
 	}
 

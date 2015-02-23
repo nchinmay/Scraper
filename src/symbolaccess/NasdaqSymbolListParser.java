@@ -45,7 +45,7 @@ public class NasdaqSymbolListParser extends AbstractSymbolListParser {
 
 	public static void main(String[] args) throws IOException {
 		NasdaqSymbolListParser nsp = new NasdaqSymbolListParser();
-		nsp.getSymbolDataFile();
+		nsp.getSymbolListFile();
 		for (String s : nsp.parseFile())
 			System.out.println(s);
 		System.out.println(nsp.parseFile().size());

@@ -71,7 +71,7 @@ public abstract class AbstractSymbolListParser {
 	/**
 	 * RETRIEVES SYMBOL DATA FILE OVER FTP
 	 */
-	public boolean getSymbolDataFile() throws IOException {
+	public boolean getSymbolListFile() throws IOException {
 		FTPClient ftp = new FTPClient();
 		// Connect
 		ftp.connect(FTP_SERVER);

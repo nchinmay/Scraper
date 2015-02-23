@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class NonNasdaqSymbolListedParser extends AbstractSymbolListParser {
+public class NonNasdaqSymbolListParser extends AbstractSymbolListParser {
 	public static final String FILE_NAME = "otherlisted.txt";
 
 	public static final int ACT_SYMBOL_INDEX = 0;
@@ -42,8 +42,8 @@ public class NonNasdaqSymbolListedParser extends AbstractSymbolListParser {
 	 * TEST STUFF
 	 */
 	public static void main(String[] args) throws IOException {
-		NonNasdaqSymbolListedParser nnsp = new NonNasdaqSymbolListedParser();
-		nnsp.getSymbolDataFile();
+		NonNasdaqSymbolListParser nnsp = new NonNasdaqSymbolListParser();
+		nnsp.getSymbolListFile();
 		for (String s : nnsp.parseFile())
 			System.out.println(s);
 		System.out.println(nnsp.parseFile().size());
