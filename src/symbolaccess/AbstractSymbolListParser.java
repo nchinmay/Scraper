@@ -32,10 +32,20 @@ public abstract class AbstractSymbolListParser {
 	public static final String TEST_ISSUE = "Y";
 	public static final String NOT_TEST_ISSUE = "N";
 
+	// TODO - USE LOGGER
+	// TODO - Better name for these classes/package
+	// TODO - There's MOAR info in these files. Use it
+
+	/**
+	 * ABSTRACT FUNCTIONS
+	 */
 	public abstract String getFileName();
 
 	public abstract String parseLine(String line);
 
+	/**
+	 * PARSES SYMBOL DATA FILE
+	 */
 	public Set<String> parseFile() {
 		Set<String> symbols = null;
 		try {
@@ -58,6 +68,9 @@ public abstract class AbstractSymbolListParser {
 		return symbols;
 	}
 
+	/**
+	 * RETRIEVES SYMBOL DATA FILE OVER FTP
+	 */
 	public boolean getSymbolDataFile() throws IOException {
 		FTPClient ftp = new FTPClient();
 		// Connect
