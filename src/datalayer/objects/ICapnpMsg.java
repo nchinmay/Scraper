@@ -1,6 +1,6 @@
 package datalayer.objects;
 
-public interface IMsg
+public interface ICapnpMsg
 {
 
 }
