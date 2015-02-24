@@ -16,8 +16,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import runutil.RunHelper;
-import datalayer.objects.ICapnpMsg;
 import datalayer.objects.YData;
+import datalayer.objects.interfaces.ICapnpMsg;
 
 public class CapnpCreator
 {
@@ -47,7 +47,7 @@ public class CapnpCreator
 		}
 	}
 
-	public static void makeCapnpMsgFile(Class<? extends ICapnpMsg> msg) throws Exception
+	private static void makeCapnpMsgFile(Class<? extends ICapnpMsg> msg) throws Exception
 	{
 		Path compilerPath = Paths.get(CAPNP_COMPILER_DIR + CAPNP_COMPILER);
 		if (!Files.exists(compilerPath))
@@ -78,7 +78,7 @@ public class CapnpCreator
 		}
 	}
 
-	public static void makeCapnpSchema(Class<? extends ICapnpMsg> msg) throws Exception
+	private static void makeCapnpSchema(Class<? extends ICapnpMsg> msg) throws Exception
 	{
 		String msgClassName = msg.getSimpleName();
 		String schemaFileName = msgClassName.toLowerCase() + CAPNP_FILE_EXT;
@@ -111,13 +111,15 @@ public class CapnpCreator
 		}
 	}
 
-	public static String getIdFromCompiler() throws IOException
+	private static String getIdFromCompiler() throws IOException
 	{
 		String capnpDirPath = CAPNP_COMPILER_DIR;
 		Path compilerPath = Paths.get(capnpDirPath + CAPNP_COMPILER);
 		Process proc = Runtime.getRuntime().exec(compilerPath.toString() + " id");
-		BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-		return br.readLine();
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream())))
+		{
+			return br.readLine();
+		}
 	}
 
 	private static void addFields(BufferedWriter writer, Class<? extends ICapnpMsg> msg) throws Exception
@@ -146,12 +148,14 @@ public class CapnpCreator
 
 	private static void printStream(InputStream stream) throws IOException
 	{
-		BufferedReader br = new BufferedReader(new InputStreamReader(stream));
-		String line = br.readLine();
-		while (line != null)
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(stream)))
 		{
-			System.out.println(line);
-			line = br.readLine();
+			String line = br.readLine();
+			while (line != null)
+			{
+				System.out.println(line);
+				line = br.readLine();
+			}
 		}
 	}
 }

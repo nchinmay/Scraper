@@ -6,22 +6,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import datalayer.objects.ICSVAble;
+import datalayer.objects.interfaces.ICSVMsg;
 
 public class CsvFileHelper
 {
-	public static void writeAsCsvFile(String runDir, String filename, char delim, ICSVAble csvAble)
+	public static void writeAsCsvFile(String runDir, String filename, char delim, ICSVMsg csvAble)
 	{
-		try
+		try (CSVWriter writer = new CSVWriter(new FileWriter(runDir + filename), delim))
 		{
-			CSVWriter writer = new CSVWriter(new FileWriter(runDir + filename), delim);
 			List<String[]> csv = new LinkedList<String[]>();
 			csv.add(csvAble.getCSVHeader().split(","));
 			csv.add(csvAble.getRow().split(","));
 			writer.writeAll(csv);
 			writer.flush();
-			writer.close();
-
 		}
 		catch (IOException e)
 		{

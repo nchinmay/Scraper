@@ -1,6 +1,9 @@
 package datalayer.objects;
 
-public class YData implements ICSVAble, ICapnpMsg
+import datalayer.objects.interfaces.ICSVMsg;
+import datalayer.objects.interfaces.ICapnpMsg;
+
+public class YData implements ICSVMsg, ICapnpMsg
 {
 	private String Symbol;
 	private String Name;

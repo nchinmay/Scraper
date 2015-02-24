@@ -318,16 +318,16 @@ public class YDataFetcher
 
 	public static Set<String> readSymbolsFromFile() throws Exception
 	{
-		BufferedReader br = new BufferedReader(new FileReader(RunHelper.getCurrentWorkingDirectory() + SP500_FEB_2015_SYMBOL_FILE));
-		Set<String> symbols = new HashSet<String>();
-
-		String s = br.readLine();
-		while (s != null)
+		try (BufferedReader br = new BufferedReader(new FileReader(RunHelper.getCurrentWorkingDirectory() + SP500_FEB_2015_SYMBOL_FILE)))
 		{
-			symbols.add(s);
-			s = br.readLine();
+			Set<String> symbols = new HashSet<String>();
+			String s = br.readLine();
+			while (s != null)
+			{
+				symbols.add(s);
+				s = br.readLine();
+			}
+			return symbols;
 		}
-		br.close();
-		return symbols;
 	}
 }

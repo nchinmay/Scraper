@@ -1,6 +1,6 @@
-package datalayer.objects;
+package datalayer.objects.interfaces;
 
-public interface ICSVAble
+public interface ICSVMsg
 {
 	public String getCSVHeader();
 
