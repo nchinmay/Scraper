@@ -20,7 +20,7 @@ import datalayer.objects.interfaces.ICapnpMsg;
 
 public class CapnpCreator
 {
-
+	// TODO - Also Create Converters
 	private static Set<Class<? extends ICapnpMsg>> I_CAPNP_MSG_CLASS_SET = new HashSet<>();
 
 	static

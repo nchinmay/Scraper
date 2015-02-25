@@ -19,7 +19,7 @@ public class CapnpObjHelper
 		this.javaObjClsToCapnpMsgBuilderClsMap = new HashMap<>();
 	}
 
-	public final CapnpObjHelper getConverter()
+	public final CapnpObjHelper getHelper()
 	{
 		return CapnpObjHelper.converter;
 	}
@@ -43,7 +43,8 @@ public class CapnpObjHelper
 				e.printStackTrace();
 				return;
 			}
-			// TODO - Converter in progress
+			// TODO - Helper in progress
+			// TODO - Put Converter in map
 			System.out.println(msgBuilderCls);
 		}
 	}
