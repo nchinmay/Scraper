@@ -15,21 +15,11 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
-import runutil.RunHelper;
 import datalayer.objects.YData;
 import datalayer.objects.interfaces.ICapnpMsg;
 
 public class CapnpCreator
 {
-	public static final String CAPNP_FILE_EXT = ".capnp";
-	public static final String CAPNP_JAVA_FILE_DIR = RunHelper.getCurrentWorkingDirectory() + "src/datalayer/objects/msg" + RunHelper.PATH_DELIM;
-	public static final String CAPNP_COMPILER_DIR = RunHelper.getCurrentWorkingDirectory() + "capnp" + RunHelper.PATH_DELIM;
-	public static final String CAPNP_SCHEMA_DIR = CAPNP_COMPILER_DIR + "schema" + RunHelper.PATH_DELIM;
-	public static final String CAPNP_COMPILER_DIR_RELATIVE_PATH = "../../../../capnp/" + RunHelper.PATH_DELIM;
-	public static final String CAPNP_SCHEMA_DIR_RELATIVE_PATH = CAPNP_COMPILER_DIR_RELATIVE_PATH + "schema" + RunHelper.PATH_DELIM;
-	public static final String CAPNP_COMPILER = "capnp.exe";
-	public static final String CAPNP_COMPILER_JAVA_PLUGIN = "capnpc-java.exe";
-	public static final String CAPNP_JAVA_FILE_PACKAGE = "datalayer.objects.msg";
 
 	private static Set<Class<? extends ICapnpMsg>> I_CAPNP_MSG_CLASS_SET = new HashSet<>();
 
@@ -49,26 +39,26 @@ public class CapnpCreator
 
 	private static void makeCapnpMsgFile(Class<? extends ICapnpMsg> msg) throws Exception
 	{
-		Path compilerPath = Paths.get(CAPNP_COMPILER_DIR + CAPNP_COMPILER);
+		Path compilerPath = Paths.get(CapnpConstants.CAPNP_COMPILER_DIR + CapnpConstants.CAPNP_COMPILER);
 		if (!Files.exists(compilerPath))
 		{
-			throw new FileNotFoundException("Failed to find capnp compiler - " + CAPNP_COMPILER);
+			throw new FileNotFoundException("Failed to find capnp compiler - " + CapnpConstants.CAPNP_COMPILER);
 		}
 
-		Path pluginPath = Paths.get(CAPNP_COMPILER_DIR + CAPNP_COMPILER_JAVA_PLUGIN);
+		Path pluginPath = Paths.get(CapnpConstants.CAPNP_COMPILER_DIR + CapnpConstants.CAPNP_COMPILER_JAVA_PLUGIN);
 		if (!Files.exists(pluginPath))
 		{
-			throw new FileNotFoundException("Failed to find capnp compiler java plugin - " + CAPNP_COMPILER_JAVA_PLUGIN);
+			throw new FileNotFoundException("Failed to find capnp compiler java plugin - " + CapnpConstants.CAPNP_COMPILER_JAVA_PLUGIN);
 		}
 
 		String msgClassName = msg.getSimpleName();
-		String schemaFileName = msgClassName.toLowerCase() + CAPNP_FILE_EXT;
-		Path schemaFilePath = Paths.get(CAPNP_SCHEMA_DIR + schemaFileName);
+		String schemaFileName = msgClassName.toLowerCase() + CapnpConstants.CAPNP_FILE_EXT;
+		Path schemaFilePath = Paths.get(CapnpConstants.CAPNP_SCHEMA_DIR + schemaFileName);
 
 		Process proc = null;
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		processBuilder.command(compilerPath.toString(), "compile", "-ojava", schemaFilePath.toString());
-		processBuilder.directory(new File(Paths.get(CAPNP_JAVA_FILE_DIR).toString()));
+		processBuilder.directory(new File(Paths.get(CapnpConstants.CAPNP_JAVA_FILE_DIR).toString()));
 		proc = processBuilder.start();
 		if (proc == null || 0 != proc.waitFor())
 		{
@@ -81,8 +71,8 @@ public class CapnpCreator
 	private static void makeCapnpSchema(Class<? extends ICapnpMsg> msg) throws Exception
 	{
 		String msgClassName = msg.getSimpleName();
-		String schemaFileName = msgClassName.toLowerCase() + CAPNP_FILE_EXT;
-		Path schemaFilePath = Paths.get(CAPNP_SCHEMA_DIR + schemaFileName);
+		String schemaFileName = msgClassName.toLowerCase() + CapnpConstants.CAPNP_FILE_EXT;
+		Path schemaFilePath = Paths.get(CapnpConstants.CAPNP_SCHEMA_DIR + schemaFileName);
 
 		if (!Files.exists(schemaFilePath))
 		{
@@ -91,11 +81,11 @@ public class CapnpCreator
 			{
 				writer.write(getIdFromCompiler() + ";");
 				writer.newLine();
-				writer.write("using Java = import \"" + CAPNP_SCHEMA_DIR_RELATIVE_PATH + "java.capnp\";");
+				writer.write("using Java = import \"" + CapnpConstants.CAPNP_SCHEMA_DIR_RELATIVE_PATH + "java.capnp\";");
 				writer.newLine();
-				writer.write("$Java.package(\"" + CAPNP_JAVA_FILE_PACKAGE + "\");");
+				writer.write("$Java.package(\"" + CapnpConstants.CAPNP_JAVA_FILE_PACKAGE + "\");");
 				writer.newLine();
-				writer.write("$Java.outerClassname(\"" + msgClassName + "Msg\");");
+				writer.write("$Java.outerClassname(\"" + msgClassName + CapnpConstants.CAPNP_JAVA_FILE_SUFFIX + "\");");
 				writer.newLine();
 				writer.newLine();
 				writer.write("struct " + msgClassName + "\n{");
@@ -113,8 +103,8 @@ public class CapnpCreator
 
 	private static String getIdFromCompiler() throws IOException
 	{
-		String capnpDirPath = CAPNP_COMPILER_DIR;
-		Path compilerPath = Paths.get(capnpDirPath + CAPNP_COMPILER);
+		String capnpDirPath = CapnpConstants.CAPNP_COMPILER_DIR;
+		Path compilerPath = Paths.get(capnpDirPath + CapnpConstants.CAPNP_COMPILER);
 		Process proc = Runtime.getRuntime().exec(compilerPath.toString() + " id");
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream())))
 		{
