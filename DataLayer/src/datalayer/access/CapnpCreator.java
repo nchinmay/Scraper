@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
-import datalayer.objects.YData;
+import datalayer.objects.csvable.YData;
 import datalayer.objects.interfaces.ICapnpMsg;
 
 public class CapnpCreator
@@ -57,7 +57,6 @@ public class CapnpCreator
 
 		Process proc = null;
 		ProcessBuilder processBuilder = new ProcessBuilder();
-		System.out.println(compilerPath.toString());
 		// TODO - Something is broken right here. FIX IT (works only on some machines (User access issue))
 		processBuilder.command(compilerPath.toString(), "compile", "-ojava", schemaFilePath.toString());
 		processBuilder.directory(new File(Paths.get(CapnpConstants.CAPNP_JAVA_FILE_DIR).toString()));
@@ -123,7 +122,7 @@ public class CapnpCreator
 			String type = getTypeForCapnp(field);
 			if (type == null) throw new Exception("Failed to create .capnp file for " + msg.getSimpleName() + " due to Field " + field.getName());
 			String firstChar = field.getName().substring(0, 1).toLowerCase();
-			String fieldName = field.getName().replace(field.getName().charAt(0), firstChar.charAt(0));
+			String fieldName = firstChar + field.getName().substring(1);
 			writer.write("\t" + fieldName + " @" + fieldIndex++ + " :" + type + ";");
 			writer.newLine();
 		}

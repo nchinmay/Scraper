@@ -1,4 +1,4 @@
-@0xa52568637a27c0c6;
+@0x9e67614bf91a9b2d;
 using Java = import "../../../../capnp/schema/java.capnp";
 $Java.package("datalayer.objects.msg");
 $Java.outerClassname("YDataMsg");
@@ -26,14 +26,14 @@ struct YData
 	eBITDA @18 :Float64;
 	marketCapitalization @19 :Float64;
 	earningsShare @20 :Float64;
-	ePSestimateCurrentYear @21 :Float64;
-	ePSestimateNextYear @22 :Float64;
-	ePSestimateNextQuarter @23 :Float64;
+	ePSEstimateCurrentYear @21 :Float64;
+	ePSEstimateNextYear @22 :Float64;
+	ePSEstimateNextQuarter @23 :Float64;
 	dividendShare @24 :Float64;
 	dividendYield @25 :Float64;
 	exDividendDate @26 :Text;
-	dividendPaydate @27 :Text;
-	priceEpSEstimateCurrentYear @28 :Float64;
-	priceEpSEstimateNextYear @29 :Float64;
+	dividendPayDate @27 :Text;
+	priceEPSEstimateCurrentYear @28 :Float64;
+	priceEPSEstimateNextYear @29 :Float64;
 	oneyrTargetPrice @30 :Float64;
 }

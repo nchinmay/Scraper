@@ -203,24 +203,24 @@ public final class YDataMsg {
         _setDoubleField(17, value);
       }
 
-      public final double getEPSestimateCurrentYear() {
+      public final double getEPSEstimateCurrentYear() {
         return _getDoubleField(18);
       }
-      public final void setEPSestimateCurrentYear(double value) {
+      public final void setEPSEstimateCurrentYear(double value) {
         _setDoubleField(18, value);
       }
 
-      public final double getEPSestimateNextYear() {
+      public final double getEPSEstimateNextYear() {
         return _getDoubleField(19);
       }
-      public final void setEPSestimateNextYear(double value) {
+      public final void setEPSEstimateNextYear(double value) {
         _setDoubleField(19, value);
       }
 
-      public final double getEPSestimateNextQuarter() {
+      public final double getEPSEstimateNextQuarter() {
         return _getDoubleField(20);
       }
-      public final void setEPSestimateNextQuarter(double value) {
+      public final void setEPSEstimateNextQuarter(double value) {
         _setDoubleField(20, value);
       }
 
@@ -253,32 +253,32 @@ public final class YDataMsg {
       public final org.capnproto.Text.Builder initExDividendDate(int size) {
         return _initPointerField(org.capnproto.Text.factory, 3, size);
       }
-      public final boolean hasDividendPaydate() {
+      public final boolean hasDividendPayDate() {
         return !_pointerFieldIsNull(4);
       }
-      public final org.capnproto.Text.Builder getDividendPaydate() {
+      public final org.capnproto.Text.Builder getDividendPayDate() {
         return _getPointerField(org.capnproto.Text.factory, 4, null, 0, 0);
       }
-      public final void setDividendPaydate(org.capnproto.Text.Reader value) {
+      public final void setDividendPayDate(org.capnproto.Text.Reader value) {
         _setPointerField(org.capnproto.Text.factory, 4, value);
       }
-      public final void setDividendPaydate(String value) {
+      public final void setDividendPayDate(String value) {
         _setPointerField(org.capnproto.Text.factory, 4, new org.capnproto.Text.Reader(value));
       }
-      public final org.capnproto.Text.Builder initDividendPaydate(int size) {
+      public final org.capnproto.Text.Builder initDividendPayDate(int size) {
         return _initPointerField(org.capnproto.Text.factory, 4, size);
       }
-      public final double getPriceEpSEstimateCurrentYear() {
+      public final double getPriceEPSEstimateCurrentYear() {
         return _getDoubleField(23);
       }
-      public final void setPriceEpSEstimateCurrentYear(double value) {
+      public final void setPriceEPSEstimateCurrentYear(double value) {
         _setDoubleField(23, value);
       }
 
-      public final double getPriceEpSEstimateNextYear() {
+      public final double getPriceEPSEstimateNextYear() {
         return _getDoubleField(24);
       }
-      public final void setPriceEpSEstimateNextYear(double value) {
+      public final void setPriceEPSEstimateNextYear(double value) {
         _setDoubleField(24, value);
       }
 
@@ -389,15 +389,15 @@ public final class YDataMsg {
         return _getDoubleField(17);
       }
 
-      public final double getEPSestimateCurrentYear() {
+      public final double getEPSEstimateCurrentYear() {
         return _getDoubleField(18);
       }
 
-      public final double getEPSestimateNextYear() {
+      public final double getEPSEstimateNextYear() {
         return _getDoubleField(19);
       }
 
-      public final double getEPSestimateNextQuarter() {
+      public final double getEPSEstimateNextQuarter() {
         return _getDoubleField(20);
       }
 
@@ -416,18 +416,18 @@ public final class YDataMsg {
         return _getPointerField(org.capnproto.Text.factory, 3, null, 0, 0);
       }
 
-      public boolean hasDividendPaydate() {
+      public boolean hasDividendPayDate() {
         return !_pointerFieldIsNull(4);
       }
-      public org.capnproto.Text.Reader getDividendPaydate() {
+      public org.capnproto.Text.Reader getDividendPayDate() {
         return _getPointerField(org.capnproto.Text.factory, 4, null, 0, 0);
       }
 
-      public final double getPriceEpSEstimateCurrentYear() {
+      public final double getPriceEPSEstimateCurrentYear() {
         return _getDoubleField(23);
       }
 
-      public final double getPriceEpSEstimateNextYear() {
+      public final double getPriceEPSEstimateNextYear() {
         return _getDoubleField(24);
       }
 
@@ -442,12 +442,12 @@ public final class YDataMsg {
 
 
 public static final class Schemas {
-public static final org.capnproto.SegmentReader b_aa93ed6d6de35233 =
+public static final org.capnproto.SegmentReader b_f718115d8e3216e3 =
    org.capnproto.GeneratedClassSupport.decodeRawBytes(
    "\u0000\u0000\u0000\u0000\u0005\u0000\u0006\u0000" +
-   "\u0033\u0052\u00e3\u006d\u006d\u00ed\u0093\u00aa" +
+   "\u00e3\u0016\u0032\u008e\u005d\u0011\u0018\u00f7" +
    "\u0050\u0000\u0000\u0000\u0001\u0000\u001a\u0000" +
-   "\u00c6\u00c0\u0027\u007a\u0063\u0068\u0025\u00a5" +
+   "\u002d\u009b\u001a\u00f9\u004b\u0061\u0067\u009e" +
    "\u0005\u0000\u0007\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0015\u0000\u0000\u0000\u00b2\u0002\u0000\u0000" +
@@ -886,7 +886,7 @@ public static final org.capnproto.SegmentReader b_aa93ed6d6de35233 =
    "\u000b\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u0065\u0050\u0053\u0065\u0073\u0074\u0069\u006d" +
+   "\u0065\u0050\u0053\u0045\u0073\u0074\u0069\u006d" +
    "\u0061\u0074\u0065\u0043\u0075\u0072\u0072\u0065" +
    "\u006e\u0074\u0059\u0065\u0061\u0072\u0000\u0000" +
    "\u000b\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
@@ -896,7 +896,7 @@ public static final org.capnproto.SegmentReader b_aa93ed6d6de35233 =
    "\u000b\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u0065\u0050\u0053\u0065\u0073\u0074\u0069\u006d" +
+   "\u0065\u0050\u0053\u0045\u0073\u0074\u0069\u006d" +
    "\u0061\u0074\u0065\u004e\u0065\u0078\u0074\u0059" +
    "\u0065\u0061\u0072\u0000\u0000\u0000\u0000\u0000" +
    "\u000b\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
@@ -906,7 +906,7 @@ public static final org.capnproto.SegmentReader b_aa93ed6d6de35233 =
    "\u000b\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u0065\u0050\u0053\u0065\u0073\u0074\u0069\u006d" +
+   "\u0065\u0050\u0053\u0045\u0073\u0074\u0069\u006d" +
    "\u0061\u0074\u0065\u004e\u0065\u0078\u0074\u0051" +
    "\u0075\u0061\u0072\u0074\u0065\u0072\u0000\u0000" +
    "\u000b\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
@@ -944,7 +944,7 @@ public static final org.capnproto.SegmentReader b_aa93ed6d6de35233 =
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0064\u0069\u0076\u0069\u0064\u0065\u006e\u0064" +
-   "\u0050\u0061\u0079\u0064\u0061\u0074\u0065\u0000" +
+   "\u0050\u0061\u0079\u0044\u0061\u0074\u0065\u0000" +
    "\u000c\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
@@ -952,7 +952,7 @@ public static final org.capnproto.SegmentReader b_aa93ed6d6de35233 =
    "\u000c\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u0070\u0072\u0069\u0063\u0065\u0045\u0070\u0053" +
+   "\u0070\u0072\u0069\u0063\u0065\u0045\u0050\u0053" +
    "\u0045\u0073\u0074\u0069\u006d\u0061\u0074\u0065" +
    "\u0043\u0075\u0072\u0072\u0065\u006e\u0074\u0059" +
    "\u0065\u0061\u0072\u0000\u0000\u0000\u0000\u0000" +
@@ -963,7 +963,7 @@ public static final org.capnproto.SegmentReader b_aa93ed6d6de35233 =
    "\u000b\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u0070\u0072\u0069\u0063\u0065\u0045\u0070\u0053" +
+   "\u0070\u0072\u0069\u0063\u0065\u0045\u0050\u0053" +
    "\u0045\u0073\u0074\u0069\u006d\u0061\u0074\u0065" +
    "\u004e\u0065\u0078\u0074\u0059\u0065\u0061\u0072" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +

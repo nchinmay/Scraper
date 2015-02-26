@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.capnproto.MessageBuilder;
 
-import datalayer.objects.YData;
+import datalayer.objects.csvable.YData;
 import datalayer.objects.interfaces.ICapnpMsg;
 
 public class CapnpObjHelper
