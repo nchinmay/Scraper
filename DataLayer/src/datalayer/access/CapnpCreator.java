@@ -57,6 +57,8 @@ public class CapnpCreator
 
 		Process proc = null;
 		ProcessBuilder processBuilder = new ProcessBuilder();
+		System.out.println(compilerPath.toString());
+		// TODO - Something is broken right here. FIX IT
 		processBuilder.command(compilerPath.toString(), "compile", "-ojava", schemaFilePath.toString());
 		processBuilder.directory(new File(Paths.get(CapnpConstants.CAPNP_JAVA_FILE_DIR).toString()));
 		proc = processBuilder.start();
@@ -120,7 +122,9 @@ public class CapnpCreator
 		{
 			String type = getTypeForCapnp(field);
 			if (type == null) throw new Exception("Failed to create .capnp file for " + msg.getSimpleName() + " due to Field " + field.getName());
-			writer.write("\t" + field.getName().toLowerCase() + " @" + fieldIndex++ + " :" + type + ";");
+			String firstChar = field.getName().substring(0, 1).toLowerCase();
+			String fieldName = field.getName().replace(field.getName().charAt(0), firstChar.charAt(0));
+			writer.write("\t" + fieldName + " @" + fieldIndex++ + " :" + type + ";");
 			writer.newLine();
 		}
 	}

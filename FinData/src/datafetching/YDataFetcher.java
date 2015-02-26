@@ -200,37 +200,37 @@ public class YDataFetcher
 		YDataMsg.YData.Builder db = message.initRoot(YDataMsg.YData.factory);
 		db.setSymbol(getValueFromXML(quote, "Symbol"));
 		db.setName(getValueFromXML(quote, "Name"));
-		db.setStockexchange(getValueFromXML(quote, "StockExchange"));
+		db.setStockExchange(getValueFromXML(quote, "StockExchange"));
 
-		db.setYearlow(convertToDouble(getValueFromXML(quote, "YearLow")));
-		db.setYearhigh(convertToDouble(getValueFromXML(quote, "YearHigh")));
-		db.setChangefromyearlow(convertToDouble(getValueFromXML(quote, "ChangeFromYearLow")));
-		db.setChangefromyearhigh(convertToDouble(getValueFromXML(quote, "ChangeFromYearHigh")));
-		db.setPercentchangefromyearlow(convertToDouble(getValueFromXML(quote, "PercentChangeFromYearLow")));
-		db.setPercentchangefromyearhigh(convertToDouble(getValueFromXML(quote, "PercebtChangeFromYearHigh"))); // Spelling mistake by Yahoo
-		db.setFiftydaymovingaverage(convertToDouble(getValueFromXML(quote, "FiftydayMovingAverage")));
-		db.setChangefromfiftydaymovingaverage(convertToDouble(getValueFromXML(quote, "ChangeFromFiftydayMovingAverage")));
-		db.setTwohundreddaymovingaverage(convertToDouble(getValueFromXML(quote, "TwoHundreddayMovingAverage")));
-		db.setChangefromtwohundreddaymovingaverage(convertToDouble(getValueFromXML(quote, "ChangeFromTwoHundreddayMovingAverage")));
-		db.setAveragedailyvolume(convertToLong(getValueFromXML(quote, "AverageDailyVolume")));
-		db.setPeratio(convertToDouble(getValueFromXML(quote, "PERatio")));
-		db.setPegratio(convertToDouble(getValueFromXML(quote, "PEGRatio")));
-		db.setPricesales(convertToDouble(getValueFromXML(quote, "PriceSales")));
-		db.setPricebook(convertToDouble(getValueFromXML(quote, "PriceBook")));
-		db.setEbitda(convertToDouble(getValueFromXML(quote, "EBITDA")));
-		db.setMarketcapitalization(convertToDouble(getValueFromXML(quote, "MarketCapitalization")));
+		db.setYearLow(convertToDouble(getValueFromXML(quote, "YearLow")));
+		db.setYearHigh(convertToDouble(getValueFromXML(quote, "YearHigh")));
+		db.setChangeFromYearLow(convertToDouble(getValueFromXML(quote, "ChangeFromYearLow")));
+		db.setChangeFromYearHigh(convertToDouble(getValueFromXML(quote, "ChangeFromYearHigh")));
+		db.setPercentChangeFromYearLow(convertToDouble(getValueFromXML(quote, "PercentChangeFromYearLow")));
+		db.setPercentChangeFromYearHigh(convertToDouble(getValueFromXML(quote, "PercebtChangeFromYearHigh"))); // Spelling mistake by Yahoo
+		db.setFiftydayMovingAverage(convertToDouble(getValueFromXML(quote, "FiftydayMovingAverage")));
+		db.setChangeFromFiftydayMovingAverage(convertToDouble(getValueFromXML(quote, "ChangeFromFiftydayMovingAverage")));
+		db.setTwoHundreddayMovingAverage(convertToDouble(getValueFromXML(quote, "TwoHundreddayMovingAverage")));
+		db.setChangeFromTwoHundreddayMovingAverage(convertToDouble(getValueFromXML(quote, "ChangeFromTwoHundreddayMovingAverage")));
+		db.setAverageDailyVolume(convertToLong(getValueFromXML(quote, "AverageDailyVolume")));
+		db.setPERatio(convertToDouble(getValueFromXML(quote, "PERatio")));
+		db.setPEGRatio(convertToDouble(getValueFromXML(quote, "PEGRatio")));
+		db.setPriceSales(convertToDouble(getValueFromXML(quote, "PriceSales")));
+		db.setPriceBook(convertToDouble(getValueFromXML(quote, "PriceBook")));
+		db.setEBITDA(convertToDouble(getValueFromXML(quote, "EBITDA")));
+		db.setMarketCapitalization(convertToDouble(getValueFromXML(quote, "MarketCapitalization")));
 
-		db.setEarningsshare(convertToDouble(getValueFromXML(quote, "EarningsShare")));
-		db.setEpsestimatecurrentyear(convertToDouble(getValueFromXML(quote, "EPSEstimateCurrentYear")));
-		db.setEpsestimatenextyear(convertToDouble(getValueFromXML(quote, "EPSEstimateNextYear")));
-		db.setEpsestimatenextquarter(convertToDouble(getValueFromXML(quote, "EPSEstimateNextQuarter")));
-		db.setDividendshare(convertToDouble(getValueFromXML(quote, "DividendShare")));
-		db.setDividendyield(convertToDouble(getValueFromXML(quote, "DividendYield")));
-		db.setExdividenddate(getValueFromXML(quote, "ExDividendDate"));
-		db.setDividendpaydate(getValueFromXML(quote, "DividendPayDate"));
-		db.setPriceepsestimatecurrentyear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimateCurrentYear")));
-		db.setPriceepsestimatenextyear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimatenexttYear")));
-		db.setOneyrtargetprice(convertToDouble(getValueFromXML(quote, "OneyrTargetPrice")));
+		db.setEarningsShare(convertToDouble(getValueFromXML(quote, "EarningsShare")));
+		db.setEPSestimateCurrentYear(convertToDouble(getValueFromXML(quote, "EPSEstimateCurrentYear")));
+		db.setEPSestimateNextYear(convertToDouble(getValueFromXML(quote, "EPSEstimateNextYear")));
+		db.setEPSestimateNextQuarter(convertToDouble(getValueFromXML(quote, "EPSEstimateNextQuarter")));
+		db.setDividendShare(convertToDouble(getValueFromXML(quote, "DividendShare")));
+		db.setDividendYield(convertToDouble(getValueFromXML(quote, "DividendYield")));
+		db.setExDividendDate(getValueFromXML(quote, "ExDividendDate"));
+		db.setDividendPaydate(getValueFromXML(quote, "DividendPayDate"));
+		db.setPriceEpSEstimateCurrentYear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimateCurrentYear")));
+		db.setPriceEpSEstimateNextYear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimatenexttYear")));
+		db.setOneyrTargetPrice(convertToDouble(getValueFromXML(quote, "OneyrTargetPrice")));
 
 		try
 		{
