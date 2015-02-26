@@ -58,7 +58,7 @@ public class CapnpCreator
 		Process proc = null;
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		System.out.println(compilerPath.toString());
-		// TODO - Something is broken right here. FIX IT
+		// TODO - Something is broken right here. FIX IT (works only on some machines (User access issue))
 		processBuilder.command(compilerPath.toString(), "compile", "-ojava", schemaFilePath.toString());
 		processBuilder.directory(new File(Paths.get(CapnpConstants.CAPNP_JAVA_FILE_DIR).toString()));
 		proc = processBuilder.start();

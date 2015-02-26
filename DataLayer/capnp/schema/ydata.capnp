@@ -1,5 +1,5 @@
-@0x8cbabc163344f48a;
-using Java = import "schema/java.capnp";
+@0xa52568637a27c0c6;
+using Java = import "../../../../capnp/schema/java.capnp";
 $Java.package("datalayer.objects.msg");
 $Java.outerClassname("YDataMsg");
 
