@@ -4,7 +4,9 @@ import datalayer.objects.interfaces.ICapnpMsg;
 import datalayer.objects.csvable.YFData;
 import datalayer.objects.msg.YFDataMsg;
 import datalayer.objects.msg.YFDataMsg.YFData.Builder;
+import datalayer.objects.msg.YFDataMsg.YFData.Reader;
 import org.capnproto.MessageBuilder;
+import org.capnproto.MessageReader;
 
 public class YFDataConverter
 {
@@ -13,9 +15,9 @@ public class YFDataConverter
 		YFData m = (YFData) msg;
 		MessageBuilder mb = new MessageBuilder();
 		Builder b = mb.initRoot(YFDataMsg.YFData.factory);
-		b.setSymbol(m.getSymbol());
-		b.setName(m.getName());
-		b.setStockExchange(m.getStockExchange());
+		if(m.getSymbol() != null) b.setSymbol(m.getSymbol());
+		if(m.getName() != null) b.setName(m.getName());
+		if(m.getStockExchange() != null) b.setStockExchange(m.getStockExchange());
 		b.setYearLow(m.getYearLow());
 		b.setYearHigh(m.getYearHigh());
 		b.setChangeFromYearLow(m.getChangeFromYearLow());
@@ -39,17 +41,17 @@ public class YFDataConverter
 		b.setEPSEstimateNextQuarter(m.getEPSEstimateNextQuarter());
 		b.setDividendShare(m.getDividendShare());
 		b.setDividendYield(m.getDividendYield());
-		b.setExDividendDate(m.getExDividendDate());
-		b.setDividendPayDate(m.getDividendPayDate());
+		if(m.getExDividendDate() != null) b.setExDividendDate(m.getExDividendDate());
+		if(m.getDividendPayDate() != null) b.setDividendPayDate(m.getDividendPayDate());
 		b.setPriceEPSEstimateCurrentYear(m.getPriceEPSEstimateCurrentYear());
 		b.setPriceEPSEstimateNextYear(m.getPriceEPSEstimateNextYear());
 		b.setOneyrTargetPrice(m.getOneyrTargetPrice());
 		return mb;
 	}
-	public static YFData convert(MessageBuilder mb)
+	public static YFData convert(MessageReader mr)
 	{
 		YFData m = new YFData();
-		Builder b = mb.initRoot(YFDataMsg.YFData.factory);
+		Reader b = mr.getRoot(YFDataMsg.YFData.factory);
 		m.setSymbol(b.getSymbol() == null ? null : b.getSymbol().toString());
 		m.setName(b.getName() == null ? null : b.getName().toString());
 		m.setStockExchange(b.getStockExchange() == null ? null : b.getStockExchange().toString());

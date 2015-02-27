@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.capnproto.MessageBuilder;
+import org.capnproto.MessageReader;
 
 import datalayer.objects.csvable.YFData;
 import datalayer.objects.interfaces.ICapnpMsg;
@@ -42,8 +43,9 @@ public class CapnpObjConverterMaker
 		out.println("import " + cls.getCanonicalName() + ";");
 		out.println("import " + capnpMsgFileCls.getCanonicalName() + ";");
 		out.println("import " + capnpMsgFileCls.getCanonicalName() + "." + cls.getSimpleName() + ".Builder;");
-		// out.println("import " + capnpMsgFileCls.getCanonicalName() + "." + cls.getSimpleName() + ".Reader;");
+		out.println("import " + capnpMsgFileCls.getCanonicalName() + "." + cls.getSimpleName() + ".Reader;");
 		out.println("import " + MessageBuilder.class.getCanonicalName() + ";");
+		out.println("import " + MessageReader.class.getCanonicalName() + ";");
 		out.println();
 		out.println("public class " + cls.getSimpleName() + CapnpConstants.CAPNP_JAVA_CONVERTER_SUFFIX);
 		out.println("{");
@@ -60,16 +62,18 @@ public class CapnpObjConverterMaker
 		{
 			String clsFieldGetterName = "get" + field.getName();
 			String msgClsFieldSetterName = "set" + field.getName();
-			out.println("		b." + msgClsFieldSetterName + "(m." + clsFieldGetterName + "());");
+			if (field.getType() == String.class) out.println("		if(m." + clsFieldGetterName + "() != null) b." + msgClsFieldSetterName + "(m." + clsFieldGetterName + "());");
+			else out.println("		b." + msgClsFieldSetterName + "(m." + clsFieldGetterName + "());");
 		}
 		out.println("		return mb;");
 		out.println("	}");
 
 		// Capnp Java Msg -> ICapnpMsg
-		out.println("	public static " + cls.getSimpleName() + " convert(" + messageBuilderClsName + " mb)");
+		String messageReaderClsName = MessageReader.class.getSimpleName();
+		out.println("	public static " + cls.getSimpleName() + " convert(" + messageReaderClsName + " mr)");
 		out.println("	{");
 		out.println("		" + cls.getSimpleName() + " m = new " + cls.getSimpleName() + "();");
-		out.println("		Builder b = mb.initRoot(" + capnpMsgFileCls.getSimpleName() + "." + cls.getSimpleName() + "." + "factory);");
+		out.println("		Reader b = mr.getRoot(" + capnpMsgFileCls.getSimpleName() + "." + cls.getSimpleName() + "." + "factory);");
 		for (Field field : cls.getDeclaredFields())
 		{
 			String clsFieldSetterName = "set" + field.getName();
