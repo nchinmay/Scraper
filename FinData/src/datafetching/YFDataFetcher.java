@@ -23,7 +23,7 @@ import runutil.RunHelper;
 import symbolaccess.NasdaqSymbolListParser;
 import symbolaccess.NonNasdaqSymbolListParser;
 import datalayer.helpers.CsvFileHelper;
-import datalayer.objects.csvable.YData;
+import datalayer.objects.csvable.YFData;
 
 /**
  * This thing just gets Publicly Available fundamental data from Yahoo and dumps to CSV/some other data container. It does nothing more nothing less and is not intended for commercial use.
@@ -37,6 +37,7 @@ public class YFDataFetcher
 	public static final String SP500_FEB_2015_SYMBOL_FILE = "symbols.txt";
 	public static final int SYMBOLS_PER_QUERY = 50;
 	public static final int TRIES_PER_SYMBOL = 5;
+	public static final long DELAY_BETWEEN_QUERIES_MILLIS = 5;
 
 	public static void main(String[] args) throws Exception
 	{
@@ -51,8 +52,9 @@ public class YFDataFetcher
 		getYahooData(nnsp.parseFile());
 	}
 
-	public static void getYahooData(final Set<String> symbols)
+	public static Set<datalayer.objects.YFData> getYahooData(final Set<String> symbols)
 	{
+		Set<datalayer.objects.YFData> retFDataSet = null;
 		if (symbols != null)
 		{
 			Set<String> symbolsForThisQuery = new HashSet<String>();
@@ -63,26 +65,33 @@ public class YFDataFetcher
 				symbolsForThisQuery.add(iter.next());
 				if (symbolsForThisQuery.size() == SYMBOLS_PER_QUERY || !iter.hasNext())
 				{
-					try
+					for (int tries = 0; tries < TRIES_PER_SYMBOL && !symbolsForThisQuery.isEmpty(); ++tries)
 					{
-						for (int tries = 0; tries < TRIES_PER_SYMBOL && !symbolsForThisQuery.isEmpty(); ++tries)
+						try
 						{
 							InputStream is = YFDataFetcher.getYQXMLInputStream(symbolsForThisQuery);
-							Set<datalayer.objects.YData> processedSymbolData = YFDataFetcher.parseYQXMLQueryAndReturnProcessedSymbols(is);
+							Set<datalayer.objects.YFData> processedSymbolData = YFDataFetcher.parseYQXMLQueryAndReturnSymbolData(is);
 							if (processedSymbolData != null)
 							{
+								// Add to Return Set
+								if (retFDataSet == null) retFDataSet = new HashSet<datalayer.objects.YFData>();
+								retFDataSet.addAll(processedSymbolData);
 								// Remove Processed Symbols
-								for (datalayer.objects.YData symbolData : processedSymbolData)
-									symbolsForThisQuery.remove(symbolData.getBuilder().getSymbol());
+								for (datalayer.objects.YFData symbolData : processedSymbolData)
+								{
+									String symbol = symbolData.getBuilder().getSymbol().toString();
+									symbolsForThisQuery.remove(symbol);
+								}
 							}
+							if (DELAY_BETWEEN_QUERIES_MILLIS > 0) Thread.sleep(DELAY_BETWEEN_QUERIES_MILLIS);
 						}
-						unprocessedSymbols.addAll(symbolsForThisQuery);
-						symbolsForThisQuery.clear();
+						catch (Exception e)
+						{
+							e.printStackTrace();
+						}
 					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
+					unprocessedSymbols.addAll(symbolsForThisQuery);
+					symbolsForThisQuery.clear();
 				}
 			}
 			for (String s : unprocessedSymbols)
@@ -90,20 +99,12 @@ public class YFDataFetcher
 				System.out.println("Failed to process symbol - " + s);
 			}
 		}
+		return retFDataSet;
 	}
 
-	public static InputStream getYQXMLInputStream(final Set<String> symbols) throws Exception
+	public static Set<datalayer.objects.YFData> parseYQXMLQueryAndReturnSymbolData(InputStream inputStream) throws Exception
 	{
-		// Make Connection And Request Data in XML Format
-		URL url = new URL(getBaseUrl(symbols));
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		if (conn.getResponseCode() != 200) throw new IOException(conn.getResponseMessage());
-		return conn.getInputStream();
-	}
-
-	public static Set<datalayer.objects.YData> parseYQXMLQueryAndReturnProcessedSymbols(InputStream inputStream) throws Exception
-	{
-		Set<datalayer.objects.YData> processedSymbolData = null;
+		Set<datalayer.objects.YFData> processedSymbolData = null;
 		if (inputStream != null)
 		{
 			// Create Document And Parse XML Stream
@@ -119,17 +120,17 @@ public class YFDataFetcher
 			NodeList quoteNodes = dom.getElementsByTagName("quote");
 			if (quoteNodes != null && quoteNodes.getLength() > 0)
 			{
-				processedSymbolData = new HashSet<datalayer.objects.YData>();
+				processedSymbolData = new HashSet<datalayer.objects.YFData>();
 				for (int i = 0; i < quoteNodes.getLength(); ++i)
 				{
 					Element quote = (Element) quoteNodes.item(i);
 
 					// CSV data - to be removed once capnp layer is ready
-					YData data = parseYDXMLQuote(quote);
-					CsvFileHelper.writeAsCsvFile(RunHelper.getTodayRunDataDirectory(), data.getRowKey() + ".csv", ',', data);
+					YFData data = parseYDXMLQuote(quote);
+					CsvFileHelper.writeAsCsvFile(RunHelper.getTodayRunDataDirectory(), data.getRowKey() + ".csv", ',', data); // TODO - don't write here
 
 					// Cap'n Proto data
-					datalayer.objects.YData symbolData = parseYDXMLQuoteToCapnp(quote);
+					datalayer.objects.YFData symbolData = parseYDXMLQuoteToCapnp(quote);
 
 					// Add to processed symbols
 					processedSymbolData.add(symbolData);
@@ -139,9 +140,9 @@ public class YFDataFetcher
 		return processedSymbolData;
 	}
 
-	public static YData parseYDXMLQuote(Element quote)
+	public static YFData parseYDXMLQuote(Element quote)
 	{
-		YData d = new YData();
+		YFData d = new YFData();
 		d.setSymbol(getValueFromXML(quote, "Symbol"));
 		d.setName(getValueFromXML(quote, "Name"));
 		d.setStockExchange(getValueFromXML(quote, "StockExchange"));
@@ -178,10 +179,10 @@ public class YFDataFetcher
 		return d;
 	}
 
-	public static datalayer.objects.YData parseYDXMLQuoteToCapnp(Element quote)
+	public static datalayer.objects.YFData parseYDXMLQuoteToCapnp(Element quote)
 	{
 		// Cap'n Proto data
-		datalayer.objects.YData db = new datalayer.objects.YData();
+		datalayer.objects.YFData db = new datalayer.objects.YFData();
 
 		db.getBuilder().setSymbol(getValueFromXML(quote, "Symbol"));
 		db.getBuilder().setName(getValueFromXML(quote, "Name"));
@@ -217,6 +218,7 @@ public class YFDataFetcher
 		db.getBuilder().setPriceEPSEstimateNextYear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimateNextYear")));
 		db.getBuilder().setOneyrTargetPrice(convertToDouble(getValueFromXML(quote, "OneyrTargetPrice")));
 
+		// TODO - don't write here
 		try
 		{
 			SerializePacked.writeToUnbuffered((new FileOutputStream(RunHelper.getTodayRunDataDirectory() + db.getBuilder().getSymbol() + ".data")).getChannel(),
@@ -291,7 +293,7 @@ public class YFDataFetcher
 		return l;
 	}
 
-	public static String getBaseUrl(final Set<String> symbols)
+	private static String getBaseUrl(final Set<String> symbols)
 	{
 		StringBuilder tickers = null;
 		for (String symbol : symbols)
@@ -306,6 +308,15 @@ public class YFDataFetcher
 			return baseUrl.toString();
 		}
 		return null;
+	}
+
+	private static InputStream getYQXMLInputStream(final Set<String> symbols) throws Exception
+	{
+		// Make Connection And Request Data in XML Format
+		URL url = new URL(getBaseUrl(symbols));
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		if (conn.getResponseCode() != 200) throw new IOException(conn.getResponseMessage());
+		return conn.getInputStream();
 	}
 
 	/**
