@@ -74,7 +74,10 @@ public class CapnpObjConverterMaker
 		{
 			String clsFieldSetterName = "set" + field.getName();
 			String msgClsFieldGetterName = "get" + field.getName();
-			out.println("		m." + clsFieldSetterName + "(b." + msgClsFieldGetterName + "()" + (field.getType() == String.class ? ".toString()" : "") + ");");
+			if (field.getType() == String.class) out.println("		m." + clsFieldSetterName + "(b." + msgClsFieldGetterName + "() == null ? null : b." + msgClsFieldGetterName
+					+ "().toString());");
+			else out.println("		m." + clsFieldSetterName + "(b." + msgClsFieldGetterName + "());");
+
 		}
 		out.println("		return m;");
 		out.println("	}");

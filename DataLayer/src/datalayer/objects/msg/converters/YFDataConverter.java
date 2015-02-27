@@ -50,9 +50,9 @@ public class YFDataConverter
 	{
 		YFData m = new YFData();
 		Builder b = mb.initRoot(YFDataMsg.YFData.factory);
-		m.setSymbol(b.getSymbol().toString());
-		m.setName(b.getName().toString());
-		m.setStockExchange(b.getStockExchange().toString());
+		m.setSymbol(b.getSymbol() == null ? null : b.getSymbol().toString());
+		m.setName(b.getName() == null ? null : b.getName().toString());
+		m.setStockExchange(b.getStockExchange() == null ? null : b.getStockExchange().toString());
 		m.setYearLow(b.getYearLow());
 		m.setYearHigh(b.getYearHigh());
 		m.setChangeFromYearLow(b.getChangeFromYearLow());
@@ -76,8 +76,8 @@ public class YFDataConverter
 		m.setEPSEstimateNextQuarter(b.getEPSEstimateNextQuarter());
 		m.setDividendShare(b.getDividendShare());
 		m.setDividendYield(b.getDividendYield());
-		m.setExDividendDate(b.getExDividendDate().toString());
-		m.setDividendPayDate(b.getDividendPayDate().toString());
+		m.setExDividendDate(b.getExDividendDate() == null ? null : b.getExDividendDate().toString());
+		m.setDividendPayDate(b.getDividendPayDate() == null ? null : b.getDividendPayDate().toString());
 		m.setPriceEPSEstimateCurrentYear(b.getPriceEPSEstimateCurrentYear());
 		m.setPriceEPSEstimateNextYear(b.getPriceEPSEstimateNextYear());
 		m.setOneyrTargetPrice(b.getOneyrTargetPrice());
