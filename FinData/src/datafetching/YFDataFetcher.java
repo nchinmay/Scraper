@@ -92,23 +92,6 @@ public class YFDataFetcher
 		}
 	}
 
-	public static String getBaseUrl(final Set<String> symbols)
-	{
-		StringBuilder tickers = null;
-		for (String symbol : symbols)
-		{
-			tickers = tickers == null ? tickers = new StringBuilder("\"" + symbol + "\"") : tickers.append(",\"" + symbol + "\"");
-		}
-		if (tickers != null)
-		{
-			StringBuilder baseUrl = new StringBuilder("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(");
-			baseUrl.append(tickers);
-			baseUrl.append(")&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
-			return baseUrl.toString();
-		}
-		return null;
-	}
-
 	public static InputStream getYQXMLInputStream(final Set<String> symbols) throws Exception
 	{
 		// Make Connection And Request Data in XML Format
@@ -306,6 +289,23 @@ public class YFDataFetcher
 			e.printStackTrace();
 		}
 		return l;
+	}
+
+	public static String getBaseUrl(final Set<String> symbols)
+	{
+		StringBuilder tickers = null;
+		for (String symbol : symbols)
+		{
+			tickers = tickers == null ? tickers = new StringBuilder("\"" + symbol + "\"") : tickers.append(",\"" + symbol + "\"");
+		}
+		if (tickers != null)
+		{
+			StringBuilder baseUrl = new StringBuilder("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(");
+			baseUrl.append(tickers);
+			baseUrl.append(")&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
+			return baseUrl.toString();
+		}
+		return null;
 	}
 
 	/**
