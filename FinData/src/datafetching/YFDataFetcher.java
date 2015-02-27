@@ -26,6 +26,7 @@ import validation.Validation;
 import validation.YFValidation;
 import datalayer.helpers.CsvFileHelper;
 import datalayer.objects.csvable.YFData;
+import datalayer.objects.msg.converters.YFDataConverter;
 
 /**
  * This thing just gets Publicly Available fundamental data from Yahoo and dumps to CSV/some other data container. It does nothing more nothing less and is not intended for commercial use.
@@ -46,17 +47,21 @@ public class YFDataFetcher
 		// NSDQ listed symbols
 		NasdaqSymbolListParser nsp = new NasdaqSymbolListParser();
 		nsp.getSymbolListFile();
-		getYahooData(nsp.parseFile());
+		Set<YFData> dataSet = getYahooFinData(nsp.parseFile());
+		for (YFData data : dataSet)
+			writeData(data);
 
 		// Other listed symbols
 		NonNasdaqSymbolListParser nnsp = new NonNasdaqSymbolListParser();
 		nnsp.getSymbolListFile();
-		getYahooData(nnsp.parseFile());
+		dataSet = getYahooFinData(nnsp.parseFile());
+		for (YFData data : dataSet)
+			writeData(data);
 	}
 
-	public static Set<datalayer.objects.YFData> getYahooData(final Set<String> symbols)
+	public static Set<YFData> getYahooFinData(final Set<String> symbols)
 	{
-		Set<datalayer.objects.YFData> retFDataSet = null;
+		Set<YFData> retFDataSet = null;
 		if (symbols != null)
 		{
 			Set<String> symbolsForThisQuery = new HashSet<String>();
@@ -69,19 +74,20 @@ public class YFDataFetcher
 				{
 					for (int tries = 0; tries < TRIES_PER_SYMBOL && !symbolsForThisQuery.isEmpty(); ++tries)
 					{
+						System.out.println((tries + 1) + " ----- " + symbolsForThisQuery.size());
 						try
 						{
 							InputStream is = YFDataFetcher.getYQXMLInputStream(symbolsForThisQuery);
-							Set<datalayer.objects.YFData> processedSymbolData = YFDataFetcher.parseYQXMLQueryAndReturnSymbolData(is);
+							Set<YFData> processedSymbolData = YFDataFetcher.parseYQXMLQueryAndReturnSymbolData(is);
 							if (processedSymbolData != null)
 							{
 								// Add to Return Set
-								if (retFDataSet == null) retFDataSet = new HashSet<datalayer.objects.YFData>();
+								if (retFDataSet == null) retFDataSet = new HashSet<YFData>();
 								retFDataSet.addAll(processedSymbolData);
 								// Remove Processed Symbols
-								for (datalayer.objects.YFData symbolData : processedSymbolData)
+								for (YFData symbolData : processedSymbolData)
 								{
-									String symbol = symbolData.getBuilder().getSymbol().toString();
+									String symbol = symbolData.getSymbol();
 									symbolsForThisQuery.remove(symbol);
 								}
 							}
@@ -104,9 +110,9 @@ public class YFDataFetcher
 		return retFDataSet;
 	}
 
-	public static Set<datalayer.objects.YFData> parseYQXMLQueryAndReturnSymbolData(InputStream inputStream) throws Exception
+	public static Set<YFData> parseYQXMLQueryAndReturnSymbolData(InputStream inputStream) throws Exception
 	{
-		Set<datalayer.objects.YFData> processedSymbolData = null;
+		Set<YFData> processedSymbolData = null;
 		if (inputStream != null)
 		{
 			// Create Document And Parse XML Stream
@@ -122,7 +128,7 @@ public class YFDataFetcher
 			NodeList quoteNodes = dom.getElementsByTagName("quote");
 			if (quoteNodes != null && quoteNodes.getLength() > 0)
 			{
-				processedSymbolData = new HashSet<datalayer.objects.YFData>();
+				processedSymbolData = new HashSet<YFData>();
 				for (int i = 0; i < quoteNodes.getLength(); ++i)
 				{
 					Element quote = (Element) quoteNodes.item(i);
@@ -131,11 +137,8 @@ public class YFDataFetcher
 					YFData data = parseYDXMLQuote(quote);
 					CsvFileHelper.writeAsCsvFile(RunHelper.getTodayRunDataDirectory(), data.getRowKey() + ".csv", ',', data); // TODO - don't write here
 
-					// Cap'n Proto data
-					datalayer.objects.YFData symbolData = parseYDXMLQuoteToCapnp(quote);
-
 					// Add to processed symbols
-					if (Validation.isCatastrophicError(YFValidation.validate(symbolData))) processedSymbolData.add(symbolData);
+					if (!Validation.isCatastrophicError(YFValidation.validate(data))) processedSymbolData.add(data);
 				}
 			}
 		}
@@ -179,59 +182,6 @@ public class YFDataFetcher
 		d.setPriceEPSEstimateNextYear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimateNextYear")));
 		d.setOneyrTargetPrice(convertToDouble(getValueFromXML(quote, "OneyrTargetPrice")));
 		return d;
-	}
-
-	public static datalayer.objects.YFData parseYDXMLQuoteToCapnp(Element quote)
-	{
-		// Cap'n Proto data
-		datalayer.objects.YFData db = new datalayer.objects.YFData();
-
-		db.getBuilder().setSymbol(getValueFromXML(quote, "Symbol"));
-		db.getBuilder().setName(getValueFromXML(quote, "Name"));
-		db.getBuilder().setStockExchange(getValueFromXML(quote, "StockExchange"));
-
-		db.getBuilder().setYearLow(convertToDouble(getValueFromXML(quote, "YearLow")));
-		db.getBuilder().setYearHigh(convertToDouble(getValueFromXML(quote, "YearHigh")));
-		db.getBuilder().setChangeFromYearLow(convertToDouble(getValueFromXML(quote, "ChangeFromYearLow")));
-		db.getBuilder().setChangeFromYearHigh(convertToDouble(getValueFromXML(quote, "ChangeFromYearHigh")));
-		db.getBuilder().setPercentChangeFromYearLow(convertToDouble(getValueFromXML(quote, "PercentChangeFromYearLow")));
-		db.getBuilder().setPercentChangeFromYearHigh(convertToDouble(getValueFromXML(quote, "PercebtChangeFromYearHigh"))); // Spelling mistake by Yahoo
-		db.getBuilder().setFiftydayMovingAverage(convertToDouble(getValueFromXML(quote, "FiftydayMovingAverage")));
-		db.getBuilder().setChangeFromFiftydayMovingAverage(convertToDouble(getValueFromXML(quote, "ChangeFromFiftydayMovingAverage")));
-		db.getBuilder().setTwoHundreddayMovingAverage(convertToDouble(getValueFromXML(quote, "TwoHundreddayMovingAverage")));
-		db.getBuilder().setChangeFromTwoHundreddayMovingAverage(convertToDouble(getValueFromXML(quote, "ChangeFromTwoHundreddayMovingAverage")));
-		db.getBuilder().setAverageDailyVolume(convertToLong(getValueFromXML(quote, "AverageDailyVolume")));
-		db.getBuilder().setPERatio(convertToDouble(getValueFromXML(quote, "PERatio")));
-		db.getBuilder().setPEGRatio(convertToDouble(getValueFromXML(quote, "PEGRatio")));
-		db.getBuilder().setPriceSales(convertToDouble(getValueFromXML(quote, "PriceSales")));
-		db.getBuilder().setPriceBook(convertToDouble(getValueFromXML(quote, "PriceBook")));
-		db.getBuilder().setEBITDA(convertToDouble(getValueFromXML(quote, "EBITDA")));
-		db.getBuilder().setMarketCapitalization(convertToDouble(getValueFromXML(quote, "MarketCapitalization")));
-
-		db.getBuilder().setEarningsShare(convertToDouble(getValueFromXML(quote, "EarningsShare")));
-		db.getBuilder().setEPSEstimateCurrentYear(convertToDouble(getValueFromXML(quote, "EPSEstimateCurrentYear")));
-		db.getBuilder().setEPSEstimateNextYear(convertToDouble(getValueFromXML(quote, "EPSEstimateNextYear")));
-		db.getBuilder().setEPSEstimateNextQuarter(convertToDouble(getValueFromXML(quote, "EPSEstimateNextQuarter")));
-		db.getBuilder().setDividendShare(convertToDouble(getValueFromXML(quote, "DividendShare")));
-		db.getBuilder().setDividendYield(convertToDouble(getValueFromXML(quote, "DividendYield")));
-		db.getBuilder().setExDividendDate(getValueFromXML(quote, "ExDividendDate"));
-		db.getBuilder().setDividendPayDate(getValueFromXML(quote, "DividendPayDate"));
-		db.getBuilder().setPriceEPSEstimateCurrentYear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimateCurrentYear")));
-		db.getBuilder().setPriceEPSEstimateNextYear(convertToDouble(getValueFromXML(quote, "PriceEPSEstimateNextYear")));
-		db.getBuilder().setOneyrTargetPrice(convertToDouble(getValueFromXML(quote, "OneyrTargetPrice")));
-
-		// TODO - don't write here
-		try
-		{
-			SerializePacked.writeToUnbuffered((new FileOutputStream(RunHelper.getTodayRunDataDirectory() + db.getBuilder().getSymbol() + ".data")).getChannel(),
-					db.getMessageBuilder());
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-
-		return db;
 	}
 
 	/**
@@ -344,6 +294,19 @@ public class YFDataFetcher
 				s = br.readLine();
 			}
 			return symbols;
+		}
+	}
+
+	public static void writeData(YFData data)
+	{
+		try
+		{
+			SerializePacked
+					.writeToUnbuffered((new FileOutputStream(RunHelper.getTodayRunDataDirectory() + data.getSymbol() + ".data")).getChannel(), YFDataConverter.convert(data));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 }
