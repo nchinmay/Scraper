@@ -22,6 +22,8 @@ import org.w3c.dom.NodeList;
 import runutil.RunHelper;
 import symbolaccess.NasdaqSymbolListParser;
 import symbolaccess.NonNasdaqSymbolListParser;
+import validation.Validation;
+import validation.YFValidation;
 import datalayer.helpers.CsvFileHelper;
 import datalayer.objects.csvable.YFData;
 
@@ -133,7 +135,7 @@ public class YFDataFetcher
 					datalayer.objects.YFData symbolData = parseYDXMLQuoteToCapnp(quote);
 
 					// Add to processed symbols
-					processedSymbolData.add(symbolData);
+					if (Validation.isCatastrophicError(YFValidation.validate(symbolData))) processedSymbolData.add(symbolData);
 				}
 			}
 		}
