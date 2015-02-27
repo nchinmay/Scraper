@@ -5,6 +5,11 @@ import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+/**
+ * 
+ * ONE DAY THE DREAM OF SCRAPER WILL BE ALIVE :)
+ *
+ */
 public class Scraper
 {
 	private static final String Y = "http://finance.yahoo.com/";
