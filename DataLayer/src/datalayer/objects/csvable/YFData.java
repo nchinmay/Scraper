@@ -3,7 +3,7 @@ package datalayer.objects.csvable;
 import datalayer.objects.interfaces.ICSVMsg;
 import datalayer.objects.interfaces.ICapnpMsg;
 
-public class YData implements ICSVMsg, ICapnpMsg
+public class YFData implements ICSVMsg, ICapnpMsg
 {
 	private String Symbol;
 	private String Name;

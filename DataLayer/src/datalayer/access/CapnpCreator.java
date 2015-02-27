@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
-import datalayer.objects.csvable.YData;
+import datalayer.objects.csvable.YFData;
 import datalayer.objects.interfaces.ICapnpMsg;
 
 public class CapnpCreator
@@ -25,7 +25,7 @@ public class CapnpCreator
 
 	static
 	{
-		I_CAPNP_MSG_CLASS_SET.add(YData.class);
+		I_CAPNP_MSG_CLASS_SET.add(YFData.class);
 	}
 
 	public static void main(String[] args) throws Exception

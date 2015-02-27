@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.capnproto.MessageBuilder;
 
-import datalayer.objects.csvable.YData;
+import datalayer.objects.csvable.YFData;
 import datalayer.objects.interfaces.ICapnpMsg;
 
 public class CapnpObjHelper
@@ -51,7 +51,7 @@ public class CapnpObjHelper
 
 	public static void main(String[] args) throws ClassNotFoundException
 	{
-		CapnpObjHelper.converter.convertToCapnpMsg(new YData());
+		CapnpObjHelper.converter.convertToCapnpMsg(new YFData());
 	}
 
 }
