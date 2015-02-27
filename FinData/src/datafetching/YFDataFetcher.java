@@ -32,11 +32,11 @@ import datalayer.objects.csvable.YData;
  * @- TODO - No Validations anywhere at all. Add them
  * @- TODO - Alerts for bad data e.g. Yahoo thinks VTR has a Market Cap of 25.41 Trillion on 20150220
  */
-public class YDataFetcher
+public class YFDataFetcher
 {
 	public static final String SP500_FEB_2015_SYMBOL_FILE = "symbols.txt";
 	public static final int SYMBOLS_PER_QUERY = 50;
-	public static final int TRIES_PER_SYMBOL = 3;
+	public static final int TRIES_PER_SYMBOL = 5;
 
 	public static void main(String[] args) throws Exception
 	{
@@ -67,9 +67,14 @@ public class YDataFetcher
 					{
 						for (int tries = 0; tries < TRIES_PER_SYMBOL && !symbolsForThisQuery.isEmpty(); ++tries)
 						{
-							InputStream is = YDataFetcher.getYQXMLInputStream(symbolsForThisQuery);
-							Set<String> processedSymbols = YDataFetcher.parseYQXMLQueryAndReturnProcessedSymbols(is);
-							if (processedSymbols != null) symbolsForThisQuery.removeAll(processedSymbols);
+							InputStream is = YFDataFetcher.getYQXMLInputStream(symbolsForThisQuery);
+							Set<datalayer.objects.YData> processedSymbolData = YFDataFetcher.parseYQXMLQueryAndReturnProcessedSymbols(is);
+							if (processedSymbolData != null)
+							{
+								// Remove Processed Symbols
+								for (datalayer.objects.YData symbolData : processedSymbolData)
+									symbolsForThisQuery.remove(symbolData.getBuilder().getSymbol());
+							}
 						}
 						unprocessedSymbols.addAll(symbolsForThisQuery);
 						symbolsForThisQuery.clear();
@@ -113,9 +118,9 @@ public class YDataFetcher
 		return conn.getInputStream();
 	}
 
-	public static Set<String> parseYQXMLQueryAndReturnProcessedSymbols(InputStream inputStream) throws Exception
+	public static Set<datalayer.objects.YData> parseYQXMLQueryAndReturnProcessedSymbols(InputStream inputStream) throws Exception
 	{
-		Set<String> processedSymbols = null;
+		Set<datalayer.objects.YData> processedSymbolData = null;
 		if (inputStream != null)
 		{
 			// Create Document And Parse XML Stream
@@ -131,7 +136,7 @@ public class YDataFetcher
 			NodeList quoteNodes = dom.getElementsByTagName("quote");
 			if (quoteNodes != null && quoteNodes.getLength() > 0)
 			{
-				processedSymbols = new HashSet<String>();
+				processedSymbolData = new HashSet<datalayer.objects.YData>();
 				for (int i = 0; i < quoteNodes.getLength(); ++i)
 				{
 					Element quote = (Element) quoteNodes.item(i);
@@ -141,15 +146,14 @@ public class YDataFetcher
 					CsvFileHelper.writeAsCsvFile(RunHelper.getTodayRunDataDirectory(), data.getRowKey() + ".csv", ',', data);
 
 					// Cap'n Proto data
-					parseYDXMLQuoteToCapnp(quote);
+					datalayer.objects.YData symbolData = parseYDXMLQuoteToCapnp(quote);
 
 					// Add to processed symbols
-					processedSymbols.add(data.getSymbol());
-					// System.out.println(data);
+					processedSymbolData.add(symbolData);
 				}
 			}
 		}
-		return processedSymbols;
+		return processedSymbolData;
 	}
 
 	public static YData parseYDXMLQuote(Element quote)
