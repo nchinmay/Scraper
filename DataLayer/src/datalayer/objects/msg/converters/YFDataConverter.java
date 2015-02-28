@@ -1,11 +1,10 @@
 package datalayer.objects.msg.converters;
 
-import datalayer.objects.findata.YFData;
 import datalayer.objects.interfaces.ICapnpMsg;
+import datalayer.objects.findata.YFData;
 import datalayer.objects.msg.YFDataMsg;
 import datalayer.objects.msg.YFDataMsg.YFData.Builder;
 import datalayer.objects.msg.YFDataMsg.YFData.Reader;
-
 import org.capnproto.MessageBuilder;
 import org.capnproto.MessageReader;
 

@@ -13,7 +13,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import datalayer.objects.findata.YFData;
 import datalayer.objects.interfaces.ICapnpMsg;
@@ -34,6 +38,7 @@ public class CapnpCreator
 		{
 			makeCapnpSchema(cls);
 			makeCapnpMsgFile(cls);
+			CapnpObjConverterMaker.makeJavaFile(cls, CapnpObjConverterMaker.makeConverterCode(cls));
 		}
 	}
 
@@ -75,30 +80,29 @@ public class CapnpCreator
 		String schemaFileName = msgClassName.toLowerCase() + CapnpConstants.CAPNP_FILE_EXT;
 		Path schemaFilePath = Paths.get(CapnpConstants.CAPNP_SCHEMA_DIR + schemaFileName);
 
-		if (!Files.exists(schemaFilePath))
+		Map<String, CapnpFileFieldInfo> capnpFileFieldMap = null;
+		if (Files.exists(schemaFilePath))
 		{
-			// Make New Capnp File
-			try (BufferedWriter writer = Files.newBufferedWriter(schemaFilePath, StandardCharsets.UTF_8))
-			{
-				writer.write(getIdFromCompiler() + ";");
-				writer.newLine();
-				writer.write("using Java = import \"" + CapnpConstants.CAPNP_SCHEMA_DIR_RELATIVE_PATH + "java.capnp\";");
-				writer.newLine();
-				writer.write("$Java.package(\"" + CapnpConstants.CAPNP_JAVA_FILE_PACKAGE + "\");");
-				writer.newLine();
-				writer.write("$Java.outerClassname(\"" + msgClassName + CapnpConstants.CAPNP_JAVA_FILE_SUFFIX + "\");");
-				writer.newLine();
-				writer.newLine();
-				writer.write("struct " + msgClassName + "\n{");
-				writer.newLine();
-				addFields(writer, msg);
-				writer.write("}");
-				writer.flush();
-			}
+			capnpFileFieldMap = getCapnpFileFieldMap(schemaFilePath, msg);
 		}
-		else
+
+		// Make New Capnp File
+		try (BufferedWriter writer = Files.newBufferedWriter(schemaFilePath, StandardCharsets.UTF_8))
 		{
-			// TODO - Update Existing Capnp File
+			writer.write(getIdFromCompiler() + ";");
+			writer.newLine();
+			writer.write("using Java = import \"" + CapnpConstants.CAPNP_SCHEMA_DIR_RELATIVE_PATH + "java.capnp\";");
+			writer.newLine();
+			writer.write("$Java.package(\"" + CapnpConstants.CAPNP_JAVA_FILE_PACKAGE + "\");");
+			writer.newLine();
+			writer.write("$Java.outerClassname(\"" + msgClassName + CapnpConstants.CAPNP_JAVA_FILE_SUFFIX + "\");");
+			writer.newLine();
+			writer.newLine();
+			writer.write("struct " + msgClassName + "\n{");
+			writer.newLine();
+			addFields(writer, msg, capnpFileFieldMap);
+			writer.write("}");
+			writer.flush();
 		}
 	}
 
@@ -110,21 +114,6 @@ public class CapnpCreator
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream())))
 		{
 			return br.readLine();
-		}
-	}
-
-	private static void addFields(BufferedWriter writer, Class<? extends ICapnpMsg> msg) throws Exception
-	{
-		Field[] fields = msg.getDeclaredFields();
-		int fieldIndex = 0;
-		for (Field field : fields)
-		{
-			String type = getTypeForCapnp(field);
-			if (type == null) throw new Exception("Failed to create .capnp file for " + msg.getSimpleName() + " due to Field " + field.getName());
-			String firstChar = field.getName().substring(0, 1).toLowerCase();
-			String fieldName = firstChar + field.getName().substring(1);
-			writer.write("\t" + fieldName + " @" + fieldIndex++ + " :" + type + ";");
-			writer.newLine();
 		}
 	}
 
@@ -149,6 +138,75 @@ public class CapnpCreator
 				System.out.println(line);
 				line = br.readLine();
 			}
+		}
+	}
+
+	private static void addFields(BufferedWriter writer, Class<? extends ICapnpMsg> msg, Map<String, CapnpFileFieldInfo> capnpFileFieldMap) throws Exception
+	{
+		Field[] fields = msg.getDeclaredFields();
+		Map<Integer, String> linesToWrite = new TreeMap<Integer, String>();
+		int fieldIndex = 0;
+
+		if (capnpFileFieldMap != null) // old fields
+		{
+			for (CapnpFileFieldInfo capnpFieldInfo : capnpFileFieldMap.values())
+			{
+				linesToWrite.put(capnpFieldInfo.index, capnpFieldInfo.line);
+				fieldIndex = Math.max(fieldIndex, capnpFieldInfo.index + 1);
+			}
+		}
+
+		for (Field field : fields) // new fields
+		{
+			String type = getTypeForCapnp(field);
+			if (type == null) throw new Exception("Failed to create .capnp file for " + msg.getSimpleName() + " due to Field " + field.getName());
+			String firstChar = field.getName().substring(0, 1).toLowerCase();
+			String fieldName = firstChar + field.getName().substring(1);
+			CapnpFileFieldInfo capnpFieldInfo = capnpFileFieldMap == null ? null : capnpFileFieldMap.get(fieldName);
+			if (capnpFieldInfo == null)
+			{
+				linesToWrite.put(Integer.valueOf(fieldIndex), "\t" + fieldName + " @" + fieldIndex++ + " :" + type + ";");
+			}
+		}
+
+		for (String line : linesToWrite.values())
+		{
+			writer.write(line);
+			writer.newLine();
+		}
+	}
+
+	private static Map<String, CapnpFileFieldInfo> getCapnpFileFieldMap(Path schemaFilePath, Class<? extends ICapnpMsg> msg) throws IOException
+	{
+		Map<String, CapnpFileFieldInfo> fieldMap = null;
+		try (BufferedReader reader = Files.newBufferedReader(schemaFilePath, StandardCharsets.UTF_8))
+		{
+			String regex = "^\t([a-z]{1}([a-zA-Z_0-9]*)) @([0-9]+) :.*;$";
+			Pattern pattern = Pattern.compile(regex);
+			fieldMap = new TreeMap<String, CapnpFileFieldInfo>();
+			String line = reader.readLine();
+			while (line != null)
+			{
+				Matcher matcher = pattern.matcher(line);
+				if (matcher.matches())
+				{
+					fieldMap.put(matcher.group(1), new CapnpFileFieldInfo(Integer.parseInt(matcher.group(3)), line));
+				}
+				line = reader.readLine();
+			}
+		}
+		return fieldMap;
+	}
+
+	private static class CapnpFileFieldInfo
+	{
+		public final int index;
+		public final String line;
+
+		public CapnpFileFieldInfo(int index, String line)
+		{
+			this.index = index;
+			this.line = line;
 		}
 	}
 }
