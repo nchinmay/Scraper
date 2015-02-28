@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
-import datalayer.objects.csvable.YFData;
+import datalayer.objects.findata.YFData;
 import datalayer.objects.interfaces.ICapnpMsg;
 
 public class CapnpCreator

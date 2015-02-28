@@ -2,7 +2,7 @@ package validation;
 
 import org.jsoup.helper.StringUtil;
 
-import datalayer.objects.csvable.YFData;
+import datalayer.objects.findata.YFData;
 
 public class YFValidation
 {

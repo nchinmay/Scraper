@@ -9,7 +9,7 @@ import org.capnproto.MessageReader;
 import org.capnproto.SerializePacked;
 
 import runutil.RunHelper;
-import datalayer.objects.csvable.YFData;
+import datalayer.objects.findata.YFData;
 import datalayer.objects.msg.converters.YFDataConverter;
 
 public class ReadWriteExample

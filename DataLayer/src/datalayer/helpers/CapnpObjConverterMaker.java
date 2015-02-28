@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import org.capnproto.MessageBuilder;
 import org.capnproto.MessageReader;
 
-import datalayer.objects.csvable.YFData;
+import datalayer.objects.findata.YFData;
 import datalayer.objects.interfaces.ICapnpMsg;
 
 /**

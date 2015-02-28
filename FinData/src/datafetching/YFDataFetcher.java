@@ -25,7 +25,7 @@ import symbolaccess.NonNasdaqSymbolListParser;
 import validation.Validation;
 import validation.YFValidation;
 import datalayer.helpers.CsvFileHelper;
-import datalayer.objects.csvable.YFData;
+import datalayer.objects.findata.YFData;
 import datalayer.objects.msg.converters.YFDataConverter;
 
 /**

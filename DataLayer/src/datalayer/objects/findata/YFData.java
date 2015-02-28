@@ -1,4 +1,4 @@
-package datalayer.objects.csvable;
+package datalayer.objects.findata;
 
 import datalayer.objects.interfaces.ICSVMsg;
 import datalayer.objects.interfaces.ICapnpMsg;
