@@ -1,4 +1,4 @@
-@0xef415a5f60934f51;
+@0xd382f6a4fa10072f;
 using Java = import "../../../../capnp/schema/java.capnp";
 $Java.package("datalayer.objects.msg");
 $Java.outerClassname("YFDataMsg");

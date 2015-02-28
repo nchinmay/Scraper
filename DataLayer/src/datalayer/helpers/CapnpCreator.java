@@ -1,4 +1,4 @@
-package datalayer.access;
+package datalayer.helpers;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -57,8 +57,8 @@ public class CapnpCreator
 
 		Process proc = null;
 		ProcessBuilder processBuilder = new ProcessBuilder();
-		// TODO - Something is broken right here. FIX IT (works only on some machines (User access issue))
-		processBuilder.command(compilerPath.toString(), "compile", "-ojava", schemaFilePath.toString());
+		processBuilder.command(compilerPath.toString(), "compile", "-o" + CapnpConstants.CAPNP_COMPILER_DIR_RELATIVE_PATH + CapnpConstants.CAPNP_COMPILER_JAVA_PLUGIN,
+				schemaFilePath.toString());
 		processBuilder.directory(new File(Paths.get(CapnpConstants.CAPNP_JAVA_FILE_DIR).toString()));
 		proc = processBuilder.start();
 		if (proc == null || 0 != proc.waitFor())
