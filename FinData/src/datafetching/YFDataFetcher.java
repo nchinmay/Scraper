@@ -74,7 +74,6 @@ public class YFDataFetcher
 				{
 					for (int tries = 0; tries < TRIES_PER_SYMBOL && !symbolsForThisQuery.isEmpty(); ++tries)
 					{
-						System.out.println((tries + 1) + " ----- " + symbolsForThisQuery.size());
 						try
 						{
 							InputStream is = YFDataFetcher.getYQXMLInputStream(symbolsForThisQuery);

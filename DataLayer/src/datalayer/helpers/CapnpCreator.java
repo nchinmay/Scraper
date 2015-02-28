@@ -38,7 +38,7 @@ public class CapnpCreator
 		{
 			makeCapnpSchema(cls);
 			makeCapnpMsgFile(cls);
-			CapnpObjConverterMaker.makeJavaFile(cls, CapnpObjConverterMaker.makeConverterCode(cls));
+			CapnpObjConverterMaker.makeJavaFile(cls);
 		}
 	}
 

@@ -21,7 +21,21 @@ import datalayer.objects.interfaces.ICapnpMsg;
  */
 public class CapnpObjConverterMaker
 {
-	public static String makeConverterCode(Class<? extends ICapnpMsg> cls)
+	public static void makeJavaFile(Class<? extends ICapnpMsg> cls)
+	{
+		Path converterFilePath = Paths.get(CapnpConstants.CAPNP_JAVA_CONVERTER_DIR + cls.getSimpleName() + CapnpConstants.CAPNP_JAVA_CONVERTER_SUFFIX + ".java");
+		try (BufferedWriter writer = Files.newBufferedWriter(converterFilePath, StandardCharsets.UTF_8))
+		{
+			writer.write(makeConverterCode(cls));
+			writer.flush();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace(); // TODO -- Better Error Logging
+		}
+	}
+
+	private static String makeConverterCode(Class<? extends ICapnpMsg> cls)
 	{
 		Class<?> capnpMsgFileCls = null;
 		try
@@ -91,25 +105,11 @@ public class CapnpObjConverterMaker
 		return writer.toString();
 	}
 
-	public static void makeJavaFile(Class<? extends ICapnpMsg> cls, String code)
-	{
-		Path converterFilePath = Paths.get(CapnpConstants.CAPNP_JAVA_CONVERTER_DIR + cls.getSimpleName() + CapnpConstants.CAPNP_JAVA_CONVERTER_SUFFIX + ".java");
-		try (BufferedWriter writer = Files.newBufferedWriter(converterFilePath, StandardCharsets.UTF_8))
-		{
-			writer.write(code);
-			writer.flush();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace(); // TODO -- Better Error Logging
-		}
-	}
-
 	/**
 	 * TEST STUFF
 	 */
 	public static void main(String[] args)
 	{
-		makeJavaFile(YFData.class, makeConverterCode(YFData.class));
+		makeJavaFile(YFData.class);
 	}
 }
