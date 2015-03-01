@@ -5,8 +5,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -24,6 +22,7 @@ import symbolaccess.NasdaqSymbolListParser;
 import symbolaccess.NonNasdaqSymbolListParser;
 import validation.Validation;
 import validation.YFValidation;
+import datafetching.helpers.NetAccessHelper;
 import datalayer.helpers.CsvFileHelper;
 import datalayer.objects.findata.YFData;
 import datalayer.objects.msg.converters.YFDataConverter;
@@ -76,8 +75,7 @@ public class YFDataFetcher
 					{
 						try
 						{
-							InputStream is = YFDataFetcher.getYQXMLInputStream(symbolsForThisQuery);
-							Set<YFData> processedSymbolData = YFDataFetcher.parseYQXMLQueryAndReturnSymbolData(is);
+							Set<YFData> processedSymbolData = YFDataFetcher.parseYQXMLQueryAndReturnSymbolData(symbols);
 							if (processedSymbolData != null)
 							{
 								// Add to Return Set
@@ -109,9 +107,10 @@ public class YFDataFetcher
 		return retFDataSet;
 	}
 
-	public static Set<YFData> parseYQXMLQueryAndReturnSymbolData(InputStream inputStream) throws Exception
+	public static Set<YFData> parseYQXMLQueryAndReturnSymbolData(Set<String> symbols) throws Exception
 	{
 		Set<YFData> processedSymbolData = null;
+		InputStream inputStream = NetAccessHelper.getInputStreamFromUrl(getBaseUrl(symbols));
 		if (inputStream != null)
 		{
 			// Create Document And Parse XML Stream
@@ -261,15 +260,6 @@ public class YFDataFetcher
 		return null;
 	}
 
-	private static InputStream getYQXMLInputStream(final Set<String> symbols) throws Exception
-	{
-		// Make Connection And Request Data in XML Format
-		URL url = new URL(getBaseUrl(symbols));
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		if (conn.getResponseCode() != 200) throw new IOException(conn.getResponseMessage());
-		return conn.getInputStream();
-	}
-
 	/**
 	 * TEST STUFF
 	 */
@@ -286,12 +276,7 @@ public class YFDataFetcher
 		try (BufferedReader br = new BufferedReader(new FileReader(RunHelper.getCurrentWorkingDirectory() + SP500_FEB_2015_SYMBOL_FILE)))
 		{
 			Set<String> symbols = new HashSet<String>();
-			String s = br.readLine();
-			while (s != null)
-			{
-				symbols.add(s);
-				s = br.readLine();
-			}
+			br.lines().forEach(symbol -> symbols.add(symbol));
 			return symbols;
 		}
 	}

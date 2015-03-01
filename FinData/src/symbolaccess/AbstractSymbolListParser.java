@@ -49,19 +49,11 @@ public abstract class AbstractSymbolListParser
 	 */
 	public Set<String> parseFile()
 	{
-		Set<String> symbols = null;
-		try
+		try (BufferedReader br = new BufferedReader(new FileReader(RunHelper.getTodaySymbolDataDirectory() + getFileName())))
 		{
-			BufferedReader br = new BufferedReader(new FileReader(RunHelper.getTodaySymbolDataDirectory() + getFileName()));
-			symbols = new HashSet<String>();
-			String line = br.readLine();
-			while (line != null)
-			{
-				String symbol = parseLine(line);
-				if (symbol != null) symbols.add(symbol);
-				line = br.readLine();
-			}
-			br.close();
+			Set<String> symbols = new HashSet<String>();
+			br.lines().forEach(s -> symbols.add(s));
+			return symbols;
 		}
 		catch (FileNotFoundException e)
 		{
@@ -71,7 +63,7 @@ public abstract class AbstractSymbolListParser
 		{
 			e.printStackTrace();
 		}
-		return symbols;
+		return null;
 	}
 
 	/**
