@@ -1,4 +1,4 @@
-package datafetching;
+package findata.datafetching;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -18,14 +18,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import runutil.RunHelper;
-import symbolaccess.NasdaqSymbolListParser;
-import symbolaccess.NonNasdaqSymbolListParser;
-import validation.Validation;
-import validation.YFValidation;
-import datafetching.helpers.NetAccessHelper;
 import datalayer.helpers.CsvFileHelper;
 import datalayer.objects.findata.YFData;
 import datalayer.objects.msg.converters.YFDataConverter;
+import findata.helpers.NetAccessHelper;
+import findata.symbolaccess.NasdaqSymbolListParser;
+import findata.symbolaccess.NonNasdaqSymbolListParser;
+import findata.validation.Validation;
+import findata.validation.YFValidation;
 
 /**
  * This thing just gets Publicly Available fundamental data from Yahoo and dumps to CSV/some other data container. It does nothing more nothing less and is not intended for commercial use.

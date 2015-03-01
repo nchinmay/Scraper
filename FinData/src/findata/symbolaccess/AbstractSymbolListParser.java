@@ -1,4 +1,4 @@
-package symbolaccess;
+package findata.symbolaccess;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

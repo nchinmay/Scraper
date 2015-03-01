@@ -1,4 +1,4 @@
-package validation;
+package findata.validation;
 
 import org.jsoup.helper.StringUtil;
 
