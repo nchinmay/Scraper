@@ -30,18 +30,8 @@ public class PrototypeFW
 
 		for (String symbol : testSymbols)
 		{
-			// Stream<String> str = YFHistDataFetcher.getHistDataStream(symbol);
-			// str.forEach(s -> printAsCsv(s));
 			Stream<YFHistData> str = YFHistDataFetcher.getSortedHistDataStream(symbol);
 			str.forEach(s -> System.out.println(s));
 		}
-	}
-
-	public static void printAsCsv(String s)
-	{
-		String[] part = s.split(",");
-		String print = "Date - " + part[0] + " Open - " + part[1] + " High - " + part[2] + " Low - " + part[3] + " Close - " + part[4] + " Volume - " + part[5] + " Adj. Close - "
-				+ part[6];
-		System.out.println(print);
 	}
 }
