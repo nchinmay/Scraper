@@ -145,12 +145,12 @@ public final class YFHistDataMsg {
 
 
 public static final class Schemas {
-public static final org.capnproto.SegmentReader b_b522714c7443a8c0 =
+public static final org.capnproto.SegmentReader b_ed202a14277c2405 =
    org.capnproto.GeneratedClassSupport.decodeRawBytes(
    "\u0000\u0000\u0000\u0000\u0005\u0000\u0006\u0000" +
-   "\u00c0\u00a8\u0043\u0074\u004c\u0071\"\u00b5" +
+   "\u0005\u0024\u007c\u0027\u0014\u002a\u0020\u00ed" +
    "\u0055\u0000\u0000\u0000\u0001\u0000\u0007\u0000" +
-   "\u00e1\u00f9\u00f9\u00e7\u00b4\u000f\u002b\u00a5" +
+   "\u00ea\u0037\u00b7\u0039\u00cd\u0083\u00d2\u0089" +
    "\u0001\u0000\u0007\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0015\u0000\u0000\u0000\u0002\u0003\u0000\u0000" +

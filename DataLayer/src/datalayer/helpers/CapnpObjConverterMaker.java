@@ -74,8 +74,9 @@ public class CapnpObjConverterMaker
 		out.println("		Builder b = mb.initRoot(" + capnpMsgFileCls.getSimpleName() + "." + cls.getSimpleName() + "." + "factory);");
 		for (Field field : cls.getDeclaredFields())
 		{
-			String clsFieldGetterName = "get" + field.getName();
-			String msgClsFieldSetterName = "set" + field.getName();
+			String fieldNameForFunction = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
+			String clsFieldGetterName = "get" + fieldNameForFunction;
+			String msgClsFieldSetterName = "set" + fieldNameForFunction;
 			if (field.getType() == String.class) out.println("		if(m." + clsFieldGetterName + "() != null) b." + msgClsFieldSetterName + "(m." + clsFieldGetterName + "());");
 			else out.println("		b." + msgClsFieldSetterName + "(m." + clsFieldGetterName + "());");
 		}
@@ -90,8 +91,9 @@ public class CapnpObjConverterMaker
 		out.println("		Reader b = mr.getRoot(" + capnpMsgFileCls.getSimpleName() + "." + cls.getSimpleName() + "." + "factory);");
 		for (Field field : cls.getDeclaredFields())
 		{
-			String clsFieldSetterName = "set" + field.getName();
-			String msgClsFieldGetterName = "get" + field.getName();
+			String fieldNameForFunction = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
+			String clsFieldSetterName = "set" + fieldNameForFunction;
+			String msgClsFieldGetterName = "get" + fieldNameForFunction;
 			if (field.getType() == String.class) out.println("		m." + clsFieldSetterName + "(b." + msgClsFieldGetterName + "() == null ? null : b." + msgClsFieldGetterName
 					+ "().toString());");
 			else out.println("		m." + clsFieldSetterName + "(b." + msgClsFieldGetterName + "());");
