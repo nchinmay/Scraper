@@ -75,7 +75,7 @@ public class YFDataFetcher
 					{
 						try
 						{
-							Set<YFData> processedSymbolData = YFDataFetcher.parseYQXMLQueryAndReturnSymbolData(symbols);
+							Set<YFData> processedSymbolData = YFDataFetcher.parseYQXMLQueryAndReturnSymbolData(symbolsForThisQuery);
 							if (processedSymbolData != null)
 							{
 								// Add to Return Set

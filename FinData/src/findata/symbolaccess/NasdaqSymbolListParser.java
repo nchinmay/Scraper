@@ -21,7 +21,7 @@ public class NasdaqSymbolListParser extends AbstractSymbolListParser
 		return FILE_NAME;
 	}
 
-	public String parseLine(String line)
+	public String parseLineForSymbol(String line)
 	{
 		if (!StringUtils.isEmpty(line))
 		{

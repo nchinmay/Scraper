@@ -42,7 +42,7 @@ public abstract class AbstractSymbolListParser
 	 */
 	public abstract String getFileName();
 
-	public abstract String parseLine(String line);
+	public abstract String parseLineForSymbol(String line);
 
 	/**
 	 * PARSES SYMBOL DATA FILE
@@ -52,7 +52,10 @@ public abstract class AbstractSymbolListParser
 		try (BufferedReader br = new BufferedReader(new FileReader(RunHelper.getTodaySymbolDataDirectory() + getFileName())))
 		{
 			Set<String> symbols = new HashSet<String>();
-			br.lines().forEach(s -> symbols.add(s));
+			br.lines().forEach(l -> {
+				String s = parseLineForSymbol(l);
+				if (s != null) symbols.add(s);
+			});
 			return symbols;
 		}
 		catch (FileNotFoundException e)
