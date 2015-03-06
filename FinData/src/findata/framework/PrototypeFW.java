@@ -33,5 +33,6 @@ public class PrototypeFW
 			Stream<YFHistData> str = YFHistDataFetcher.getSortedHistDataStream(symbol);
 			str.forEach(s -> System.out.println(s));
 		}
+
 	}
 }

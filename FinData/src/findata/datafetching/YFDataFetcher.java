@@ -25,7 +25,7 @@ import findata.helpers.NetAccessHelper;
 import findata.symbolaccess.NasdaqSymbolListParser;
 import findata.symbolaccess.NonNasdaqSymbolListParser;
 import findata.validation.Validation;
-import findata.validation.YFValidation;
+import findata.validation.YFDataValidation;
 
 /**
  * This thing just gets Publicly Available fundamental data from Yahoo and dumps to CSV/some other data container. It does nothing more nothing less and is not intended for commercial use.
@@ -136,7 +136,7 @@ public class YFDataFetcher
 					CsvFileHelper.writeAsCsvFile(RunHelper.getTodayRunDataDirectory(), data.getRowKey() + ".csv", ',', data); // TODO - don't write here
 
 					// Add to processed symbols
-					if (!Validation.isCatastrophicError(YFValidation.validate(data))) processedSymbolData.add(data);
+					if (!Validation.isCatastrophicError(YFDataValidation.validate(data))) processedSymbolData.add(data);
 				}
 			}
 		}

@@ -4,7 +4,7 @@ import org.jsoup.helper.StringUtil;
 
 import datalayer.objects.findata.YFData;
 
-public class YFValidation
+public class YFDataValidation
 {
 	public static int validate(YFData ydata)
 	{
