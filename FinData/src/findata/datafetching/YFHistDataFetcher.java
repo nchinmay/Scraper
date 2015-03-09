@@ -11,24 +11,31 @@ import findata.helpers.NetAccessHelper;
 
 public class YFHistDataFetcher
 {
+	public static final int YH_DATA_START_DATE = 19620001;
 	public static final String YH_DATA_SEPERATOR = ",";
 	public static final String YH_DATA_DATE_FORMAT = "yyyy-MM-dd";
 	public static final SimpleDateFormat YH_DATA_DATE_FORMATTER = new SimpleDateFormat(YH_DATA_DATE_FORMAT);
 
-	public static String getBaseUrl(String symbol)
-	{
-		return "http://ichart.finance.yahoo.com/table.csv?s=" + symbol + "&c=1962";
-	}
-
 	public static Stream<String> getHistDataStream(String symbol) throws Exception
 	{
-		Stream<String> str = (new BufferedReader(new InputStreamReader(NetAccessHelper.getInputStreamFromUrl(getBaseUrl(symbol))))).lines();
-		return str;
+		return getHistDataStream(symbol, YH_DATA_START_DATE);
+	}
+
+	public static Stream<String> getHistDataStream(String symbol, int fromDate) throws Exception
+	{
+		BufferedReader buffer = (new BufferedReader(new InputStreamReader(NetAccessHelper.getInputStreamFromUrl(getBaseUrl(symbol, fromDate)))));
+		buffer.readLine(); // Skip Header - Date,Open,High,Low,Close,Volume,Adj Close
+		return buffer.lines();
 	}
 
 	public static Stream<YFHistData> getSortedHistDataStream(String symbol) throws Exception
 	{
-		return getHistDataStream(symbol).map(new Function<String, YFHistData>() {
+		return getSortedHistDataStream(symbol, YH_DATA_START_DATE);
+	}
+
+	public static Stream<YFHistData> getSortedHistDataStream(String symbol, int fromDate) throws Exception
+	{
+		return getHistDataStream(symbol, fromDate).map(new Function<String, YFHistData>() {
 			@Override
 			public YFHistData apply(String t)
 			{
@@ -54,5 +61,20 @@ public class YFHistDataFetcher
 				return d;
 			}
 		}).sorted();
+	}
+
+	public static String getBaseUrl(String symbol)
+	{
+		return "http://ichart.finance.yahoo.com/table.csv?s=" + symbol + "&c=1962";
+	}
+
+	public static String getBaseUrl(String symbol, int fromDate)
+	{
+		String fromDateStr = String.valueOf(fromDate);
+		if (fromDateStr.length() != 8) return null;
+		int fromYear = Integer.parseInt(fromDateStr.substring(0, 4));
+		int fromMonth = Integer.parseInt(fromDateStr.substring(4, 6)) - 1;
+		int fromDay = Integer.parseInt(fromDateStr.substring(6, 8));
+		return "http://ichart.finance.yahoo.com/table.csv?s=" + symbol + "&a=" + fromMonth + "&b=" + fromDay + "&c=" + fromYear;
 	}
 }

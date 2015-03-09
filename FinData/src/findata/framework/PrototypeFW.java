@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import datalayer.objects.findata.YFHistData;
 import findata.datafetching.YFHistDataFetcher;
+import findata.toolset.FinTools;
 
 /**
  * TEST CLASS FOR FRAMEWORK CONCEPTUALIZATION
@@ -30,9 +31,10 @@ public class PrototypeFW
 
 		for (String symbol : testSymbols)
 		{
-			Stream<YFHistData> str = YFHistDataFetcher.getSortedHistDataStream(symbol);
-			str.forEach(s -> System.out.println(s));
+			Stream<YFHistData> str = YFHistDataFetcher.getSortedHistDataStream(symbol, 20140309);
+			double sharpe = FinTools.getSharpeRatio(FinTools.getIntervalReturns(str));
+			System.out.println(symbol + " : " + sharpe);
 		}
-
 	}
+
 }
