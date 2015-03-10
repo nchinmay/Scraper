@@ -2,3 +2,5 @@
 
 /rundata/
 .settings/
+.worksheet/bin
+.cache
