@@ -1,23 +1,18 @@
 import findata.datafetching.YFHistDataFetcher
+import findata.datafetching.YFHistDataFetcherScala
 import findata.toolset.FinTools
-import java.util.concurrent.ConcurrentHashMap.ForEachKeyTask
 
 object WorkSheet {
   val testSymbols = List("AAL", "DAL", "MU", "YHOO", "AA", "KORS", "TSLA")
                                                   //> testSymbols  : List[String] = List(AAL, DAL, MU, YHOO, AA, KORS, TSLA)
 
-  testSymbols.foreach {
-    s => val histStream = YFHistDataFetcher.getSortedHistDataStream(s, 20140309); println(FinTools.getSharpeRatio(FinTools.getIntervalReturns(histStream)))
-  }                                               //> 0.7729018967251612
-                                                  //| 0.9287356405608587
-                                                  //| 0.5011206488162979
-                                                  //| 0.5477388008872438
-                                                  //| 0.6438050840008662
-                                                  //| -1.2263324748415578
-                                                  //| -0.3205015135318007
+  //  testSymbols.foreach {
+  //    s => val histStream = YFHistDataFetcher.getSortedHistDataStream(s, 20140309); println(FinTools.getSharpeRatio(FinTools.getIntervalReturns(histStream)))
+  //  }
 
-  val csvStr = scala.io.Source.fromURL(YFHistDataFetcher.getBaseUrl("AAPL")).getLines().foreach(s=> println(s));
+  val csvStr = scala.io.Source.fromURL(YFHistDataFetcherScala.getBaseUrl("AAPL")).getLines().foreach(s => println(s));
                                                   //> Date,Open,High,Low,Close,Volume,Adj Close
+                                                  //| 2015-03-13,124.40,125.40,122.58,123.59,51675300,123.59
                                                   //| 2015-03-12,122.31,124.90,121.63,124.45,48145700,124.45
                                                   //| 2015-03-11,124.75,124.77,122.11,122.24,68582700,122.24
                                                   //| 2015-03-10,126.41,127.22,123.80,124.51,68240700,124.51
@@ -32,8 +27,7 @@ object WorkSheet {
                                                   //| 2015-02-25,131.56,131.60,128.15,128.79,74711700,128.79
                                                   //| 2015-02-24,132.94,133.60,131.17,132.17,69228100,132.17
                                                   //| 2015-02-23,130.02,133.00,129.66,133.00,70974100,133.00
-                                                  //| 2015-02-20,128.62,129.50,128.05,129.50,48948400,129.50
-                                                  //| 2015-02-19,128.48,129.03,128.33,128.45,37362400,1
-                                                  //| Output exceeds cutoff limit.
+                                                  //| 2015-02-20,128.62,129.50,128.05,129.50,48948400,1
+                                                  //| Output exceeds cutoff limit.-
 
 }

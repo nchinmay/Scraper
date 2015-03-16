@@ -43,6 +43,11 @@
 			<artifactId>commons-net</artifactId>
 			<version>3.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.scalatest</groupId>
+			<artifactId>scalatest_2.11</artifactId>
+			<version>3.0.0-SNAP4</version>
+		</dependency>
 	</dependencies>
 	<packaging>pom</packaging>
 	<modules>

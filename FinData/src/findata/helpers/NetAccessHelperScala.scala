@@ -1,5 +1,8 @@
 package findata.helpers
 
-class NetAccessHelperScala {
+object NetAccessHelperScala {
 
+  def getHistData(url: String) = {
+
+  }
 }
