@@ -24,7 +24,7 @@ object YFHistDataFetcherScala {
     } else null
   }
 
-  def getHistDataStream(ticker: String, from: Int): Iterator[String] = {
-    scala.io.Source.fromURL(YFHistDataFetcherScala.getBaseUrl(ticker, from)).getLines()
+  def getHistDataCSVStream(ticker: String, from: Int): Iterator[Array[String]] = {
+    scala.io.Source.fromURL(YFHistDataFetcherScala.getBaseUrl(ticker, from)).getLines().drop(1).map(_.split(","))
   }
 }
