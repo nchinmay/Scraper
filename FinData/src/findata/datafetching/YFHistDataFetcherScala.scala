@@ -7,6 +7,10 @@ import scala.collection.Iterator
 
 object YFHistDataFetcherScala {
   val YH_DATA_START_DATE: Int = 19620101;
+  val YH_NUM_OF_LINES_TO_SKIP: Int = 1;
+  val YH_DATA_SEPERATOR: String = ",";
+  val YH_DATA_DATE_FORMAT: String = "yyyy-MM-dd";
+
   val YF_ICHART_URL_PREFIX = "http://ichart.finance.yahoo.com/table.csv?s="
   val YF_ICHART_URL_SUFFIX = "&c=1962"
 
@@ -25,6 +29,6 @@ object YFHistDataFetcherScala {
   }
 
   def getHistDataCSVStream(ticker: String, from: Int): Iterator[Array[String]] = {
-    scala.io.Source.fromURL(YFHistDataFetcherScala.getBaseUrl(ticker, from)).getLines().drop(1).map(_.split(","))
+    scala.io.Source.fromURL(YFHistDataFetcherScala.getBaseUrl(ticker, from)).getLines().drop(YH_NUM_OF_LINES_TO_SKIP).map(_.split(YH_DATA_SEPERATOR))
   }
 }

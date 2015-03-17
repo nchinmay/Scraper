@@ -3,5 +3,5 @@
 /.settings/
 /*.csv
 /rundata
-.worksheet/bin
+.worksheet
 .cache

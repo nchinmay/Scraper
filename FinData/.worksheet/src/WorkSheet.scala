@@ -10,5 +10,4 @@ object WorkSheet {;import org.scalaide.worksheet.runtime.library.WorksheetSuppor
   //  }
 
   val csvStr = YFHistDataFetcherScala.getHistDataCSVStream("AAPL", 20150301).foreach(l => { l.foreach(s => print(s + "\t")); println });;System.out.println("""csvStr  : Unit = """ + $show(csvStr ))}
-
 }
