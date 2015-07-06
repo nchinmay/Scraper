@@ -36,6 +36,7 @@ public abstract class AbstractSymbolListParser
 	// TODO - USE LOGGER
 	// TODO - Better name for these classes/package
 	// TODO - There's MOAR info in these files. Use it
+	// TODO - Convert to Scala when native Scala FTP client is available
 
 	/**
 	 * ABSTRACT FUNCTIONS
