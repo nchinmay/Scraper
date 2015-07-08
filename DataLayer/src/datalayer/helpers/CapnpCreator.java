@@ -19,7 +19,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import datalayer.objects.findata.YFHistData;
+import datalayer.objects.findata.YFFundamentalData;
 import datalayer.objects.interfaces.ICapnpMsg;
 
 public class CapnpCreator
@@ -29,7 +29,7 @@ public class CapnpCreator
 
 	static
 	{
-		I_CAPNP_MSG_CLASS_SET.add(YFHistData.class);
+		I_CAPNP_MSG_CLASS_SET.add(YFFundamentalData.class);
 	}
 
 	public static void main(String[] args) throws Exception
