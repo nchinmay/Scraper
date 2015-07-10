@@ -70,7 +70,7 @@ class YFFundamentalDataFetcherScala {
 
         case _                                      =>
       }
-      ret.add(yffd)
+      ret += yffd
     }
     ret
   }
