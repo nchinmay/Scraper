@@ -1,5 +1,6 @@
 package findata.datafetching
 
+import scala.collection.mutable.Set
 import scala.xml.Node
 import scala.xml.XML
 
@@ -28,23 +29,49 @@ class YFFundamentalDataFetcherScala {
   val in = scala.io.Source.fromURL(getBaseUrl(Set("AAPL")), "utf-8").mkString
   val xml = XML.loadString(in)
 
-  def parseQuery(queryNode: Node) = {
+  def parseQuery(queryNode: Node): Set[YFFundamentalData] = {
+    val ret: Set[YFFundamentalData] = Set()
     for (child <- queryNode.child) {
-      val d = new YFFundamentalData()
+      val yffd = new YFFundamentalData()
       child.label match {
-        case "Symbol"                    => d.setSymbol(child.text)
-        case "Name"                      => d.setName(child.text)
-        case "StockExchange"             => d.setStockExchange(child.text)
+        case "Symbol"                               => yffd.setSymbol(child.text)
+        case "Name"                                 => yffd.setName(child.text)
+        case "StockExchange"                        => yffd.setStockExchange(child.text)
 
-        case "YearLow"                   => d.setYearLow(child.text.toDouble)
-        case "YearHigh"                  => d.setYearHigh(child.text.toDouble)
-        case "ChangeFromYearLow"         => d.setChangeFromYearLow(child.text.toDouble)
-        case "ChangeFromYearHigh"        => d.setChangeFromYearHigh(child.text.toDouble)
-        case "PercentChangeFromYearLow"  => d.setPercentChangeFromYearLow(child.text.dropRight(1).toDouble)
-        case "PercebtChangeFromYearHigh" => d.setPercentChangeFromYearHigh(child.text.dropRight(1).toDouble)
+        case "YearLow"                              => yffd.setYearLow(child.text.toDouble)
+        case "YearHigh"                             => yffd.setYearHigh(child.text.toDouble)
+        case "ChangeFromYearLow"                    => yffd.setChangeFromYearLow(child.text.toDouble)
+        case "ChangeFromYearHigh"                   => yffd.setChangeFromYearHigh(child.text.toDouble)
+        case "PercentChangeFromYearLow"             => yffd.setPercentChangeFromYearLow(child.text.replace("%", "").toDouble)
+        case "PercebtChangeFromYearHigh"            => yffd.setPercentChangeFromYearHigh(child.text.replace("%", "").toDouble)
+        case "FiftydayMovingAverage"                => yffd.setFiftydayMovingAverage(child.text.toDouble)
+        case "ChangeFromFiftydayMovingAverage"      => yffd.setChangeFromFiftydayMovingAverage(child.text.replace("%", "").toDouble)
+        case "TwoHundreddayMovingAverage"           => yffd.setTwoHundreddayMovingAverage(child.text.toDouble)
+        case "ChangeFromTwoHundreddayMovingAverage" => yffd.setChangeFromTwoHundreddayMovingAverage(child.text.replace("%", "").toDouble)
+        case "AverageDailyVolume"                   => yffd.setAverageDailyVolume(child.text.toLong)
+        case "PERatio"                              => yffd.setPERatio(child.text.toDouble)
+        case "PEGRatio"                             => yffd.setPEGRatio(child.text.toDouble)
+        case "PriceSales"                           => yffd.setPriceSales(child.text.toDouble)
+        case "PriceBook"                            => yffd.setPriceBook(child.text.toDouble)
+        case "EBITDA"                               => yffd.setEBITDA(child.text.toDouble)
+        case "MarketCapitalization"                 => yffd.setMarketCapitalization(child.text.toDouble)
 
-        case _                           =>
+        case "EarningsShare"                        => yffd.setEarningsShare(child.text.toDouble)
+        case "EPSEstimateCurrentYear"               => yffd.setEPSEstimateCurrentYear(child.text.toDouble)
+        case "EPSEstimateNextYear"                  => yffd.setEPSEstimateNextYear(child.text.toDouble)
+        case "EPSEstimateNextQuarter"               => yffd.setEPSEstimateNextQuarter(child.text.toDouble)
+        case "DividendShare"                        => yffd.setDividendShare(child.text.toDouble)
+        case "DividendYield"                        => yffd.setDividendYield(child.text.replace("%", "").toDouble)
+        case "ExDividendDate"                       => yffd.setExDividendDate(child.text)
+        case "DividendPayDate"                      => yffd.setDividendPayDate(child.text)
+        case "PriceEPSEstimateCurrentYear"          => yffd.setPriceEPSEstimateCurrentYear(child.text.toDouble)
+        case "PriceEPSEstimateNextYear"             => yffd.setPriceEPSEstimateNextYear(child.text.toDouble)
+        case "OneyrTargetPrice"                     => yffd.setOneyrTargetPrice(child.text.toDouble)
+
+        case _                                      =>
       }
+      ret.add(yffd)
     }
+    ret
   }
 }
