@@ -442,12 +442,12 @@ public final class YFFundamentalDataMsg {
 
 
 public static final class Schemas {
-public static final org.capnproto.SegmentReader b_990643fee73164c7 =
+public static final org.capnproto.SegmentReader b_abab88eedc160129 =
    org.capnproto.GeneratedClassSupport.decodeRawBytes(
    "\u0000\u0000\u0000\u0000\u0005\u0000\u0006\u0000" +
-   "\u00c7\u0064\u0031\u00e7\u00fe\u0043\u0006\u0099" +
+   "\u0029\u0001\u0016\u00dc\u00ee\u0088\u00ab\u00ab" +
    "\u004c\u0000\u0000\u0000\u0001\u0000\u001a\u0000" +
-   "\u0027\u00e9\u00f3\r\u00ad\u00ef\n\u00b1" +
+   "\u002a\u0033\u0018\u00e7\u00e4\u001c\u002f\u00bd" +
    "\u0005\u0000\u0007\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0015\u0000\u0000\u0000\u00f2\u0002\u0000\u0000" +

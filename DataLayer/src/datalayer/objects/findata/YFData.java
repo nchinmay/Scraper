@@ -3,8 +3,7 @@ package datalayer.objects.findata;
 import datalayer.objects.interfaces.ICSVMsg;
 import datalayer.objects.interfaces.ICapnpMsg;
 
-public class YFData implements ICSVMsg, ICapnpMsg
-{
+public class YFData implements ICSVMsg, ICapnpMsg {
 	private String Symbol;
 	private String Name;
 	private String StockExchange;
@@ -41,328 +40,266 @@ public class YFData implements ICSVMsg, ICapnpMsg
 	private double PriceEPSEstimateNextYear;
 	private double OneyrTargetPrice;
 
-	public String getSymbol()
-	{
+	public String getSymbol() {
 		return Symbol;
 	}
 
-	public void setSymbol(String symbol)
-	{
+	public void setSymbol(String symbol) {
 		Symbol = symbol;
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return Name;
 	}
 
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		Name = name;
 	}
 
-	public String getStockExchange()
-	{
+	public String getStockExchange() {
 		return StockExchange;
 	}
 
-	public void setStockExchange(String stockExchange)
-	{
+	public void setStockExchange(String stockExchange) {
 		StockExchange = stockExchange;
 	}
 
-	public double getYearLow()
-	{
+	public double getYearLow() {
 		return YearLow;
 	}
 
-	public void setYearLow(double yearLow)
-	{
+	public void setYearLow(double yearLow) {
 		YearLow = yearLow;
 	}
 
-	public double getYearHigh()
-	{
+	public double getYearHigh() {
 		return YearHigh;
 	}
 
-	public void setYearHigh(double yearHigh)
-	{
+	public void setYearHigh(double yearHigh) {
 		YearHigh = yearHigh;
 	}
 
-	public double getChangeFromYearLow()
-	{
+	public double getChangeFromYearLow() {
 		return ChangeFromYearLow;
 	}
 
-	public void setChangeFromYearLow(double changeFromYearLow)
-	{
+	public void setChangeFromYearLow(double changeFromYearLow) {
 		ChangeFromYearLow = changeFromYearLow;
 	}
 
-	public double getPercentChangeFromYearLow()
-	{
+	public double getPercentChangeFromYearLow() {
 		return PercentChangeFromYearLow;
 	}
 
-	public void setPercentChangeFromYearLow(double percentChangeFromYearLow)
-	{
+	public void setPercentChangeFromYearLow(double percentChangeFromYearLow) {
 		PercentChangeFromYearLow = percentChangeFromYearLow;
 	}
 
-	public double getChangeFromYearHigh()
-	{
+	public double getChangeFromYearHigh() {
 		return ChangeFromYearHigh;
 	}
 
-	public void setChangeFromYearHigh(double changeFromYearHigh)
-	{
+	public void setChangeFromYearHigh(double changeFromYearHigh) {
 		ChangeFromYearHigh = changeFromYearHigh;
 	}
 
-	public double getPercentChangeFromYearHigh()
-	{
+	public double getPercentChangeFromYearHigh() {
 		return PercentChangeFromYearHigh;
 	}
 
-	public void setPercentChangeFromYearHigh(double percentChangeFromYearHigh)
-	{
+	public void setPercentChangeFromYearHigh(double percentChangeFromYearHigh) {
 		PercentChangeFromYearHigh = percentChangeFromYearHigh;
 	}
 
-	public double getFiftydayMovingAverage()
-	{
+	public double getFiftydayMovingAverage() {
 		return FiftydayMovingAverage;
 	}
 
-	public void setFiftydayMovingAverage(double fiftydayMovingAverage)
-	{
+	public void setFiftydayMovingAverage(double fiftydayMovingAverage) {
 		FiftydayMovingAverage = fiftydayMovingAverage;
 	}
 
-	public double getChangeFromFiftydayMovingAverage()
-	{
+	public double getChangeFromFiftydayMovingAverage() {
 		return ChangeFromFiftydayMovingAverage;
 	}
 
-	public void setChangeFromFiftydayMovingAverage(double changeFromFiftydayMovingAverage)
-	{
+	public void setChangeFromFiftydayMovingAverage(
+			double changeFromFiftydayMovingAverage) {
 		ChangeFromFiftydayMovingAverage = changeFromFiftydayMovingAverage;
 	}
 
-	public double getTwoHundreddayMovingAverage()
-	{
+	public double getTwoHundreddayMovingAverage() {
 		return TwoHundreddayMovingAverage;
 	}
 
-	public void setTwoHundreddayMovingAverage(double twoHundreddayMovingAverage)
-	{
+	public void setTwoHundreddayMovingAverage(double twoHundreddayMovingAverage) {
 		TwoHundreddayMovingAverage = twoHundreddayMovingAverage;
 	}
 
-	public double getChangeFromTwoHundreddayMovingAverage()
-	{
+	public double getChangeFromTwoHundreddayMovingAverage() {
 		return ChangeFromTwoHundreddayMovingAverage;
 	}
 
-	public void setChangeFromTwoHundreddayMovingAverage(double changeFromTwoHundreddayMovingAverage)
-	{
+	public void setChangeFromTwoHundreddayMovingAverage(
+			double changeFromTwoHundreddayMovingAverage) {
 		ChangeFromTwoHundreddayMovingAverage = changeFromTwoHundreddayMovingAverage;
 	}
 
-	public long getAverageDailyVolume()
-	{
+	public long getAverageDailyVolume() {
 		return AverageDailyVolume;
 	}
 
-	public void setAverageDailyVolume(long averageDailyVolume)
-	{
+	public void setAverageDailyVolume(long averageDailyVolume) {
 		AverageDailyVolume = averageDailyVolume;
 	}
 
-	public double getPERatio()
-	{
+	public double getPERatio() {
 		return PERatio;
 	}
 
-	public void setPERatio(double pERatio)
-	{
+	public void setPERatio(double pERatio) {
 		PERatio = pERatio;
 	}
 
-	public double getPEGRatio()
-	{
+	public double getPEGRatio() {
 		return PEGRatio;
 	}
 
-	public void setPEGRatio(double pEGRatio)
-	{
+	public void setPEGRatio(double pEGRatio) {
 		PEGRatio = pEGRatio;
 	}
 
-	public double getPriceSales()
-	{
+	public double getPriceSales() {
 		return PriceSales;
 	}
 
-	public void setPriceSales(double priceSales)
-	{
+	public void setPriceSales(double priceSales) {
 		PriceSales = priceSales;
 	}
 
-	public double getPriceBook()
-	{
+	public double getPriceBook() {
 		return PriceBook;
 	}
 
-	public void setPriceBook(double priceBook)
-	{
+	public void setPriceBook(double priceBook) {
 		PriceBook = priceBook;
 	}
 
-	public double getEBITDA()
-	{
+	public double getEBITDA() {
 		return EBITDA;
 	}
 
-	public void setEBITDA(double eBITDA)
-	{
+	public void setEBITDA(double eBITDA) {
 		EBITDA = eBITDA;
 	}
 
-	public double getMarketCapitalization()
-	{
+	public double getMarketCapitalization() {
 		return MarketCapitalization;
 	}
 
-	public void setMarketCapitalization(double marketCapitalization)
-	{
+	public void setMarketCapitalization(double marketCapitalization) {
 		MarketCapitalization = marketCapitalization;
 	}
 
-	public double getEarningsShare()
-	{
+	public double getEarningsShare() {
 		return EarningsShare;
 	}
 
-	public void setEarningsShare(double earningsShare)
-	{
+	public void setEarningsShare(double earningsShare) {
 		EarningsShare = earningsShare;
 	}
 
-	public double getEPSEstimateCurrentYear()
-	{
+	public double getEPSEstimateCurrentYear() {
 		return EPSEstimateCurrentYear;
 	}
 
-	public void setEPSEstimateCurrentYear(double ePSEstimateCurrentYear)
-	{
+	public void setEPSEstimateCurrentYear(double ePSEstimateCurrentYear) {
 		EPSEstimateCurrentYear = ePSEstimateCurrentYear;
 	}
 
-	public double getEPSEstimateNextYear()
-	{
+	public double getEPSEstimateNextYear() {
 		return EPSEstimateNextYear;
 	}
 
-	public void setEPSEstimateNextYear(double ePSEstimateNextYear)
-	{
+	public void setEPSEstimateNextYear(double ePSEstimateNextYear) {
 		EPSEstimateNextYear = ePSEstimateNextYear;
 	}
 
-	public double getEPSEstimateNextQuarter()
-	{
+	public double getEPSEstimateNextQuarter() {
 		return EPSEstimateNextQuarter;
 	}
 
-	public void setEPSEstimateNextQuarter(double ePSEstimateNextQuarter)
-	{
+	public void setEPSEstimateNextQuarter(double ePSEstimateNextQuarter) {
 		EPSEstimateNextQuarter = ePSEstimateNextQuarter;
 	}
 
-	public double getDividendShare()
-	{
+	public double getDividendShare() {
 		return DividendShare;
 	}
 
-	public void setDividendShare(double dividendShare)
-	{
+	public void setDividendShare(double dividendShare) {
 		DividendShare = dividendShare;
 	}
 
-	public double getDividendYield()
-	{
+	public double getDividendYield() {
 		return DividendYield;
 	}
 
-	public void setDividendYield(double dividendYield)
-	{
+	public void setDividendYield(double dividendYield) {
 		DividendYield = dividendYield;
 	}
 
-	public String getExDividendDate()
-	{
+	public String getExDividendDate() {
 		return ExDividendDate;
 	}
 
-	public void setExDividendDate(String exDividendDate)
-	{
+	public void setExDividendDate(String exDividendDate) {
 		ExDividendDate = exDividendDate;
 	}
 
-	public String getDividendPayDate()
-	{
+	public String getDividendPayDate() {
 		return DividendPayDate;
 	}
 
-	public void setDividendPayDate(String dividendPayDate)
-	{
+	public void setDividendPayDate(String dividendPayDate) {
 		DividendPayDate = dividendPayDate;
 	}
 
-	public double getPriceEPSEstimateCurrentYear()
-	{
+	public double getPriceEPSEstimateCurrentYear() {
 		return PriceEPSEstimateCurrentYear;
 	}
 
-	public void setPriceEPSEstimateCurrentYear(double priceEPSEstimateCurrentYear)
-	{
+	public void setPriceEPSEstimateCurrentYear(
+			double priceEPSEstimateCurrentYear) {
 		PriceEPSEstimateCurrentYear = priceEPSEstimateCurrentYear;
 	}
 
-	public double getPriceEPSEstimateNextYear()
-	{
+	public double getPriceEPSEstimateNextYear() {
 		return PriceEPSEstimateNextYear;
 	}
 
-	public void setPriceEPSEstimateNextYear(double priceEPSEstimateNextYear)
-	{
+	public void setPriceEPSEstimateNextYear(double priceEPSEstimateNextYear) {
 		PriceEPSEstimateNextYear = priceEPSEstimateNextYear;
 	}
 
-	public double getOneyrTargetPrice()
-	{
+	public double getOneyrTargetPrice() {
 		return OneyrTargetPrice;
 	}
 
-	public void setOneyrTargetPrice(double oneyrTargetPrice)
-	{
+	public void setOneyrTargetPrice(double oneyrTargetPrice) {
 		OneyrTargetPrice = oneyrTargetPrice;
 	}
 
-	public String getRowKey()
-	{
+	public String getRowKey() {
 		return Symbol;
 	}
 
-	public String getCSVHeader()
-	{
+	public String getCSVHeader() {
 		return "Symbol,Name,StockExchange,YearLow,YearHigh,ChangeFromYearLow,ChangeFromYearHigh,PercentChangeFromYearLow,PercentChangeFromYearHigh,FiftydayMovingAverage,ChangeFromFiftydayMovingAverage,TwoHundreddayMovingAverage,ChangeFromTwoHundreddayMovingAverage,AverageDailyVolume,PERatio,PEGRatio,PriceSales,PriceBook,EBITDA,MarketCapitalization,EarningsShare,EPSEstimateCurrentYear,EPSEstimateNextYear,EPSEstimateNextQuarter,DividendShare,DividendYield,ExDividendDate,DividendPayDate,PriceEPSEstimateCurrentYear,PriceEPSEstimateNextYear,OneyrTargetPrice";
 	}
 
-	public String getRow()
-	{
+	public String getRow() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(Symbol);
 		builder.append(",");
@@ -429,10 +366,9 @@ public class YFData implements ICSVMsg, ICapnpMsg
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("YData [Symbol=");
+		builder.append("YFData [Symbol=");
 		builder.append(Symbol);
 		builder.append(", Name=");
 		builder.append(Name);
