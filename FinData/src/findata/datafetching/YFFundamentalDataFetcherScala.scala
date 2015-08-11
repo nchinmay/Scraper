@@ -1,10 +1,12 @@
 package findata.datafetching
 
-import scala.collection.mutable.Set
+import scala.collection.immutable.Set
+import scala.collection.immutable.Map
 import scala.xml.Node
 import scala.xml.XML
-
 import datalayer.objects.findata.YFFundamentalData
+import org.slf4j.LoggerFactory
+import com.typesafe.scalalogging.Logger
 
 /**
  * This thing just gets Publicly Available fundamental data from Yahoo and dumps to CSV/some other data container. It does nothing more nothing less and is not intended for commercial use.
@@ -20,27 +22,29 @@ class YFFundamentalDataFetcherScala {
   val SYMBOLS_PER_QUERY = 50;
   val TRIES_PER_SYMBOL = 5;
   val DELAY_BETWEEN_QUERIES_MILLIS = 5;
+  val logger = Logger(LoggerFactory.getLogger(this.getClass.getSimpleName))
 
-  val in = scala.io.Source.fromURL(getBaseUrl(Set("AAPL")), "utf-8").mkString
-  val xml = XML.loadString(in)
-
-  def getYFFData(symbols: Set[String]): Set[YFFundamentalData] = {
-    val ret: Set[YFFundamentalData] = Set()
+  def getYFFData(symbols: Set[String]): Map[String, YFFundamentalData] = {
+    val mutableRet: scala.collection.mutable.Map[String, YFFundamentalData] = scala.collection.mutable.Map()
     for (currentSet <- symbols.grouped(SYMBOLS_PER_QUERY)) {
-
-      // TODO -- try 3 times per symbol to get values
-      val queryResultXML = XML.loadString(scala.io.Source.fromURL(getBaseUrl(currentSet), "utf-8").mkString)
-      for (resultsNode <- queryResultXML) {
-        val yffdFromQuery = parseQuery(resultsNode.child(0))
-        ret ++= yffdFromQuery
+      val currentMutableSet = scala.collection.mutable.Set(currentSet.toSeq: _*)
+      for (i <- 1 to 5; if !currentMutableSet.isEmpty) {
+        try {
+          val baseURL = getBaseUrl(currentSet)
+          val queryResultXML = XML.loadString(scala.io.Source.fromURL(baseURL, "utf-8").mkString)
+          val yffdFromQuery = parseQuery(queryResultXML(0).child(0))
+          mutableRet ++= yffdFromQuery
+          currentMutableSet --= yffdFromQuery.keySet
+        } catch {
+          case e: Exception => logger.error(e.getMessage)
+        }
       }
-      // TODO -- try 3 times per symbol to get values
     }
-    ret
+    Map(mutableRet.toSeq: _*)
   }
 
-  def parseQuery(resultsNode: Node): Set[YFFundamentalData] = {
-    val ret: Set[YFFundamentalData] = Set()
+  def parseQuery(resultsNode: Node): Map[String, YFFundamentalData] = {
+    val mutableRet: scala.collection.mutable.Map[String, YFFundamentalData] = scala.collection.mutable.Map()
     for (quoteNode <- resultsNode.child) {
       val yffd = new YFFundamentalData()
       for (prop <- quoteNode.child) {
@@ -81,10 +85,10 @@ class YFFundamentalDataFetcherScala {
 
           case _                                      =>
         }
-        ret += yffd
       }
+      mutableRet += ((yffd.getSymbol, yffd));
     }
-    ret
+    Map(mutableRet.toSeq: _*)
   }
 
   def parseDouble(d: String): Double = {
