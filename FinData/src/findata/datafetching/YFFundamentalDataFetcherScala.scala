@@ -25,7 +25,7 @@ class YFFundamentalDataFetcherScala {
   val logger = Logger(LoggerFactory.getLogger(this.getClass.getSimpleName))
 
   def getYFFData(symbols: Set[String]): Map[String, YFFundamentalData] = {
-    val mutableRet: scala.collection.mutable.Map[String, YFFundamentalData] = scala.collection.mutable.Map()
+    val mutableRetMap: scala.collection.mutable.Map[String, YFFundamentalData] = scala.collection.mutable.Map()
     for (currentSet <- symbols.grouped(SYMBOLS_PER_QUERY)) {
       val currentMutableSet = scala.collection.mutable.Set(currentSet.toSeq: _*)
       for (i <- 1 to 5; if !currentMutableSet.isEmpty) {
@@ -33,18 +33,18 @@ class YFFundamentalDataFetcherScala {
           val baseURL = getBaseUrl(currentSet)
           val queryResultXML = XML.loadString(scala.io.Source.fromURL(baseURL, "utf-8").mkString)
           val yffdFromQuery = parseQuery(queryResultXML(0).child(0))
-          mutableRet ++= yffdFromQuery
+          mutableRetMap ++= yffdFromQuery
           currentMutableSet --= yffdFromQuery.keySet
         } catch {
           case e: Exception => logger.error(e.getMessage)
         }
       }
     }
-    Map(mutableRet.toSeq: _*)
+    Map(mutableRetMap.toSeq: _*)
   }
 
   def parseQuery(resultsNode: Node): Map[String, YFFundamentalData] = {
-    val mutableRet: scala.collection.mutable.Map[String, YFFundamentalData] = scala.collection.mutable.Map()
+    val mutableRetMap: scala.collection.mutable.Map[String, YFFundamentalData] = scala.collection.mutable.Map()
     for (quoteNode <- resultsNode.child) {
       val yffd = new YFFundamentalData()
       for (prop <- quoteNode.child) {
@@ -86,9 +86,9 @@ class YFFundamentalDataFetcherScala {
           case _                                      =>
         }
       }
-      mutableRet += ((yffd.getSymbol, yffd));
+      mutableRetMap += ((yffd.getSymbol, yffd));
     }
-    Map(mutableRet.toSeq: _*)
+    Map(mutableRetMap.toSeq: _*)
   }
 
   def parseDouble(d: String): Double = {
