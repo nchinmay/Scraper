@@ -13,50 +13,35 @@ object WorkSheet {
   //    s => val histStream = YFHistDataFetcher.getSortedHistDataStream(s, 20140309); println(FinTools.getSharpeRatio(FinTools.getIntervalReturns(histStream)))
   //  }
 
-  val csvStr = YFHistDataFetcherScala.getHistDataCSVStream("AAPL", 20150301).foreach(l => { l.foreach(s => print(s + "\t")); println })
-                                                  //> 2015-06-24	127.209999	129.800003	127.120003	128.110001	
-                                                  //| 54964900	128.110001	
-                                                  //| 2015-06-23	127.480003	127.610001	126.879997	127.029999	
-                                                  //| 30137100	127.029999	
-                                                  //| 2015-06-22	127.489998	128.059998	127.080002	127.610001	
-                                                  //| 33833500	127.610001	
-                                                  //| 2015-06-19	127.709999	127.82	126.400002	126.599998	54181300
-                                                  //| 	126.599998	
-                                                  //| 2015-06-18	127.230003	128.309998	127.220001	127.879997	
-                                                  //| 35241100	127.879997	
-                                                  //| 2015-06-17	127.720001	127.879997	126.739998	127.300003	
-                                                  //| 32768500	127.300003	
-                                                  //| 2015-06-16	127.029999	127.849998	126.370003	127.599998	
-                                                  //| 31404000	127.599998	
-                                                  //| 2015-06-15	126.099998	127.239998	125.709999	126.919998	
-                                                  //| 39842600	126.919998	
-                                                  //| 2015-06-12	128.190002	128.330002	127.110001	127.169998	
-                                                  //| 36754200	127.169998	
-                                                  //| 2015-06-11	129.179993	130.179993	128.479996	128.589996	
-                                                  //| 35260400	128.589996	
-                                                  //| 2015-06-10	127.919998	129.339996	127.849998	128.880005	
-                                                  //| 38915900	128.880005	
-                                                  //| 2015-06-09	126.699997	128.080002	125.620003	127.419998
+  val csvStr = YFHistDataFetcherScala.getHistDataCSVStream("AAPL", 20150301).get.foreach(l => { l.foreach(s => print(s + "\t")); println })
+                                                  //> 2015-08-12	112.529999	115.419998	109.629997	115.239998	
+                                                  //| 101217500	115.239998	
+                                                  //| 2015-08-11	117.809998	118.18	113.330002	113.489998	95711900
+                                                  //| 	113.489998	
+                                                  //| 2015-08-10	116.529999	119.989998	116.529999	119.720001	
+                                                  //| 54538500	119.720001	
+                                                  //| 2015-08-07	114.580002	116.25	114.50	115.519997	38421400	
+                                                  //| 115.519997	
+                                                  //| 2015-08-06	115.970001	116.50	114.120003	115.129997	52903000
+                                                  //| 	115.129997	
+                                                  //| 2015-08-05	112.949997	117.440002	112.099998	115.400002	
+                                                  //| 99312600	114.880003	
+                                                  //| 2015-08-04	117.419998	117.699997	113.25	114.639999	12413860
+                                                  //| 0	114.123426	
+                                                  //| 2015-08-03	121.50	122.57	117.519997	118.440002	69976000	
+                                                  //| 117.906306	
+                                                  //| 2015-07-31	122.599998	122.639999	120.910004	121.300003	
+                                                  //| 42885000	120.753419	
+                                                  //| 2015-07-30	122.32	122.57	121.709999	122.370003	33628300	
+                                                  //| 121.818597	
+                                                  //| 2015-07-29	123.150002	123.50	122.269997	122.989998	37011700
+                                                  //| 	122.435799	
+                                                  //| 2015-07-28	123.379997	123.910004	122.550003	123.379997	
+                                                  //| 33618100	122.824041	
+                                                  //| 20
                                                   //| Output exceeds cutoff limit.
 
-  val scConf = new SparkConf().setMaster("spark://master:7077")
-                                                  //> scConf  : org.apache.spark.SparkConf = org.apache.spark.SparkConf@18a70f16
-  val sc = SparkContext.getOrCreate(scConf)       //> Using Spark's default log4j profile: org/apache/spark/log4j-defaults.propert
-                                                  //| ies
-                                                  //| 15/06/25 00:52:46 INFO SparkContext: Running Spark version 1.4.0
-                                                  //| 15/06/25 00:52:51 WARN NativeCodeLoader: Unable to load native-hadoop librar
-                                                  //| y for your platform... using builtin-java classes where applicable
-                                                  //| 15/06/25 00:52:51 ERROR SparkContext: Error initializing SparkContext.
-                                                  //| org.apache.spark.SparkException: An application name must be set in your con
-                                                  //| figuration
-                                                  //| 	at org.apache.spark.SparkContext.<init>(SparkContext.scala:371)
-                                                  //| 	at org.apache.spark.SparkContext$.getOrCreate(SparkContext.scala:2107)
-                                                  //| 	at WorkSheet$$anonfun$main$1.apply$mcV$sp(WorkSheet.scala:18)
-                                                  //| 	at org.scalaide.worksheet.runtime.library.WorksheetSupport$$anonfun$$exe
-                                                  //| cute$1.apply$mcV$sp(WorksheetSupport.scala:76)
-                                                  //| 	at org.scalaide.worksheet.runtime.library.WorksheetSupport$.redirected(W
-                                                  //| orksheetSupport.scala:65)
-                                                  //| 	at org.scalaide.worksheet.runtime.library.WorksheetSupp
-                                                  //| Output exceeds cutoff limit.
+  // val scConf = new SparkConf().setMaster("spark://master:7077")
+  // val sc = SparkContext.getOrCreate(scConf)
 
 }
