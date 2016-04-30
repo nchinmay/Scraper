@@ -13,16 +13,9 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.scala-saddle</groupId>
-			<artifactId>saddle-core_2.11</artifactId>
-			<version>1.3.4</version>
-			<exclusions>
-				<!-- Conflicts with slf4j logger elsewhere -->
-				<exclusion>
-					<artifactId>logback-classic</artifactId>
-					<groupId>ch.qos.logback</groupId>
-				</exclusion>
-			</exclusions>
+			<groupId>joinery</groupId>
+			<artifactId>joinery-dataframe</artifactId>
+			<version>1.7</version>
 		</dependency>
 	</dependencies>
 	<artifactId>FinData</artifactId>

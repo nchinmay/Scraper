@@ -3,8 +3,8 @@ package findata.datafetching
 import scala.collection.immutable.Set
 import scala.collection.immutable.Map
 import scala.xml.Node
-import scala.xml.XML
-import datalayer.objects.findata.YFFundamentalData
+import scala.xml.XML 
+import datalayer.objects.findata.YFFundamentalData 
 import org.slf4j.LoggerFactory
 import com.typesafe.scalalogging.Logger
 
