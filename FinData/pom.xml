@@ -6,6 +6,13 @@
 		<artifactId>Scraper</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	<repositories>
+		<repository>
+			<id>jcenter.bintray</id>
+			<url>http://jcenter.bintray.com/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>Scraper</groupId>
@@ -16,6 +23,11 @@
 			<groupId>joinery</groupId>
 			<artifactId>joinery-dataframe</artifactId>
 			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.14</version>
 		</dependency>
 	</dependencies>
 	<artifactId>FinData</artifactId>
