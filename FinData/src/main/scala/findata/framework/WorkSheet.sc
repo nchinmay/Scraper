@@ -21,14 +21,14 @@ object WorkSheet {
   val csvSource = new CsvUrl(url)                 //> csvSource  : findata.framework.CsvUrl = CsvUrl(http://ichart.finance.yahoo.c
                                                   //| om/table.csv?s=AAPL&a=2&b=1&c=2015, encoding: UTF-8)
   val df = CsvParser.parse(csvSource).withRowIndex(0).withColIndex(0).col("Adj Close")
-                                                  //> df  : org.saddle.Frame[String,String,String] = [296 x 1]
+                                                  //> df  : org.saddle.Frame[String,String,String] = [297 x 1]
                                                   //|                Adj Close 
                                                   //|               ---------- 
+                                                  //| 2016-05-03 ->      95.18 
                                                   //| 2016-05-02 ->  93.639999 
                                                   //| 2016-04-29 ->  93.739998 
                                                   //| 2016-04-28 ->  94.830002 
                                                   //| 2016-04-27 ->      97.82 
-                                                  //| 2016-04-26 -> 104.349998 
                                                   //| ...
                                                   //| 2015-03-06 -> 124.295889 
                                                   //| 2015-03-05 -> 124.109352 
