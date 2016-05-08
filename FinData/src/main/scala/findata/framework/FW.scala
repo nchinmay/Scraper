@@ -13,6 +13,9 @@ import org.saddle.Series
 import org.saddle.Index
 import org.saddle.index.OuterJoin
 import org.saddle.Vec
+import org.saddle.mat
+import org.saddle.ops.InnerProd
+import org.saddle.ops.BinOp
 
 object FW {
   val ADJ_CLOSE = "Adj Close"
@@ -31,9 +34,13 @@ object FW {
     var ret: Frame[Date, String, Double] = fw.getAdjClosesNormalized(symbols, from)
     println(ret)
 
-    val allocs = Frame(Vec(0.25, 0.25, 0.25, 0.25), ret.rowIx, ret.colIx)
-println( allocs)
-   // val weightedRet = ret.dot(allocs)
+    val allocVec = Vec(0.25, 0.25, 0.25, 0.25)
+    val allocsMat = mat.repeat(allocVec, ret.rowIx.length, true)
+    val allocFrame = Frame(allocsMat)
+    println(allocFrame)
+
+    // FIXME - val weightedRets = ret.dot(allocFrame)
+
     // val sharpe = fw.sharpeDailyRet(adjDailyCloses)
     // println(sharpe)
   }
