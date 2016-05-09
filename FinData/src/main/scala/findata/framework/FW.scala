@@ -1,21 +1,20 @@
 package findata.framework
 
-import findata.datafetching.YFHistDataFetcherScala
-import org.saddle.io.CsvParser
-import org.joda.time.DateTime
-import java.util.Formatter.DateTime
 import java.text.SimpleDateFormat
-import org.saddle.Frame
 import java.util.Date
 import org.apache.commons.math3.util.FastMath
-import findata.datafetching.YFFundamentalDataFetcherScala
-import org.saddle.Series
+import org.saddle.Frame
 import org.saddle.Index
-import org.saddle.index.OuterJoin
+import org.saddle.Series
 import org.saddle.Vec
+import org.saddle.index.OuterJoin
+import org.saddle.io.CsvParser
 import org.saddle.mat
-import org.saddle.ops.InnerProd
 import org.saddle.ops.BinOp
+import org.saddle.ops.InnerProd
+import org.saddle.ops.BinOpFrameCustom
+import findata.datafetching.YFHistDataFetcherScala
+import org.saddle.io.CsvUrl
 
 object FW {
   val ADJ_CLOSE = "Adj Close"
@@ -36,10 +35,9 @@ object FW {
 
     val allocVec = Vec(0.25, 0.25, 0.25, 0.25)
     val allocsMat = mat.repeat(allocVec, ret.rowIx.length, true)
-    val allocFrame = Frame(allocsMat)
-    println(allocFrame)
+    val allocFrame = Frame(allocsMat).setRowIndex(ret.rowIx).setColIndex(ret.colIx)
 
-    // FIXME - val weightedRets = ret.dot(allocFrame)
+    // Still FIXME -- val weightedRets = ret.dot(allocFrame)
 
     // val sharpe = fw.sharpeDailyRet(adjDailyCloses)
     // println(sharpe)
@@ -48,12 +46,10 @@ object FW {
 }
 class FW {
   def getAdjClosesNormalized(symbols: Array[String], from: Int): Frame[Date, String, Double] = {
-    var ret: Frame[Date, Int, Double] = null
-    for (symbol <- symbols) {
-      if (ret == null) ret = getAdjClosesNormalized(symbol, from).resetColIndex
-      else ret = ret.join(getAdjClosesNormalized(symbol, from), OuterJoin)
-    }
-    ret.setColIndex(Index(symbols))
+    val adjClosesNorm = symbols.foldLeft(Frame.empty[Date, Int, Double]) {
+      (prevFrame, symbol) => prevFrame.join(getAdjClosesNormalized(symbol, from).resetColIndex, OuterJoin)
+    }.setColIndex(Index(symbols))
+    adjClosesNorm
   }
 
   def getAdjClosesNormalized(symbol: String, from: Int): Frame[Date, String, Double] = {

@@ -1,7 +1,6 @@
-package findata.framework
+package org.saddle.io
 
 import org.saddle.UTF8
-import org.saddle.io.CsvSource
 import java.io.{ BufferedReader, InputStreamReader }
 import java.net.URL
 
