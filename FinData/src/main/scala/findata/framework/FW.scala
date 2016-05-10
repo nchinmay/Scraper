@@ -27,12 +27,13 @@ object FW {
     val ret: Frame[Date, String, Double] = fw.getAdjClosesNormalized(symbols, from)
     println(ret)
 
-    val allocVec = Vec(0.25, 0.25, 0.25, 0.25)
-    val allocsMat = mat.repeat(allocVec, ret.rowIx.length, true)
-    val allocFrame = Frame(allocsMat).setRowIndex(ret.rowIx).setColIndex(ret.colIx)
+    val allocs = Vec(0.25, 0.25, 0.25, 0.25)
+    val allocFrame = Frame(mat.repeat(allocs, ret.rowIx.length, true)).setRowIndex(ret.rowIx).setColIndex(ret.colIx)
 
-    val weightedRets = ret.dot(allocFrame)
-    println(weightedRets)
+    val weightedAdjCloses = ret.dot(allocFrame)
+    println(weightedAdjCloses)
+
+    println("SHARPE = " + fw.sharpeDailyRet(ret, allocs))
 
     // val sharpe = fw.sharpeDailyRet(adjDailyCloses)
     // println(sharpe)
@@ -40,6 +41,9 @@ object FW {
 
 }
 class FW {
+  /**
+   * Adjusted Closes
+   */
   def getAdjClosesNormalized(symbols: Array[String], from: Int): Frame[Date, String, Double] = {
     val adjClosesNorm = symbols.foldLeft(Frame.empty[Date, Int, Double]) {
       (prevFrame, symbol) => prevFrame.join(getAdjClosesNormalized(symbol, from).resetColIndex, OuterJoin)
@@ -53,12 +57,30 @@ class FW {
     adjClosesNormalized
   }
 
+  /**
+   * Getting Historical data from Yahoo
+   */
   def getYHistData(symbol: String, from: Int): Frame[Date, String, String] = {
     val url = YFHistDataFetcherScala.getBaseUrl(symbol, from)
     val csvSource = CsvUrl(url)
     CsvParser.parse(csvSource).withRowIndex(0).withColIndex(0).mapRowIndex { x => FW.YHIST_DATA_SDF.parse(x) }
   }
 
+  /**
+   * Sharpe Ratio for Normalized Adj Closes Frame with portfolio allocations `weights`
+   */
+  def sharpeDailyRet(adjClosesNormalized: Frame[Date, String, Double], weights: Vec[Double]): Double = {
+    require(adjClosesNormalized.colIx.length == weights.length, "adjClosesNormalized.colIx.length should equal allocs.length")
+    val allocFrame = Frame(mat.repeat(weights, adjClosesNormalized.rowIx.length, true))
+      .setRowIndex(adjClosesNormalized.rowIx)
+      .setColIndex(adjClosesNormalized.colIx)
+    val weightedAdjCloses = adjClosesNormalized.dot(allocFrame)
+    sharpeDailyRet(weightedAdjCloses)
+  }
+
+  /**
+   * Sharpe Ratio for Individual Adj Closes Series
+   */
   def sharpeDailyRet(adjustedDailyCloses: Series[Date, Double]): Double = {
     val dailyReturns = returnizeSeries(adjustedDailyCloses)
     sharpe(dailyReturns)
@@ -74,10 +96,16 @@ class FW {
     sharpe
   }
 
+  /**
+   * Calculate Return for a Series over `returnPeriod`
+   */
   def returnizeSeries(dataSeries: Series[Date, Double], returnPeriod: Int = -1): Series[Date, Double] = {
     dataSeries / dataSeries.shift(returnPeriod) - 1
   }
 
+  /**
+   * Calculate Return for a Frame over `returnPeriod`
+   */
   def returnizeFrame(dataFrame: Frame[Date, String, Double], returnPeriod: Int = -1): Frame[Date, String, Double] = {
     dataFrame / dataFrame.shift(returnPeriod) - 1
   }
