@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>org.scala-saddle</groupId>
 			<artifactId>saddle-core_2.11</artifactId>
-			<version>1.3.4</version>
+			<version>1.3.5-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

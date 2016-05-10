@@ -2,19 +2,13 @@ package findata.framework
 
 import java.text.SimpleDateFormat
 import java.util.Date
+
 import org.apache.commons.math3.util.FastMath
-import org.saddle.Frame
-import org.saddle.Index
-import org.saddle.Series
-import org.saddle.Vec
+import org.saddle._
 import org.saddle.index.OuterJoin
-import org.saddle.io.CsvParser
-import org.saddle.mat
-import org.saddle.ops.BinOp
-import org.saddle.ops.InnerProd
-import org.saddle.ops.BinOpFrameCustom
+import org.saddle.io._
+
 import findata.datafetching.YFHistDataFetcherScala
-import org.saddle.io.CsvUrl
 
 object FW {
   val ADJ_CLOSE = "Adj Close"
@@ -30,14 +24,15 @@ object FW {
     val from = 20140501
 
     // TODO - Why doesn't joining 2 Frame[Date, String, Double]s return a Frame[Date, String, Double]? 
-    var ret: Frame[Date, String, Double] = fw.getAdjClosesNormalized(symbols, from)
+    val ret: Frame[Date, String, Double] = fw.getAdjClosesNormalized(symbols, from)
     println(ret)
 
     val allocVec = Vec(0.25, 0.25, 0.25, 0.25)
     val allocsMat = mat.repeat(allocVec, ret.rowIx.length, true)
     val allocFrame = Frame(allocsMat).setRowIndex(ret.rowIx).setColIndex(ret.colIx)
 
-    // Still FIXME -- val weightedRets = ret.dot(allocFrame)
+    val weightedRets = ret.dot(allocFrame)
+    println(weightedRets)
 
     // val sharpe = fw.sharpeDailyRet(adjDailyCloses)
     // println(sharpe)
@@ -60,7 +55,7 @@ class FW {
 
   def getYHistData(symbol: String, from: Int): Frame[Date, String, String] = {
     val url = YFHistDataFetcherScala.getBaseUrl(symbol, from)
-    val csvSource = new CsvUrl(url)
+    val csvSource = CsvUrl(url)
     CsvParser.parse(csvSource).withRowIndex(0).withColIndex(0).mapRowIndex { x => FW.YHIST_DATA_SDF.parse(x) }
   }
 
