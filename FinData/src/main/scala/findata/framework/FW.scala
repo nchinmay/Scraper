@@ -21,24 +21,40 @@ object FW {
     val fw = new FW
 
     val symbols = Array("AAPL", "GOOG", "MSFT", "TSLA")
-    val from = 20140501
+    val from = 20150510
 
     // TODO - Why doesn't joining 2 Frame[Date, String, Double]s return a Frame[Date, String, Double]? 
-    val ret: Frame[Date, String, Double] = fw.getAdjClosesNormalized(symbols, from)
-    println(ret)
+    val adjReturnsNorm: Frame[Date, String, Double] = fw.getAdjClosesNormalized(symbols, from)
+    println(adjReturnsNorm.head(5))
 
-    val allocs = Vec(0.25, 0.25, 0.25, 0.25)
-    val allocFrame = Frame(mat.repeat(allocs, ret.rowIx.length, true)).setRowIndex(ret.rowIx).setColIndex(ret.colIx)
+    //   val allocs = Vec(0.25, 0.25, 0.25, 0.25)
+    //   val allocFrame = Frame(mat.repeat(allocs, adjReturnsNorm.rowIx.length, true)).setRowIndex(adjReturnsNorm.rowIx).setColIndex(adjReturnsNorm.colIx)
+    //   val weightedAdjCloses = adjReturnsNorm.dot(allocFrame)
+    //   println(weightedAdjCloses.head(5))
+    //   println("SHARPE = " + fw.sharpeDailyRet(adjReturnsNorm, allocs))
 
-    val weightedAdjCloses = ret.dot(allocFrame)
-    println(weightedAdjCloses)
-
-    println("SHARPE = " + fw.sharpeDailyRet(ret, allocs))
-
-    // val sharpe = fw.sharpeDailyRet(adjDailyCloses)
-    // println(sharpe)
+    // Brute force optimize 4 stock portfolio, no constraints
+    var bestSharpe: Double = 0
+    var bestAlloc = Vec.empty[Double]
+    for (i <- 1 to 100) {
+      for (j <- 0 to 100 - i) {
+        for (k <- 1 to 100 - i - j) {
+          for (l <- 0 to 100 - i - j - k) {
+            if (i + j + l + k == 100) {
+              val alloc = Vec(i / 100.0, j / 100.0, k / 100.0, l / 100.0)
+              val sharpe = fw.sharpeDailyRet(adjReturnsNorm, alloc)
+              if (sharpe > bestSharpe) {
+                bestSharpe = sharpe
+                bestAlloc = alloc
+              }
+            }
+          }
+        }
+      }
+    }
+    println("bestSharpe = " + bestSharpe)
+    println("bestAlloc = " + bestAlloc)
   }
-
 }
 class FW {
   /**
@@ -92,7 +108,8 @@ class FW {
   }
 
   def sharpe(returnSeries: Series[Date, Double], riskFreeRate: Double = FW.RISK_FREE_RATE, numOfTradingPeriodsInYear: Integer = FW.TRADING_DAYS_IN_YEAR): Double = {
-    val sharpe: Double = FastMath.sqrt(numOfTradingPeriodsInYear.toDouble) * (returnSeries.mean - (riskFreeRate / numOfTradingPeriodsInYear)) / returnSeries.stdev
+    val excessReturns = returnSeries - (riskFreeRate / numOfTradingPeriodsInYear)
+    val sharpe: Double = FastMath.sqrt(numOfTradingPeriodsInYear.toDouble) * excessReturns.mean / excessReturns.stdev
     sharpe
   }
 
